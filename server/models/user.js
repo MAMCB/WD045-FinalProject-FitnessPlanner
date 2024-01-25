@@ -1,10 +1,11 @@
 const mongoose = require('mongoose');
+const bcrypt = require("bcrypt");
 
 const userSchema = new mongoose.Schema(
   {
-    name: { type: String, unique: true, required: true },
-    email: { type: String, unique: true, required: true },
-    password: { type: String, required: true },
+    username: { type: String, unique: true, required: [true , "Name is required"] },
+    email: { type: String, unique: true, required: [true, "Email is required"] },
+    password: { type: String, required: [true, "Password is required"],minLength: [8, "Password must be at least 8 characters"]},
     profilePic: {
       type: String,
       default:
@@ -20,5 +21,42 @@ const userSchema = new mongoose.Schema(
   },
   { timestamps: true }
 );
+
+userSchema.path("email").validate(async (value) => {
+  const emailCount = await mongoose.models.User.countDocuments({
+    email: value,
+  });
+  return !emailCount;
+}, "Email already exists");
+
+userSchema.virtual("confirmPassword")
+  .get(() => this._confirmPassword)
+  .set((value) => (this._confirmPassword = value));
+
+  userSchema.pre("validate", function (next) {
+    if (this.password !== this.confirmPassword) {
+      this.invalidate("confirmPassword", "Passwords must match!!!");
+      console.log("Passwords don't match!");
+    }
+    next();
+  });
+
+  userSchema.pre("save", async function (next) {
+    console.log("in pre save");
+    //hash the password BEFORE it's saved to the db
+    //Remember, we know they match from middleware above
+    try {
+      const hashedPassword = await bcrypt.hash(this.password, 10);
+      //give our password the value of the returned hash
+      console.log("HASHED", hashedPassword);
+      this.password = hashedPassword;
+      next();
+    } catch (error) {
+      console.log("IS THERE ANY ERROR", error);
+    }
+  });
+
+  const User = mongoose.model("User", userSchema);
+
 
 module.exports = mongoose.model('User', userSchema);

@@ -1,5 +1,8 @@
 const express = require('express');
 
+
+const {createExercise, getAllExercises, getExerciseById, updateExerciseById, deleteExerciseById} = require('../controllers/exercise');
+
 const exerciseRouter = express.Router();
 
 exerciseRouter.post('/', createExercise);   

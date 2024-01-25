@@ -1,5 +1,5 @@
 const express = require('express');
-const { createExercise } = require('../controllers/exercise');
+
 
 const {createExercise, getAllExercises, getExerciseById, updateExerciseById, deleteExerciseById} = require('../controllers/exercise');
 

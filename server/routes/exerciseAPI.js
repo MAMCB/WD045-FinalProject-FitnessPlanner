@@ -1,11 +1,23 @@
 const express = require('express');
 const options = require('./APIOptions');
+const axios = require('axios');
 
 const exerciseAPIRouter = express.Router();
 
+exerciseAPIRouter.get('/', async (req, res) => {
+    try{
+        const apiResponse = await axios.request(options.options[0]);
+        res.status(200).json(apiResponse.data);
+    }catch{
+        console.log(error);
+    
+    }
+});
+
+
 exerciseAPIRouter.get('/:limit', async (req, res) => {
     const limit = req.params.limit;
-    const apiOptions = options[0];
+    const apiOptions = options.options[0];
     try{
         if(limit)
         {
@@ -22,7 +34,7 @@ exerciseAPIRouter.get('/:limit', async (req, res) => {
 exerciseAPIRouter.get('/name/:name/:limit', async (req, res) => {
     const name = req.params.name;
     const limit = req.params.limit;
-    const apiOptions = options[1];
+    const apiOptions = options.options[1];
     try{
         if(name)
         {
@@ -42,7 +54,7 @@ exerciseAPIRouter.get('/name/:name/:limit', async (req, res) => {
 
 exerciseAPIRouter.get('/exercise/:id', async (req, res) => {
     const id = req.params.id;
-    const apiOptions = options[2];
+    const apiOptions = options.options[2];
     try{
         if(id)
         {
@@ -59,7 +71,7 @@ exerciseAPIRouter.get('/exercise/:id', async (req, res) => {
 exerciseAPIRouter.get('/target/:target/:limit', async (req, res) => {
     const target = req.params.target;
     const limit = req.params.limit;
-    const apiOptions = options[3];
+    const apiOptions = options.options[3];
     try{
         if(target)
         {
@@ -80,7 +92,7 @@ exerciseAPIRouter.get('/target/:target/:limit', async (req, res) => {
 exerciseAPIRouter.get('/equipment/:equipment/:limit', async (req, res) => {
     const equipment = req.params.equipment;
     const limit = req.params.limit;
-    const apiOptions = options[4];
+    const apiOptions = options.options[4];
     try{
         if(equipment)
         {
@@ -99,7 +111,7 @@ exerciseAPIRouter.get('/equipment/:equipment/:limit', async (req, res) => {
 });
 
 exerciseAPIRouter.get('/targetList', async (req, res) => {      
-    const apiOptions = options[5];
+    const apiOptions = options.options[5];
     try{
         const apiResponse = await axios.request(apiOptions);
         res.status(200).json(apiResponse.data);
@@ -110,7 +122,7 @@ exerciseAPIRouter.get('/targetList', async (req, res) => {
 });
 
 exerciseAPIRouter.get('/equipmentList', async (req, res) => {
-    const apiOptions = options[6];
+    const apiOptions = options.options[6];
     try{
         const apiResponse = await axios.request(apiOptions);
         res.status(200).json(apiResponse.data);
@@ -121,7 +133,7 @@ exerciseAPIRouter.get('/equipmentList', async (req, res) => {
 });
 
 exerciseAPIRouter.get("/bodyPartList", async (req, res) => {
-    const apiOptions = options[7];
+    const apiOptions = options.options[7];
     try{
         const apiResponse = await axios.request(apiOptions);
         res.status(200).json(apiResponse.data);
@@ -134,7 +146,7 @@ exerciseAPIRouter.get("/bodyPartList", async (req, res) => {
 exerciseAPIRouter.get("/bodyPart/:bodyPart/:limit", async (req, res) => {
     const bodyPart = req.params.bodyPart;
     const limit = req.params.limit;
-    const apiOptions = options[8];
+    const apiOptions = options.options[8];
     try{
         if(bodyPart)
         {

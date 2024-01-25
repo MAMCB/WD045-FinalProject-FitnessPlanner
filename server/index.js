@@ -18,10 +18,10 @@ app.use(cors({origin:process.env.CLIENT_URL, credentials:true}));
 app.use(cookieParser());
 app.use(express.json());
 app.use('/', homeRouter);
-app.use('/user', userRouter);
-app.use('/workoutPlan', workoutPlanRouter);
-app.use('/workoutSession', workoutSessionRouter);
-app.use('/exercise', exerciseRouter);
+app.use('/api/user', userRouter);
+app.use('/api/workoutPlan', workoutPlanRouter);
+app.use('/api/workoutSession', workoutSessionRouter);
+app.use('/api/exercise', exerciseRouter);
 app.use('/exerciseAPI', exerciseAPIRouter);
 app.use('/auth', authRouter); 
 

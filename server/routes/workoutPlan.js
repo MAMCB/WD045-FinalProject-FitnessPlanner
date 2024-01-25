@@ -1,4 +1,6 @@
 const express = require('express');
+
+const { createWorkoutPlan, getAllWorkoutPlans, getWorkoutPlanById, updateWorkoutPlanById, deleteWorkoutPlanById } = require('../controllers/workoutPlan');
 const workoutPlanRouter = express.Router();
 
 workoutPlanRouter.post('/', createWorkoutPlan);

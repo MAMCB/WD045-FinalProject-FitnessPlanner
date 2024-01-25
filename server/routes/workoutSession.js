@@ -1,4 +1,5 @@
 const express = require('express');
+const {createWorkoutSession, getAllWorkoutSessions, getWorkoutSessionById, updateWorkoutSessionById, deleteWorkoutSessionById} = require('../controllers/workoutSession');
 const workoutSessionRouter = express.Router();
 
 workoutSessionRouter.post('/', createWorkoutSession);

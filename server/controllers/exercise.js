@@ -14,7 +14,7 @@ const createExercise = async (req, res) => {
 
 const getAllExercises = async (req, res) => {
   try {
-    const allExercises = await Exercise.find();
+    const allExercises = await Exercise.find({userId: req.user._id});
     res.status(201).json(allExercises);
   } catch (error) {
     res.status(500).json({ message: error.message });

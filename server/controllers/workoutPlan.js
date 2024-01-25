@@ -14,7 +14,7 @@ const createWorkoutPlan = async (req, res) => {
 
 const getAllWorkoutPlans = async (req, res) => {
     try{
-        const allWorkoutPlans = await WorkoutPlan.find();
+        const allWorkoutPlans = await WorkoutPlan.find({userId: req.user._id});
         res.status(200).json(allWorkoutPlans);
  }catch(error){
         res.status(500).json({ message: error.message });

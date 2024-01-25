@@ -14,7 +14,7 @@ const createWorkoutSession = async (req, res) => {
 };
 const getAllWorkoutSessions = async (req, res) => {
     try {
-        const allWorkoutSessions = await WorkoutSession.find();
+        const allWorkoutSessions = await WorkoutSession.find({userId: req.user._id});
         res.status(201).json(allWorkoutSessions);
       } catch (error) {
         res.status(500).json({ message: error.message });

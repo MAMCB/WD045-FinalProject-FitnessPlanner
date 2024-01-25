@@ -1,14 +1,14 @@
 const express = require('express');
-
+const { authenticate } = require("../middlewares/auth");
 
 const {createExercise, getAllExercises, getExerciseById, updateExerciseById, deleteExerciseById} = require('../controllers/exercise');
 
 const exerciseRouter = express.Router();
 
-exerciseRouter.post('/', createExercise);   
-exerciseRouter.get('/', getAllExercises);
-exerciseRouter.get('/:id', getExerciseById);
-exerciseRouter.put('/:id', updateExerciseById);
-exerciseRouter.delete('/:id', deleteExerciseById);
+exerciseRouter.post('/', authenticate, createExercise);   
+exerciseRouter.get("/", authenticate, getAllExercises);
+exerciseRouter.get("/:id", authenticate, getExerciseById);
+exerciseRouter.put("/:id", authenticate, updateExerciseById);
+exerciseRouter.delete("/:id", authenticate, deleteExerciseById);
 
 module.exports = exerciseRouter;

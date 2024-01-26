@@ -2,31 +2,36 @@ import React from "react";
 import { Link, Navigate } from "react-router-dom";
 import { useState, useContext } from "react";
 import { AuthContext } from "../context/Auth";
+import { useForm, FormProvider } from "react-hook-form";
 
 const Register = () => {
-
   const context = useContext(AuthContext);
-  console.log({context})
-   /* const errors = context.errors; */
-   const [user, setUser] = useState({
-     username: "",
-     email: "",
-     password: "",
-     confirmPassword: "",
-   });
-  
-   const handleChange = (e) => {
-     const { name, value } = e.target;
-     setUser({ ...user, [name]: value });
-   };
-   const handleSubmit = (e) => {
-     e.preventDefault();
-     context.register(user);
-   };
-   // if user exist go to home
-   if (context.user) {
-     return <Navigate to="/" />;
-   }
+  const errors = context.errors;
+  const methods = useForm();
+  console.log({ context });
+
+  const [user, setUser] = useState({
+    username: "",
+    email: "",
+    password: "",
+    confirmPassword: "",
+  });
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setUser({ ...user, [name]: value });
+    console.log(user);
+  };
+  /* const handleSubmit = (e) => {
+    e.preventDefault();
+    console.log(context);
+    context.register(user);
+  }; */
+  const handleSubmit = methods.handleSubmit((data) => { e.preventDefault(); console.log(data)});
+  // if user exist go to home
+  if (context.user) {
+    return <Navigate to="/" />;
+  }
   if (!context.loading && !context.user) {
     return (
       <section className="bg-gray-50 dark:bg-gray-900">
@@ -47,14 +52,36 @@ const Register = () => {
               <h1 className="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-white">
                 Create an account
               </h1>
-              <form className="space-y-4 md:space-y-6">
+              <FormProvider {...methods}>
+              <form className="space-y-4 md:space-y-6"onSubmit={e => e.preventDefault() }>
                 <div>
+                  <label
+                    htmlFor=""
+                    className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                  >
+                    Username:
+                  </label>
+                  {errors?.username && (
+                    <p className="text-danger">{errors?.username.message}</p>
+                  )}
+                  <input
+                    type="text"
+                    name="username"
+                    className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                    value={user.username}
+                      onChange={handleChange}
+                      placeholder="username"
+                    required
+                  />
                   <label
                     htmlFor="email"
                     className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
                   >
                     Your email
                   </label>
+                  {errors?.email && (
+                    <p className="text-danger">{errors?.email.message}</p>
+                  )}
                   <input
                     type="email"
                     name="email"
@@ -74,6 +101,10 @@ const Register = () => {
                   >
                     Password
                   </label>
+                  {errors?.password && (
+                    <p className="text-danger">{errors?.password.message}</p>
+                  )}
+
                   <input
                     type="password"
                     name="password"
@@ -94,6 +125,11 @@ const Register = () => {
                     >
                       Confirm password
                     </label>
+                    {errors?.confirmPassword && (
+                      <p className="text-danger">
+                        {errors?.confirmPassword.message}
+                      </p>
+                    )}
                     <input
                       type="password"
                       name="confirmPassword"
@@ -108,7 +144,6 @@ const Register = () => {
                   </div>
                   <button
                     type="submit"
-                    onClick={handleSubmit}
                     className="w-full mt-4 mb-4 text-white bg-primaryOne hover:bg-secondary focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800"
                   >
                     Create an account
@@ -123,7 +158,8 @@ const Register = () => {
                     </Link>
                   </p>
                 </div>
-              </form>
+                </form>
+                </FormProvider>
             </div>
           </div>
         </div>

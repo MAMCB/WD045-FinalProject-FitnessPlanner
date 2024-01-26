@@ -1,7 +1,7 @@
 import React from 'react'
 import {useState, useEffect} from 'react'
 import axiosInstance from '../axiosInstance'
-import {Tabs,Button,TextInput,Label,Checkbox} from "flowbite-react"
+import {Tabs,Button,TextInput,Label,Checkbox,Select} from "flowbite-react"
 
 const Exercise = () => {
     const [exercises, setExercises] = useState([]);
@@ -15,6 +15,7 @@ const Exercise = () => {
           .get(import.meta.env.VITE_SERVER_BASE_URL + `/exerciseAPI/${searchType}/${search}/10`)
           .then((res) => {
             setExercises(res.data);
+            setSubmitted(false);
           })
           .catch((err) => console.log(err));
     }, [submitted])
@@ -63,26 +64,20 @@ const Exercise = () => {
             </Tabs>
           </div>
           <div>
-            <Label htmlFor="checkbox-1" value="Search by muscle" />
-            <Checkbox
-              id="checkbox-1"
-              value="target"
-              onClick={handleSearchType}
-            />
-            <Label htmlFor="checkbox-2" value="Search by equipment" />
-            <Checkbox
-              id="checkbox-2"
-              value="equipment"
-              onClick={handleSearchType}
-            />
-            <Label htmlFor="checkbox-3" value="Search by name" />
-            <Checkbox id="checkbox-3" value="name" onClick={handleSearchType} />
-            <div className="mb-2 block">
-              <Label htmlFor="search" value="Search for an exercise" />
+          <Label htmlFor='searchType' value='Select your search type'/>
+          <Select id='searchType' onChange={handleSearchType}>
+            <option value=''>Select your search type</option>
+            <option value='target'>Search by muscle</option>
+            <option value='equipment'>Search by equipment</option>
+            <option value='name'>Search by name</option>
+          </Select>
+           
+              
 
               <TextInput
                 id="search"
                 type="text"
+                placeholder={`Search by ${searchType}`}
                 required
                 onChange={handleSearchInput}
               />
@@ -103,7 +98,7 @@ const Exercise = () => {
                   </div>
                 ))}
             </div>
-          </div>
+          
         </div>
       </div>
     </>

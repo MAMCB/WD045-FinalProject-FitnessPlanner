@@ -1,16 +1,16 @@
 import React from "react";
 import { Link, Navigate } from "react-router-dom";
-import { useState, useContext } from "react";
+import { useContext } from "react";
 import { AuthContext } from "../context/Auth";
-import {Input} from "./Input";
+import { Input } from "./Input";
 import { useForm, FormProvider, useFormContext } from "react-hook-form";
 
 const Register = () => {
   const context = useContext(AuthContext);
-  const errors = context.errors;
+  const errors_ = context.errors;
+
   const methods = useForm();
   console.log({ context });
-
 
   const userName_Validation = {
     name: "username",
@@ -26,6 +26,63 @@ const Register = () => {
       maxLength: {
         value: 30,
         message: "30 characters max",
+      },
+    },
+  };
+
+  const email_Validation = {
+    name: "email",
+    label: "Email",
+    type: "email",
+    id: "email",
+    placeholder: "type your email ...",
+    validation: {
+      required: {
+        value: true,
+        message: "Email is required",
+      },
+      pattern: {
+        value:
+          /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
+        message: "Invalid email address",
+      },
+    },
+  };
+
+  const password_Validation = {
+    name: "password",
+    label: "Password",
+    type: "password",
+    id: "password",
+    placeholder: "type password ...",
+    validation: {
+      required: {
+        value: true,
+        message: "required",
+      },
+      minLength: {
+        value: 8,
+        message: "min 8 characters",
+      },
+    },
+  };
+
+  const confirmPassword_Validation = {
+    name: "confirmPassword",
+    label: "Confirm Password",
+    type: "password",
+    id: "confirmPassword",
+    placeholder: "confirm your password ...",
+    validation: {
+      required: {
+        value: true,
+        message: "Please confirm your password",
+      },
+      validate: {
+        value: (value) => {
+          const { password } = methods.getValues(); // get password value from the form
+          return password === value || "The passwords do not match";
+        },
       },
     },
   };
@@ -48,13 +105,13 @@ const Register = () => {
     context.register(user);
   }; */
   const handleSubmit = methods.handleSubmit((data) => {
-    
     console.log(data);
   });
   // if user exist go to home
   if (context.user) {
     return <Navigate to="/" />;
   }
+
   if (!context.loading && !context.user) {
     return (
       <section className="bg-gray-50 dark:bg-gray-900">
@@ -83,157 +140,28 @@ const Register = () => {
                   autoComplete="off"
                 >
                   <div>
-                    <Input
-                      label="Username"
-                      name="username"
-                      type="text"
-                      id="username"
-                      placeholder="type your name..."
-                      validation={{
-                        required: {
-                          value: true,
-                          message: "required",
-                        },
-                      }}
-                    />
-
-                    {/*                     <label
-                      htmlFor=""
-                      className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-                    >
-                      Username:
-                    </label>
-                    {errors?.username && (
-                      <p className="text-danger">{errors?.username.message}</p>
-                    )}
-                    <input
-                      type="text"
-                      name="username"
-                      className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                      value={user.username}
-                      onChange={handleChange} 
-                      placeholder="username"
-                      required
-                    /> */}
-
-                    <Input
-                      label="Your email"
-                      name="email"
-                      type="email"
-                      id="email"
-                      placeholder="name@company.com"
-                      validation={{
-                        required: {
-                          value: true,
-                          message: "required",
-                        },
-                      }}
-                    />
-
-                    {/*                     <label
-                      htmlFor="email"
-                      className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-                    >
-                      Your email
-                    </label>
-                    {errors?.email && (
-                      <p className="text-danger">{errors?.email.message}</p>
-                    )}
-                    <input
-                      type="email"
-                      name="email"
-                      id="email"
-                      autoComplete="new-email"
-                      placeholder="name@company.com"
-                       value={user.email}
-                    onChange={handleChange} 
-                      className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                      required
-                    /> */}
-
-                    <Input
-                      label="Password"
-                      name="password"
-                      type="password"
-                      id="password"
-                      placeholder="••••••••"
-                      validation={{
-                        required: {
-                          value: true,
-                          message: "required",
-                        },
-                        minLength: {
-                          value: 8,
-                          message: "min 8 characters",
-                        },
-                      }}
-                    />
+                    <Input {...userName_Validation} />
+                    <Input {...email_Validation} />
+                    <Input {...password_Validation} />
+                    <Input {...confirmPassword_Validation} />
                   </div>
                   <div>
-                    <Input
-                      label="Confirm password"
-                      name="confirmPassword"
-                      type="password"
-                      id="confirm-password"
-                      placeholder="••••••••"
-                      validation={{
-                        required: {
-                          value: true,
-                          message: "required",
-                        },
-                        minLength: {
-                          value: 8,
-                          message: "min 8 characters",
-                        },
-                      }}
-                    />
-                    {/* <label
-                      htmlFor="password"
-                      className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-                    >
-                      Password
-                    </label>
-                    {errors?.password && (
-                      <p className="text-danger">{errors?.password.message}</p>
+                    {errors_?.username && (
+                      <p className="text-danger">{errors_?.username.message}</p>
                     )}
-
-                    <input
-                      type="password"
-                      name="password"
-                      id="password"
-                      placeholder="••••••••"
-                      autoComplete="new-password"
-                      value={user.password}
-                    onChange={handleChange}
-                      className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                      required
-                    /> */}
+                    {errors_?.email && (
+                      <p className="text-danger">{errors_?.email.message}</p>
+                    )}
+                    {errors_?.password && (
+                      <p className="text-danger">{errors_?.password.message}</p>
+                    )}
+                    {errors_?.confirmPassword && (
+                      <p className="text-danger">
+                        {errors_?.confirmPassword.message}
+                      </p>
+                    )}
                   </div>
                   <div>
-                    <div>
-                      {/* <label
-                        type="confirm-password"
-                        className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-                      >
-                        Confirm password
-                      </label>
-                      {errors?.confirmPassword && (
-                        <p className="text-danger">
-                          {errors?.confirmPassword.message}
-                        </p>
-                      )}
-                      <input
-                        type="password"
-                        name="confirmPassword"
-                        id="confirm-password"
-                        placeholder="••••••••"
-                        autoComplete="new-password"
-                        value={user.confirmPassword}
-                      onChange={handleChange}
-                        className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                        required
-                      /> */}
-                    </div>
                     <button
                       /* type="submit" */
                       onClick={handleSubmit}

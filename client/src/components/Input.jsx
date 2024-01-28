@@ -1,6 +1,4 @@
 import { useFormContext } from "react-hook-form";
-import { AuthContext } from "../context/Auth";
-import { useContext } from "react";
 import { motion } from "framer-motion";
 import { AnimatePresence } from "framer-motion";
 import React from "react";
@@ -14,9 +12,8 @@ export const Input = ({ label, type, id, placeholder, validation, name }) => {
     formState: { errors },
   } = useFormContext();
 
-  
 
-  const inputError = findInputError(errors, label);
+  const inputError = findInputError(errors, name);
   const isInvalid = isFormInvalid(inputError);
 
   return (

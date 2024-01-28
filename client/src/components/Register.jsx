@@ -11,12 +11,31 @@ const Register = () => {
   const methods = useForm();
   console.log({ context });
 
-  const [user, setUser] = useState({
+
+  const userName_Validation = {
+    name: "username",
+    label: "Username",
+    type: "text",
+    id: "username",
+    placeholder: "type your name ...",
+    validation: {
+      required: {
+        value: true,
+        message: "required",
+      },
+      maxLength: {
+        value: 30,
+        message: "30 characters max",
+      },
+    },
+  };
+
+  /* const [user, setUser] = useState({
     username: "",
     email: "",
     password: "",
     confirmPassword: "",
-  });
+  }); */
 
   /* const handleChange = (e) => {
     const { name, value } = e.target;
@@ -61,13 +80,21 @@ const Register = () => {
                   className="space-y-4 md:space-y-6"
                   onSubmit={(e) => e.preventDefault()}
                   noValidate
+                  autoComplete="off"
                 >
                   <div>
                     <Input
                       label="Username"
+                      name="username"
                       type="text"
                       id="username"
                       placeholder="type your name..."
+                      validation={{
+                        required: {
+                          value: true,
+                          message: "required",
+                        },
+                      }}
                     />
 
                     {/*                     <label
@@ -91,9 +118,16 @@ const Register = () => {
 
                     <Input
                       label="Your email"
+                      name="email"
                       type="email"
                       id="email"
                       placeholder="name@company.com"
+                      validation={{
+                        required: {
+                          value: true,
+                          message: "required",
+                        },
+                      }}
                     />
 
                     {/*                     <label
@@ -119,17 +153,39 @@ const Register = () => {
 
                     <Input
                       label="Password"
+                      name="password"
                       type="password"
                       id="password"
                       placeholder="••••••••"
+                      validation={{
+                        required: {
+                          value: true,
+                          message: "required",
+                        },
+                        minLength: {
+                          value: 8,
+                          message: "min 8 characters",
+                        },
+                      }}
                     />
                   </div>
                   <div>
                     <Input
                       label="Confirm password"
+                      name="confirmPassword"
                       type="password"
                       id="confirm-password"
                       placeholder="••••••••"
+                      validation={{
+                        required: {
+                          value: true,
+                          message: "required",
+                        },
+                        minLength: {
+                          value: 8,
+                          message: "min 8 characters",
+                        },
+                      }}
                     />
                     {/* <label
                       htmlFor="password"

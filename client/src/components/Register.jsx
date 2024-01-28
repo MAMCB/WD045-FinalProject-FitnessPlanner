@@ -2,7 +2,7 @@ import React from "react";
 import { Link, Navigate } from "react-router-dom";
 import { useContext } from "react";
 import { AuthContext } from "../context/Auth";
-import { Input } from "./Input";
+import {Input} from "./Input";
 import { useForm, FormProvider, useFormContext } from "react-hook-form";
 
 const Register = () => {
@@ -10,7 +10,7 @@ const Register = () => {
   const errors_ = context.errors;
 
   const methods = useForm();
-  console.log({ context });
+  // console.log({ context });
 
   const userName_Validation = {
     name: "username",
@@ -86,26 +86,8 @@ const Register = () => {
       },
     },
   };
-
-  /* const [user, setUser] = useState({
-    username: "",
-    email: "",
-    password: "",
-    confirmPassword: "",
-  }); */
-
-  /* const handleChange = (e) => {
-    const { name, value } = e.target;
-    setUser({ ...user, [name]: value });
-    console.log(user);
-  }; */
-  /* const handleSubmit = (e) => {
-    e.preventDefault();
-    console.log(context);
-    context.register(user);
-  }; */
   const handleSubmit = methods.handleSubmit((data) => {
-    console.log(data);
+    context.register(data);
   });
   // if user exist go to home
   if (context.user) {

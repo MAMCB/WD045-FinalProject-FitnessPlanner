@@ -3,24 +3,54 @@ import { useState, useContext } from "react";
 import { Link } from "react-router-dom";
 import { AuthContext } from "../context/Auth";
 import { Navigate } from "react-router-dom";
+import { useForm, FormProvider, useFormContext } from "react-hook-form";
+import { Input } from "./Input";
 
 const Login = () => {
   const context = useContext(AuthContext);
+  const errors_ = context.errors;
+  const methods = useForm();
 
-  const [user, setUser] = useState({
-    email: "",
-    password: "",
+  const email_Validation = {
+    name: "email",
+    label: "Email",
+    type: "email",
+    id: "email",
+    placeholder: "type your email ...",
+    validation: {
+      required: {
+        value: true,
+        message: "Email is required",
+      },
+      pattern: {
+        value:
+          /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
+        message: "Invalid email address",
+      },
+    },
+  };
+
+  const password_Validation = {
+    name: "password",
+    label: "Password",
+    type: "password",
+    id: "password",
+    placeholder: "type password ...",
+    validation: {
+      required: {
+        value: true,
+        message: "required",
+      },
+      minLength: {
+        value: 8,
+        message: "min 8 characters",
+      },
+    },
+  };
+
+  const handleSubmit = methods.handleSubmit((data) => {
+    context.login(data);
   });
-
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setUser({ ...user, [name]: value });
-  };
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    console.log(user);
-    context.login(user);
-  };
   if (!context.loading && context.user) {
     return <Navigate to="/" />;
   }
@@ -47,72 +77,45 @@ const Login = () => {
                 <h1 className="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-white">
                   Sign in to your account
                 </h1>
-                <form
-                  className="space-y-4 md:space-y-6"
-                  onSubmit={handleSubmit}
-                >
-                  <div>
-                    <label
-                      htmlFor="email"
-                      className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-                    >
-                      Your email
-                    </label>
-                    <input
-                      type="email"
-                      name="email"
-                      id="email"
-                      value={user.email}
-                      onChange={handleChange}
-                      placeholder="name@company.com"
-                      className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                      required
-                    />
-                  </div>
-                  <div>
-                    <label
-                      htmlFor="password"
-                      className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-                    >
-                      Password
-                    </label>
-                    <input
-                      type="password"
-                      name="password"
-                      id="password"
-                      value={user.password}
-                      onChange={handleChange}
-                      placeholder="••••••••"
-                      className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                      required
-                    />
-                  </div>
-                  <div>
-                    <div className="flex items-start">
-                      <a
-                        href="#"
-                        className="text-sm font-medium text-primary-600 hover:underline dark:text-primary-500"
-                      >
-                        Forgot password?
-                      </a>
+                <FormProvider {...methods}>
+                  <form
+                    className="space-y-4 md:space-y-6"
+                    onSubmit={(e) => e.preventDefault()}
+                    noValidate
+                    autoComplete="off"
+                  >
+                    <div>
+                      <Input {...email_Validation} />
+                      <Input {...password_Validation} />
                     </div>
-                    <button
-                      type="submit"
-                      className="w-full mt-4 mb-4 text-white bg-primaryOne hover:bg-secondary focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800"
-                    >
-                      Sign in
-                    </button>
-                    <p className="text-sm font-light text-gray-500 dark:text-gray-400">
-                      Don’t have an account yet?{" "}
-                      <Link
-                        to="/register"
-                        className="font-medium text-primary-600 hover:underline dark:text-primary-500"
+                    <div></div>
+                    <div>
+                      <div className="flex items-start">
+                        <a
+                          href="#"
+                          className="text-sm font-medium text-primary-600 hover:underline dark:text-primary-500"
+                        >
+                          Forgot password?
+                        </a>
+                      </div>
+                      <button
+                        onClick={handleSubmit}
+                        className="w-full mt-4 mb-4 text-white bg-primaryOne hover:bg-secondary focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800"
                       >
-                        Sign up
-                      </Link>
-                    </p>
-                  </div>
-                </form>
+                        Sign in
+                      </button>
+                      <p className="text-sm font-light text-gray-500 dark:text-gray-400">
+                        Don’t have an account yet?{" "}
+                        <Link
+                          to="/register"
+                          className="font-medium text-primary-600 hover:underline dark:text-primary-500"
+                        >
+                          Sign up
+                        </Link>
+                      </p>
+                    </div>
+                  </form>
+                </FormProvider>
               </div>
             </div>
           </div>

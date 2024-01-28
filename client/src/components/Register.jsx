@@ -90,7 +90,7 @@ const Register = () => {
     context.register(data);
   });
   // if user exist go to home
-  if (context.user) {
+  if (!context.loading && context.user) {
     return <Navigate to="/" />;
   }
 
@@ -127,7 +127,7 @@ const Register = () => {
                     <Input {...password_Validation} />
                     <Input {...confirmPassword_Validation} />
                   </div>
-                  <div>
+             {/*      <div>
                     {errors_?.username && (
                       <p className="text-danger">{errors_?.username.message}</p>
                     )}
@@ -142,10 +142,9 @@ const Register = () => {
                         {errors_?.confirmPassword.message}
                       </p>
                     )}
-                  </div>
+                  </div> */}
                   <div>
                     <button
-                      /* type="submit" */
                       onClick={handleSubmit}
                       className="w-full mt-4 mb-4 text-white bg-primaryOne hover:bg-secondary focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800"
                     >

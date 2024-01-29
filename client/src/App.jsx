@@ -1,3 +1,4 @@
+
 import { useState } from "react";
 import Home from "./components/Home";
 import { Routes, Route } from "react-router-dom";
@@ -11,6 +12,7 @@ import Register from "./components/Register";
 import Profile from "./components/Profile";
 import LandingPage from "./components/LandingPage";
 import Protected from "./components/ProtectedRoute";
+
 
 function App() {
   return (

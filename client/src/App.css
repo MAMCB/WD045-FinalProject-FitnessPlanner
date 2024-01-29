@@ -1,3 +1,143 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+
+.clip-path-triangle{
+    clip-path: polygon(100% 0, 0% 100%, 100% 100%);
+    position: absolute;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    left: 30%;
+}
+
+@font-face {
+    font-family: "Roboto";
+    src: url("../fonts/Roboto/Roboto-Regular.ttf");
+  }
+
+  @font-face {
+    font-family: "Montserrat";
+    src: url("../fonts/Montserrat/Montserrat-Regular.ttf");
+  }
+
+  h1,h2,h3,h4,h5,h6{
+    font-family: roboto;
+  }
+  p{
+    font-family: montserrat;
+  }
+
+  button.button {
+    border-radius: 3px;
+    display: block;
+    background: linear-gradient(to right, #4FB5A9 50%, transparent 50%);
+    background-size: 200% 100%;
+    background-position: right bottom;
+    transition: all .5s ease-out;
+
+  }
+  
+  button.button:hover {
+    background-position: left bottom;
+   color: black;
+  }
+
+  .border-box-shadow{
+    box-shadow: 0px 0px 10px 0px #4FB5A9!important;
+  }
+
+  .position-text-in-center{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-125%);
+  }
+
+  .overlay:after {
+    position: absolute;
+    content: "";
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background-color: rgba(0,0,0,.3);
+}
+
+.slick-slide{
+  max-width: 90%;
+  margin: auto;
+}
+
+.slick-slide > div {
+	height: 100%;
+}
+
+.slick-dots{padding-top: 50px!important;}
+
+
+.slick-prev,
+ .slick-next {
+	top: -10px;
+	right: 0;
+	margin-bottom: 1.5rem;
+	border: none;
+	padding: 0.9rem;
+}
+
+.movie-wrapper .slick-prev {
+	left: auto;
+	right: 3rem;
+}
+.slick-arrow.slick-prev,
+.slick-prev:before,
+.slick-next:before {
+	color: #4FB5A9!important;
+  z-index: 9!important;
+}
+
+ 
+.slick-slide > div {
+  display: grid;
+  place-items: center;
+  width: 80%;
+  margin-top: 50px;
+  margin: auto;
+  height: 100%;
+  padding: 0px;
+}
+
+.slick-track
+{
+    display: flex !important;
+}
+
+.slick-slide
+{
+    height: inherit !important;
+}
+
+.slick-prev{
+  left: 15px!important;
+}
+.slick-next{right: 15px!important}
+
+
+.slick-dots li button{
+  border: #4FB5A9!important;
+  color: #4FB5A9!important;
+}
+
+.slick-dots li.slick-active button:before {
+  opacity: 1!important;;
+  color:  #4FB5A9!important;
+
+}
+
+.slick-dots li button:before{
+  border: #4FB5A9!important;
+  color:  #4FB5A9!important;
+  font-size: 10px;
+ 
+}

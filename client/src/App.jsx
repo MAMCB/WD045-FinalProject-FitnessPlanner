@@ -9,7 +9,7 @@ import Editor from './components/Editor'
 import Login from './components/Login'
 import Register from './components/Register'
 import Profile from './components/Profile'
-import LandingPage from './components/LandingPage'
+import LandingPage from './components/Landing-Page/LandingPage'
 
 
 function App() {

@@ -1,7 +1,37 @@
-import React from 'react'
-import { Button } from 'flowbite-react'
+import React from "react";
+import { Button } from "flowbite-react";
+import axiosInstance from "../axiosInstance";
+import { useState, useEffect } from "react";
+import { AuthContext } from "../context/Auth";
+import { useContext } from "react";
 
-const ExerciseCard = ({exercise}) => {
+const ExerciseCard = ({ exercise }) => {
+  const [exerciseSaved, setExerciseSaved] = useState(null);
+  const [succesfullySaved, setSuccesfullySaved] = useState(false);
+  const context = useContext(AuthContext);
+
+  useEffect(() => {
+    exerciseSaved &&
+      axiosInstance
+        .post("/api/exercise", exerciseSaved)
+        .then(() => setSuccesfullySaved(true))
+        .catch((error) => console.log(error));
+  }, [exerciseSaved]);
+
+  const handleSave = () => {
+    
+    const newExercise = {
+      userId: context.user._id,
+      name: exercise.name,
+      image: exercise.gifUrl,
+      muscleGroup: exercise.target,
+      equipment: exercise.equipment,
+      description: exercise.instructions.reduce((acc, curr) => acc + curr, ""),
+    };
+    
+    
+    setExerciseSaved(prev=>newExercise);
+  };
   return (
     <div className="flex h-full p-4 items-center justify-center bg-gray-400 dark:bg-gray-700 dark:text-white">
       <div className="max-w-4xl mt-4 flex bg-white rounded-xl">
@@ -16,11 +46,18 @@ const ExerciseCard = ({exercise}) => {
               {instruction}
             </p>
           ))}
-          <Button className="w-1/2 self-center mt-4">Save to my exercises</Button>
+          <Button
+            className="w-1/2 self-center mt-4"
+            onClick={handleSave}
+            disabled={succesfullySaved}
+          >
+            Save to my exercises
+          </Button>
+          {succesfullySaved && <p className="mt-2">Exercise saved!</p>}
         </div>
       </div>
     </div>
   );
-}
+};
 
-export default ExerciseCard
+export default ExerciseCard;

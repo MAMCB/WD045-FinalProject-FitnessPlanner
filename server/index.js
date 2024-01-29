@@ -20,7 +20,7 @@ const authRouter = require('./routes/authentication');
 app.use(cors({origin:process.env.CLIENT_URL, credentials:true}));
 app.use(cookieParser());
 app.use(express.json());
-app.use('/', homeRouter);
+//app.use('/', homeRouter);
 app.use('/api/user', userRouter);
 app.use('/api/workoutPlan', workoutPlanRouter);
 app.use('/api/workoutSession', workoutSessionRouter);

@@ -1,4 +1,5 @@
 const Exercise = require("../models/exercise");
+const User = require("../models/user");
 
 const createExercise = async (req, res) => {
   try {
@@ -6,6 +7,7 @@ const createExercise = async (req, res) => {
       ...req.body,
       userId: req.user._id,
     });
+    User.findByIdAndUpdate(req.user._id, { $push: { exercises: newExercise._id } }, { new: true }).exec();
     res.status(201).json(newExercise);
   } catch (error) {
     res.status(500).json({ message: error.message });
@@ -14,7 +16,8 @@ const createExercise = async (req, res) => {
 
 const getAllExercises = async (req, res) => {
   try {
-    const allExercises = await Exercise.find({userId: req.user._id});
+    const ownerUser = await User.find({userId: req.user._id})
+    const allExercises = await ownerUser.populate("exercises").execPopulate();
     res.status(201).json(allExercises);
   } catch (error) {
     res.status(500).json({ message: error.message });

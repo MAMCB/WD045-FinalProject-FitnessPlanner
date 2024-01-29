@@ -1,13 +1,30 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { Avatar, Dropdown, Navbar } from "flowbite-react";
-import { useContext } from 'react'
+import { useContext, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { AuthContext } from "../context/Auth";
 import logo from '../assets/Logo_!.png'
+import toglerIcon from "../assets/day-and-night.png"
 const NavbarForHome = () => {
 
   const context = useContext(AuthContext);
   console.log(context.user)
+
+  const [theme, setTheme] = useState("light");
+
+  useEffect(() => {
+    if (theme === "dark") {
+        document.documentElement.classList.add('dark');
+    } else {
+        document.documentElement.classList.remove('dark')
+    }
+  }
+  ,[theme])
+
+  const handleToggleTheme = () => {
+    setTheme(theme === "light" ? "dark" : "light");
+    console.log(theme)
+   };
     
   const handleLogOut = () => {
     context.logout();
@@ -15,13 +32,9 @@ const NavbarForHome = () => {
 
   
   return (
-    <Navbar fluid rounded>
+    <Navbar fluid rounded className="dark:bg-black">
       <Navbar.Brand>
-        <img
-          src={logo}
-          className="mr-3 h-6 sm:h-9"
-          alt="Logo"
-          />
+        <img src={logo} className="mr-3 h-6 sm:h-9" alt="Logo" />
         <span className="self-center whitespace-nowrap text-xl font-semibold dark:text-white">
           FitLife
         </span>
@@ -59,6 +72,15 @@ const NavbarForHome = () => {
         <Navbar.Link href="#">Your workouts</Navbar.Link>
         <Navbar.Link href="#">Editor</Navbar.Link>
         <Navbar.Link href="#">Template Store</Navbar.Link>
+        <button
+          onClick={handleToggleTheme}
+          className="dark:bg-black  dark:text-white"
+          type="button"
+          color="primary"
+        >
+          {theme === "light" ? "Dark mode" : "Light mode"}
+        </button>
+        
       </Navbar.Collapse>
     </Navbar>
   );

@@ -1,7 +1,21 @@
 import React from 'react'
 import { Button } from 'flowbite-react'
+import axiosInstance from '../axiosInstance'
+import { useState, useEffect } from 'react'
+import { AuthContext } from "../context/Auth";
+import { useContext } from "react";
 
 const ExerciseCard = ({exercise}) => {
+  const [exerciseSaved, setExerciseSaved] = useState(null);
+   const context = useContext(AuthContext);
+
+  useEffect(() => {exerciseSaved && axiosInstance.post('/api/exercise', exercise)}, [exerciseSaved]);
+
+  const handleSave = () => {
+    console.log(context.user._id);
+    console.log(exercise);
+    //setExerciseSaved({ ...exercise, userId: context.user._id });
+  }
   return (
     <div className="flex h-full p-4 items-center justify-center bg-gray-400 dark:bg-gray-700 dark:text-white">
       <div className="max-w-4xl mt-4 flex bg-white rounded-xl">
@@ -16,7 +30,7 @@ const ExerciseCard = ({exercise}) => {
               {instruction}
             </p>
           ))}
-          <Button className="w-1/2 self-center mt-4">Save to my exercises</Button>
+          <Button className="w-1/2 self-center mt-4" onClick={handleSave}>Save to my exercises</Button>
         </div>
       </div>
     </div>

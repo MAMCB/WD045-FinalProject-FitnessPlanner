@@ -4,7 +4,6 @@ import NavbarForHome from "./NavbarForHome.jsx";
 const Home = () => {
   return (
     <>
-      <div>Home</div>
       <NavbarForHome />
     </>
   );

@@ -34,7 +34,7 @@ const NavbarForHome = () => {
   return (
     <Navbar fluid rounded className="dark:bg-black">
       <Navbar.Brand>
-        <img src={logo} className="mr-3 h-6 sm:h-9" alt="Logo" />
+        <img src={logo} className="mr-3 h-9" alt="Logo" />
         <span className="self-center whitespace-nowrap text-xl font-semibold dark:text-white">
           FitLife
         </span>
@@ -49,6 +49,7 @@ const NavbarForHome = () => {
               /* img="https://flowbite.com/docs/images/people/profile-picture-5.jpg" */
               img={context.user.profilePicture}
               rounded
+              className='mr-1'
             />
           }
         >

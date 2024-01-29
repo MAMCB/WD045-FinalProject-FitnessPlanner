@@ -1,4 +1,5 @@
 const WorkoutSession = require('../models/workoutSession');
+const User = require('../models/user');
 
 const createWorkoutSession = async (req, res) => {
     try {
@@ -6,6 +7,7 @@ const createWorkoutSession = async (req, res) => {
           ...req.body,
           userId: req.user._id,
         });
+        User.findByIdAndUpdate(req.user._id, { $push: { workoutSessions: newWorkoutSession._id } }, { new: true }).exec();
         res.status(201).json(newWorkoutSession);
       } catch (error) {
         res.status(500).json({ message: error.message });
@@ -14,7 +16,8 @@ const createWorkoutSession = async (req, res) => {
 };
 const getAllWorkoutSessions = async (req, res) => {
     try {
-        const allWorkoutSessions = await WorkoutSession.find({userId: req.user._id});
+        const ownerUser = await WorkoutSession.find({userId: req.user._id});
+        const allWorkoutSessions = await ownerUser.populate("workoutSessions").execPopulate();
         res.status(201).json(allWorkoutSessions);
       } catch (error) {
         res.status(500).json({ message: error.message });

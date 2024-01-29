@@ -3,9 +3,21 @@ const bcrypt = require("bcrypt");
 
 const userSchema = new mongoose.Schema(
   {
-    username: { type: String, unique: true, required: [true , "Username is required"] },
-    email: { type: String, unique: true, required: [true, "Email is required"] },
-    password: { type: String, required: [true, "Password is required"],minLength: [8, "Password must be at least 8 characters"]},
+    username: {
+      type: String,
+      unique: true,
+      required: [true, "Username is required"],
+    },
+    email: {
+      type: String,
+      unique: true,
+      required: [true, "Email is required"],
+    },
+    password: {
+      type: String,
+      required: [true, "Password is required"],
+      minLength: [8, "Password must be at least 8 characters"],
+    },
     profilePic: {
       type: String,
       default:
@@ -14,10 +26,24 @@ const userSchema = new mongoose.Schema(
     joinedDate: { type: Date, default: Date.now },
     age: { type: Number, default: 0 },
     height: { type: Number, default: 0 },
-    weight:{ type: Number, default: 0},
-    workoutSessions:{type: Array, default: []},
-    friends:{type: Array, default: []},
-    musicPlaylists:{type: Array, default: []},
+    weight: { type: Number, default: 0 },
+    exercises: {
+      type: [mongoose.Schema.Types.ObjectId],
+      ref: "Exercise",
+      default: [],
+    },
+    workoutPlans: {
+      type: [mongoose.Schema.Types.ObjectId],
+      ref: "WorkoutPlan",
+      default: [],
+    },
+    workoutSessions: {
+      type: [mongoose.Schema.Types.ObjectId],
+      ref: "WorkoutSession",
+      default: [],
+    },
+    friends: { type: [mongoose.Schema.Types.ObjectId],ref: "User", default: [] },
+    musicPlaylists: { type: Array, default: [] },
   },
   { timestamps: true }
 );

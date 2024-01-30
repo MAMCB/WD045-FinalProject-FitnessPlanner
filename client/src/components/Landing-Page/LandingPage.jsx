@@ -3,7 +3,7 @@ import HeroSection from "./HeroSection";
 import PresentationSection from "./PresentationSection";
 import OfferSection from "./OfferSection";
 import TestimonialsSection from "./TestimonialsSection";
-import NavbarForHome from "../NavbarforHome";
+import NavbarForHome from "../NavbarForHome";
 const LandingPage = () => {
   return (
     <main>

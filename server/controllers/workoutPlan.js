@@ -16,8 +16,12 @@ const createWorkoutPlan = async (req, res) => {
 
 const getAllWorkoutPlans = async (req, res) => {
     try{
-        const ownerUser= await WorkoutPlan.find({userId: req.user._id});
-        const allWorkoutPlans = await ownerUser.populate("workoutPlans").execPopulate();
+        const ownerUser = await User.findOne({ _id: req.user._id }).populate("workoutPlans");
+     if (!ownerUser) {
+       return res.status(404).json({ message: "User not found" });
+     }
+
+     const allWorkoutPlans = ownerUser.workoutPlans;
         res.status(200).json(allWorkoutPlans);
  }catch(error){
         res.status(500).json({ message: error.message });

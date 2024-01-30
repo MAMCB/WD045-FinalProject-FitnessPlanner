@@ -265,7 +265,7 @@ const SearchResult = () => (
           {exercises.length > 0 && (
             <Carousel slide={false}>
               {exercises.map((exercise) => (
-                <ExerciseCard key={exercise.id} exercise={exercise} />
+                <ExerciseCard key={exercise.id} exercise={exercise} user={false} addExercise={null} />
               ))}
             </Carousel>
           )}

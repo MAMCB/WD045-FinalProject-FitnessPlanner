@@ -95,10 +95,10 @@ const NavbarForHome = () => {
         <Navbar.Link href="/" active>
           Home
         </Navbar.Link>
-        <Navbar.Link href="#" className={context.user ? "" : "hidden"}>
+        <Navbar.Link href="/workoutPlan" className={context.user ? "" : "hidden"}>
           Your workouts
         </Navbar.Link>
-        <Navbar.Link href="#" className={context.user ? "" : "hidden"}>
+        <Navbar.Link href="/editor" className={context.user ? "" : "hidden"}>
           Editor
         </Navbar.Link>
         <Navbar.Link href="#" className={context.user ? "" : "hidden"}>

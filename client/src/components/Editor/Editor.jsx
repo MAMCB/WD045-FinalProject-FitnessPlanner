@@ -1,4 +1,4 @@
-import React from 'react'
+import React from "react";
 import {
   Tabs,
   Button,
@@ -7,27 +7,33 @@ import {
   Carousel,
   Select,
 } from "flowbite-react";
-import ExerciseCard from "./ExerciseCard";
+import ExerciseCard from "../ExerciseSearch-page/ExerciseCard";
 import { useState, useEffect } from "react";
-import axiosInstance from '../axiosInstance';
-import { AuthContext } from "../context/Auth";
+import axiosInstance from "../../axiosInstance";
+import { AuthContext } from "../../context/Auth";
 import { useContext } from "react";
+import { useNavigate } from "react-router-dom";
+import Block from "./Block";
+
 
 const Editor = () => {
   const [exercises, setExercises] = useState([]);
+  const [blocks, setBlocks] = useState([]);
   const context = useContext(AuthContext);
+  const navigate = useNavigate();
   const [workoutPlan, setWorkoutPlan] = useState({
     name: "",
     goal: "",
-    restTimes: 0,
-    exerciseTimes: 0,
-    blocks: [],
+    restDuration: 0,
+    exerciseDuration: 0,
+    exercises: [],
   });
   const [exerciseBlock, setExerciseBlock] = useState({
     sets: 1,
     weights: 0,
     duration: 0,
-    exercise: {},
+    
+    
   });
 
   useEffect(() => {
@@ -38,16 +44,34 @@ const Editor = () => {
   }, []);
 
   const handlePlan = (e) => {
-  }
+    setWorkoutPlan((prev) => ({ ...prev, [e.target.id]: e.target.value }));
+  };
 
   const handleBlock = (e) => {
-  }
+    setBlocks((prev) => [...prev, exerciseBlock]);
+  };
 
   const addExercise = (exercise) => {
-  }
+    const newExercise = {...exercise,...exerciseBlock}
+    setWorkoutPlan((prev) => ({ ...prev, exercises: [...prev.exercises, newExercise] }));
+  };
+
+  const saveWorkout = () => {
+    workoutPlan.exercises.length>0 &&
+    console.log(workoutPlan);
+    workoutPlan.userId = context.user._id;
+    workoutPlan.exercises.forEach((exercise) => {exercise.duration ===0? exercise.duration = workoutPlan.exerciseDuration: exercise.duration = exercise.duration})
+    console.log(workoutPlan);
+    axiosInstance
+      .post("/api/workout", workoutPlan)
+      .then((res) => console.log(res))
+      .then(navigate("/workoutPlan"))
+      .catch((err) => console.log(err));
+  };
   return (
     <>
       <h1 className="m-10 text-xl font-bold">Workout Plan Editor</h1>
+      <Button type="button" onClick={saveWorkout}>Save workout</Button>
       <div className="flex justify-evenly">
         <section className="w-1/3">
           <h2>Your plan</h2>
@@ -60,7 +84,7 @@ const Editor = () => {
             <TextInput id="goal" type="text" onChange={handlePlan} />
           </div>
           <div className="m-4 ">
-            <Label htmlFor="rest-times" value="Rest times" />
+            <Label htmlFor="rest-times" value="Rest duration" />
             <TextInput id="rest-times" type="number" onChange={handlePlan} />
           </div>
           <div className="m-4 ">
@@ -80,6 +104,7 @@ const Editor = () => {
               +
             </Button>
           </div>
+          <div>{blocks.length > 0 && blocks.map((block,index)=><Block key={index}/>)}</div>
         </section>
         <section className="w-1/3">
           <Tabs aria-label="Default tabs" style="default">
@@ -98,7 +123,11 @@ const Editor = () => {
               <div>
                 {exercises.length > 0 &&
                   exercises.map((exercise) => (
-                    <ExerciseCard exercise={exercise} user={true} addExercise={addExercise} />
+                    <ExerciseCard
+                      exercise={exercise}
+                      user={true}
+                      addExercise={addExercise}
+                    />
                   ))}
               </div>
             </Tabs.Item>
@@ -108,6 +137,6 @@ const Editor = () => {
       </div>
     </>
   );
-}
+};
 
 export default Editor;

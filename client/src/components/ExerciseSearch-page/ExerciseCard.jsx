@@ -1,11 +1,11 @@
 import React from "react";
 import { Button } from "flowbite-react";
-import axiosInstance from "../axiosInstance";
+import axiosInstance from "../../axiosInstance";
 import { useState, useEffect } from "react";
-import { AuthContext } from "../context/Auth";
+import { AuthContext } from "../../context/Auth";
 import { useContext } from "react";
 
-const ExerciseCard = ({ exercise,user,addExercise }) => {
+const ExerciseCard = ({ exercise, user, addExercise }) => {
   const [exerciseSaved, setExerciseSaved] = useState(null);
   const [succesfullySaved, setSuccesfullySaved] = useState(false);
   const [inWorkoutPlan, setInWorkoutPlan] = useState(false);
@@ -20,7 +20,6 @@ const ExerciseCard = ({ exercise,user,addExercise }) => {
   }, [exerciseSaved]);
 
   const handleSave = () => {
-    
     const newExercise = {
       userId: context.user._id,
       name: exercise.name,
@@ -29,15 +28,16 @@ const ExerciseCard = ({ exercise,user,addExercise }) => {
       equipment: exercise.equipment,
       description: exercise.instructions.reduce((acc, curr) => acc + curr, ""),
     };
-    
-    
-    setExerciseSaved(prev=>newExercise);
+
+    setExerciseSaved((prev) => newExercise);
   };
 
   const handleExercise = () => {
-    if(user){
-  addExercise(exercise)
-  }}
+    if (user) {
+      setInWorkoutPlan(true);
+      addExercise(exercise);
+    }
+  };
   return (
     <div className="flex h-full p-4 items-center justify-center bg-gray-400 dark:bg-gray-700 dark:text-white">
       <div

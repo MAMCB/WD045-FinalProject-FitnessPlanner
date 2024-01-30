@@ -40,26 +40,54 @@ const ExerciseCard = ({ exercise,user,addExercise }) => {
   }}
   return (
     <div className="flex h-full p-4 items-center justify-center bg-gray-400 dark:bg-gray-700 dark:text-white">
-      <div className="max-w-4xl mt-4 flex bg-white rounded-xl">
-        <img src={user?exercise.image:exercise.gifUrl} alt={exercise.name} className="rounded-xl" />
+      <div
+        className={
+          user
+            ? "max-w-4xl mt-4 flex-col bg-white rounded-xl"
+            : "max-w-4xl mt-4 flex bg-white rounded-xl"
+        }
+      >
+        <img
+          src={user ? exercise.image : exercise.gifUrl}
+          alt={exercise.name}
+          className={user ? "w-48 h-48 rounded-xl m-auto" : "rounded-xl"}
+        />
         <div className="ml-5 bg-gray-100 rounded-xl p-5">
           <h2 className="mt-2 text-xl font-bold">{exercise.name}</h2>
-          <h4 className="mt-2">{user?exercise.muscleGroup:exercise.target}</h4>
+          <h4 className="mt-2">
+            {user ? exercise.muscleGroup : exercise.target}
+          </h4>
           <h4 className="mt-2">{exercise.equipment}</h4>
-          <h4 className="mt-2">{user?exercise.difficulty:exercise.bodyPart}</h4>
-          {user?<p>{exercise.description}</p>:exercise.instructions.map((instruction, index) => (
-            <p className="mt-2" key={index}>
-              {instruction}
-            </p>
-          ))}
-          {user?<Button className="w-1/2 self-center mt-4" onClick={handleExercise} disabled={inWorkoutPlan}> Add to workout plan</Button>:
-          <Button
-            className="w-1/2 self-center mt-4"
-            onClick={handleSave}
-            disabled={succesfullySaved}
-          >
-            Save to my exercises
-          </Button>}
+          <h4 className="mt-2">
+            {user ? exercise.difficulty : exercise.bodyPart}
+          </h4>
+          {user ? (
+            <p>{exercise.description}</p>
+          ) : (
+            exercise.instructions.map((instruction, index) => (
+              <p className="mt-2" key={index}>
+                {instruction}
+              </p>
+            ))
+          )}
+          {user ? (
+            <Button
+              className="w-1/2 self-center mt-4"
+              onClick={handleExercise}
+              disabled={inWorkoutPlan}
+            >
+              {" "}
+              Add to workout plan
+            </Button>
+          ) : (
+            <Button
+              className="w-1/2 self-center mt-4"
+              onClick={handleSave}
+              disabled={succesfullySaved}
+            >
+              Save to my exercises
+            </Button>
+          )}
           {succesfullySaved && <p className="mt-2">Exercise saved!</p>}
         </div>
       </div>

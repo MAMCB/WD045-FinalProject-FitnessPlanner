@@ -4,7 +4,7 @@ import { useContext } from "react";
 import { AuthContext } from "../context/Auth";
 import {Input} from "./Input";
 import { useForm, FormProvider, useFormContext } from "react-hook-form";
-import NavbarForHome from "./NavbarforHome";
+import NavbarForHome from "./NavbarForHome";
 
 const Register = () => {
   const context = useContext(AuthContext);

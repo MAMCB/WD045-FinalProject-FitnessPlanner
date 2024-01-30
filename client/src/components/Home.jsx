@@ -1,11 +1,8 @@
 import React from "react";
-import NavbarForHome from "./NavbarForHome.jsx";
+import NavbarForHome from "./NavbarforHome.jsx";
 
 const Home = () => {
-  return (
-    <div className="dark:bg-black">
-    </div>
-  );
+  return <div className="dark:bg-black"></div>;
 };
 
 export default Home;

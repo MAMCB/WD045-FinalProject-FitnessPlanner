@@ -5,6 +5,7 @@ import { AuthContext } from "../context/Auth";
 import logo from '../assets/Logo_!.png'
 import Profile from './Profile';
 import { NavLink } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 const NavbarForHome = () => {
 
   const context = useContext(AuthContext);
@@ -36,10 +37,10 @@ const NavbarForHome = () => {
   
   return (
     <Navbar fluid className="dark:bg-black">
-      <Navbar.Brand>
+      <Navbar.Brand href='/'>
         <img src={logo} className="mr-3 h-9" alt="Logo" />
         <span className="self-center whitespace-nowrap text-xl font-semibold dark:text-white">
-          <NavLink to={"/"}>FitLife</NavLink>
+          FitLife
         </span>
       </Navbar.Brand>
       <div className="flex md:order-2">

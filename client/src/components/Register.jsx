@@ -2,9 +2,9 @@ import React from "react";
 import { Link, Navigate } from "react-router-dom";
 import { useContext } from "react";
 import { AuthContext } from "../context/Auth";
-import {Input} from "./Input";
+import { Input } from "./Input";
 import { useForm, FormProvider, useFormContext } from "react-hook-form";
-import NavbarForHome from "./NavbarForHome";
+import NavbarForHome from "./NavbarforHome";
 
 const Register = () => {
   const context = useContext(AuthContext);

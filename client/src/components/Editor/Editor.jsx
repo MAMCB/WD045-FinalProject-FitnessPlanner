@@ -84,16 +84,16 @@ const Editor = () => {
             <TextInput id="goal" type="text" onChange={handlePlan} />
           </div>
           <div className="m-4 ">
-            <Label htmlFor="rest-times" value="Rest duration" />
-            <TextInput id="rest-times" type="number" onChange={handlePlan} />
+            <Label htmlFor="restDuration" value="Rest duration" />
+            <TextInput id="restDuration" type="number" onChange={handlePlan} />
           </div>
           <div className="m-4 ">
             <Label
-              htmlFor="exercise-times"
+              htmlFor="exerciseDuration"
               value="Duration for each exercise"
             />
             <TextInput
-              id="exercise-times"
+              id="exerciseDuration"
               type="number"
               onChange={handlePlan}
             />

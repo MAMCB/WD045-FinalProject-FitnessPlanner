@@ -11,6 +11,7 @@ import Register from "./components/Register";
 import Profile from "./components/Profile";
 import LandingPage from "./components/Landing-Page/LandingPage";
 import Protected from "./components/ProtectedRoute";
+import Footer from "./components/Footer"
 
 function App() {
   return (
@@ -32,7 +33,7 @@ function App() {
           <Route path="profile" element={<Profile />} />
         </Route>
       </Routes>
-      
+      <Footer/>
     </>
   );
 }

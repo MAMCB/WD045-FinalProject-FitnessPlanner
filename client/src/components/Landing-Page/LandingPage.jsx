@@ -3,10 +3,11 @@ import HeroSection from "./HeroSection";
 import PresentationSection from "./PresentationSection";
 import OfferSection from "./OfferSection";
 import TestimonialsSection from "./TestimonialsSection";
-
+import NavbarForHome from "../NavbarforHome";
 const LandingPage = () => {
   return (
-   <main>
+    <main>
+    <NavbarForHome/>
    <HeroSection/>
    <PresentationSection/>
    <OfferSection />

@@ -8,7 +8,16 @@ export default {
   darkMode: "class",
   theme: {
     extend: {
-
+      container: {
+        center: true,
+        padding: '1rem',
+        screens: {
+          sm: '100%',
+          md: '1024px',
+          lg: '1200px', // Custom container width
+          xl: '1400px', // Custom container width
+        },
+      },
       colors: {
         background: "#F8FCFB",
         primaryOne: "#4FB5A9",

@@ -6,11 +6,12 @@ import workoutIcon from "../../assets/workout.svg";
 const PresentationSection = () => {
   return (
     <section className="relative bg-black-color py-[100px]">
-      <div className="flex w-100 max-w-7xl mx-auto">
-        <div className="w-3/5 pr-[50px]">
-          <h2 className="text-primary-color mb-[50px] uppercase text-6xl font-bold">
+      <div className="flex container mx-auto">
+        <div className="flex flex-col mx-auto md:flex-row">
+        <div className="w-full my-10 pr-[0px] md:w-3/5 lg:pr-[50px] md:pr-[15px]">
+          <h2 className="text-primary-color mb-[50px] uppercase text-xl  font-bold lg:text-6xl">
             Start
-            <span className="rounded-xl bottom-[15px] m-3 py-1 px-6 relative inline-block  border border-primary-color text-2xl">
+            <span className="rounded-xl bottom-[0px] m-2 py-0 px-2 relative inline-block  border border-primary-color sm:text-xl lg:text-2xl lg:m-3 lg:py-1 lg:px-6 lg:bottom-[15px]">
               transforming
             </span>
             your fitness journey today
@@ -25,16 +26,16 @@ const PresentationSection = () => {
             and enhance your overall well-being with the guidance of our
             dedicated personal trainers.
           </p>
-          <div className="flex mt-[50px]">
-            <div className="w-1/3 flex flex-wrap flex-col justify-center content-center max-w-sm min-h-72 p-6 m-0.5 bg-pale-sky rounded-lg shadow hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700">
+          <div className="flex flex-col flex-nowrap mt-[10px] md:flex-row md:mt-[50px] md:flex-wrap lg:flex-nowrap">
+          <div className="flex mb-2 min-w-full flex-wrap flex-col justify-center content-center max-w-sm min-h-72 p-6 m-0.5  bg-pale-sky border border-gray-200 rounded-lg shadow hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700 md:w-[49%] md:min-w-0 lg:w-1/3">
               <div className="h-24 w-24 mr-auto ml-auto mb-4">
-              <img className="h-full w-full text-center" src={timeIcon} alt="" />
+              <img className="h-full w-full text-center" src={timeIcon} alt=" "/>
               </div>
               <p className="font-normal text-primary-color text-center">
                 Track Your Achievement.
               </p>
             </div>
-            <div className="w-1/3 flex flex-wrap flex-col justify-center content-center max-w-sm min-h-72 p-6 m-0.5  bg-pale-sky border border-gray-200 rounded-lg shadow hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700">
+            <div className="flex mb-2 min-w-full flex-wrap flex-col justify-center content-center max-w-sm min-h-72 p-6 m-0.5  bg-pale-sky border border-gray-200 rounded-lg shadow hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700 md:w-[49%] md:min-w-0 lg:w-1/3">
             <div className="h-24 w-24 mr-auto ml-auto mb-4">
             <img className="h-full w-full" src={workoutIcon} alt="" />
             </div>
@@ -42,8 +43,7 @@ const PresentationSection = () => {
                 Track Your Achievement.
               </p>
             </div>
-
-            <div className="flex w-1/3 flex-wrap flex-col justify-center content-center max-w-sm min-h-72 p-6 m-0.5  bg-pale-sky border border-gray-200 rounded-lg shadow hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700">
+            <div className="flex mb-2 min-w-full flex-wrap flex-col justify-center content-center max-w-sm min-h-72 p-6 m-0.5  bg-pale-sky border border-gray-200 rounded-lg shadow hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700 md:w-[49%] md:min-w-0 lg:w-1/3">
               <div className="h-24 w-24 mr-auto ml-auto mb-4">
             <img className="h-full w-full" src={timeIcon} alt="" />
             </div>
@@ -51,11 +51,9 @@ const PresentationSection = () => {
                 Track Your Achievement.
               </p>
             </div>
-            <div></div>
-            <div></div>
           </div>
         </div>
-        <div className="w-2/5">
+        <div className="w-full md:w-2/5">
           <div className="h-[800px] border-2 rounded-lg border-box-shadow  border-primary-color">
             <img
               className="h-[100%] width-[100%] object-cover rounded-lg"
@@ -63,6 +61,7 @@ const PresentationSection = () => {
               alt="Bodybuilding Image"
             />
           </div>
+        </div>
         </div>
       </div>
     </section>

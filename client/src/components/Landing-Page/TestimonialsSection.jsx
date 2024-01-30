@@ -1,3 +1,4 @@
+
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
@@ -24,14 +25,14 @@ const TestimonialsSection = () => {
         breakpoint: 768,
         settings: {
           slidesToShow: 1,
-          slidesToScroll: 2,
+          slidesToScroll: 1,
         },
       },
     ],
   };
   return (
     <section className="relative bg-black-color py-[100px] overflow-hidden">
-      <h2 className="text-center text-primary-color mb-[150px] uppercase text-6xl font-bold">
+      <h2 className="text-2xl lg:text-6xl text-center text-primary-color mb-[150px] uppercase font-bold">
         Testimonials
       </h2>
 
@@ -148,7 +149,7 @@ const TestimonialsSection = () => {
           </svg>
 
           <p className="font-normal text-primary-color mt-10 text-lg">
-            I've been using this app to prep for my first bodybuilding
+            I haveve been using this app to prep for my first bodybuilding
             competition, and I couldn't be happier with the results. The
             detailed workout plans and expert tips have helped me pack on muscle
             mass while maintaining peak performance. It's truly a must-have for
@@ -236,3 +237,4 @@ const TestimonialsSection = () => {
 };
 
 export default TestimonialsSection;
+

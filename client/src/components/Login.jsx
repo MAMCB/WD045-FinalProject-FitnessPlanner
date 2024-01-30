@@ -5,7 +5,7 @@ import { AuthContext } from "../context/Auth";
 import { Navigate } from "react-router-dom";
 import { useForm, FormProvider, useFormContext } from "react-hook-form";
 import { Input } from "./Input";
-import NavbarForHome from "./NavbarforHome";
+import NavbarForHome from "./NavbarForHome";
 const Login = () => {
   const context = useContext(AuthContext);
   const errors_ = context.errors;

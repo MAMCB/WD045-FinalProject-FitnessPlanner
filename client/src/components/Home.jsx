@@ -3,9 +3,9 @@ import NavbarForHome from "./NavbarForHome.jsx";
 
 const Home = () => {
   return (
-    <>
-      <NavbarForHome />
-    </>
+    <div className="dark:bg-black">
+      <NavbarForHome/>
+    </div>
   );
 };
 

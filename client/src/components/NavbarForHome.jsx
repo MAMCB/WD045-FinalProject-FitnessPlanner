@@ -6,6 +6,7 @@ import logo from '../assets/Logo_!.png'
 import Profile from './Profile';
 import { NavLink } from 'react-router-dom';
 import { Link } from 'react-router-dom';
+
 const NavbarForHome = () => {
 
   const context = useContext(AuthContext);

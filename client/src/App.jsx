@@ -10,7 +10,7 @@ import Login from "./components/Login";
 import Register from "./components/Register";
 import Profile from "./components/Profile";
 import LandingPage from "./components/Landing-Page/LandingPage";
-import CreateWorkoutPlan from "./components/CreateWorkoutPlan";
+
 import Protected from "./components/ProtectedRoute";
 import Footer from "./components/Footer"
 
@@ -25,7 +25,7 @@ function App() {
           <Route path="" element={<Home />} />
           <Route path="exercise" element={<Exercise />} />
           <Route path="exercise/:id" element={<Exercise />} />
-          <Route path="createWorkoutPlan" element={<CreateWorkoutPlan />} />
+          
           <Route path="workoutPlan" element={<WorkoutPlan />} />
           <Route path="workoutPlan/public" element={<WorkoutPlan />} />
           <Route path="workoutPlan/public/:id" element={<WorkoutPlan />} />

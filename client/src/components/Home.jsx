@@ -1,5 +1,5 @@
 import React from "react";
-import NavbarForHome from "./NavbarforHome.jsx";
+
 import {Link} from 'react-router-dom'
 
 import workoutPlan from '../assets/workoutPlan.webp'
@@ -34,7 +34,7 @@ const Home = () => {
             </Link>
           </div>
           <div className="h-[300px] w-[300px] mt-[50px] flex flex-col m-4 xl:m-8">
-            <Link className="block h-full w-full" to={'/CreateWorkoutPlan'}>
+            <Link className="block h-full w-full" to={'/editor'}>
             <div className="h-full w-full">
               <img className="h-full w-full object-cover" src={writePlanImg} alt="" />
             </div>

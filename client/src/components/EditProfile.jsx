@@ -1,4 +1,4 @@
-import { useContext, useState } from "react";
+import { useContext, useState,useEffect } from "react";
 import { AuthContext } from "../context/Auth";
 import axios from "../axiosInstance";
 import { useNavigate, useParams } from "react-router-dom";
@@ -9,11 +9,11 @@ const EditProfile = () => {
 
   const [user, setUser] = useState({
     username: context.user.username,
-    age: context.user.age,
-    height: context.user.height,
-    weight: context.user.weight,
-    profilePic: context.user.profilePic,
   });
+
+  useEffect(() => {
+    axios.get(`api/user/${context.user._id}`).then((res) => {setUser(res.data);console.log(res.data)}).catch((e) => console.error(e));
+  },[]);
 
   const handleChange = (e) => {
     setUser((state) => ({

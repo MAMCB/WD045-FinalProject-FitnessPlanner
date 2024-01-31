@@ -23,7 +23,7 @@ const Exercise = () => {
     search &&
       axiosInstance
         .get(
-          import.meta.env.VITE_SERVER_BASE_URL +
+         
             `/exerciseAPI/${searchType}/${search}/${amount}`
         )
         .then((res) => {

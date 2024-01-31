@@ -3,14 +3,21 @@ import { Label, TextInput,Button } from 'flowbite-react'
 import ExerciseCard from '../ExerciseSearch-page/ExerciseCard';
 import { useState,useEffect } from 'react';
 
-const Block = ({ exerciseBlock,handleExerciseBlock,index  }) => {
+const Block = ({ exerciseBlock,handleExerciseBlock,blockIndex,removeExercise  }) => {
   const [exerciseB, setExerciseB] = useState(exerciseBlock)
   const handleExerciseB = (e) => {
     setExerciseB((prev) => ({ ...prev, [e.target.id]: e.target.value }));
   };
   useEffect(() => {
-    handleExerciseBlock(exerciseB,index)
+    handleExerciseBlock(exerciseB,blockIndex)
   }, [exerciseB])
+
+ const remove = () => {
+ {
+    console.log(blockIndex);
+    removeExercise(blockIndex);
+ }
+}
 
   return (
     <div className="flex-col h-full p-4 items-center justify-center bg-gray-400 dark:bg-gray-700 dark:text-white">
@@ -49,10 +56,11 @@ const Block = ({ exerciseBlock,handleExerciseBlock,index  }) => {
           user={true}
           inPlan={true}
           addExercise={null}
+          remove={remove}
         />
       )}
     </div>
   );
 };
 
-export default Block
+export default Block;

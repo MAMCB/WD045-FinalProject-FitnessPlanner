@@ -14,7 +14,7 @@ import { AuthContext } from "../../context/Auth";
 import { useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import Block from "./Block";
-import { set } from "react-hook-form";
+import { v4 as uuidv4 } from "uuid";
 
 
 const Editor = () => {
@@ -45,9 +45,10 @@ const Editor = () => {
   }, []);
 
   useEffect(() => {
+    setWorkoutPlan((prev) => ({ ...prev, exercises: blocks }));
     if(blocks.length>0)
     {
-       setWorkoutPlan((prev) => ({ ...prev, exercises: blocks }));
+       
        if (blocks[blocks.length - 1].exercise.equipment !== "body weight") {
          setWorkoutPlan((prev) => ({ ...prev, equipment: true }));
        }
@@ -68,13 +69,9 @@ const Editor = () => {
     setBlocks((prev) => {prev[index] = newBlock; return [...prev]})
   };
 
-  // const addExercise = (exercise) => {
-  //   setExerciseBlock((prev) => ({ ...prev, exercise: exercise}));
-  //   const newExercise = {...exercise,...exerciseBlock}
-  //   setWorkoutPlan((prev) => ({ ...prev, exercises: [...prev.exercises, newExercise] }));
-  // };
+  
   const addExercise = (exercise) => {
-    setExerciseBlock((prev) => ({ ...prev, exercise: exercise }));
+    setExerciseBlock((prev) => ({ ...prev,id:uuidv4(), exercise: exercise }));
     const newExercise = { ...exerciseBlock, exercise: exercise };
     setBlocks((prev) => [...prev, newExercise]);
   };
@@ -91,6 +88,12 @@ const Editor = () => {
       .then((res) => console.log(res))
       .then(navigate("/workoutPlan"))
       .catch((err) => console.log(err));
+  };
+
+  const removeExercise = (index) => {
+    const newBlocks = [...blocks];
+    newBlocks.splice(index, 1);
+    setBlocks((prev)=>newBlocks);
   };
   return (
     <>
@@ -124,15 +127,16 @@ const Editor = () => {
               onChange={handlePlan}
             />
           </div>
-         
+
           <div>
             {blocks.length > 0 &&
               blocks.map((block, index) => (
                 <Block
-                  key={index}
+                  key={block.id}
                   exerciseBlock={block}
                   handleExerciseBlock={handleExerciseBlock}
-                  index={index}
+                  blockIndex={index}
+                  removeExercise={removeExercise}
                 />
               ))}
           </div>
@@ -160,6 +164,7 @@ const Editor = () => {
                       user={true}
                       addExercise={addExercise}
                       inPlan={false}
+                      remove={null}
                     />
                   ))}
               </div>

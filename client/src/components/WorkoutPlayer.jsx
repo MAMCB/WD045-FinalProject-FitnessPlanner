@@ -41,6 +41,15 @@ const WorkoutPlayer = () => {
       .then((data) => setAnimationData(data));
   }, []);
 
+  const defaultOptions = {
+    loop: true,
+    autoplay: true,
+    animationData: animationData,
+    rendererSettings: {
+      preserveAspectRatio: "xMidYMid",
+    },
+  };
+
   // example of workout data :
 
   const workoutDataExample = {
@@ -152,12 +161,27 @@ const WorkoutPlayer = () => {
     <>
       {!isWorkoutFinished ? (
         <section className="p-5 mx-auto body-font">
-          <div className="container mx-auto flex">
-            <div className="flex flex-col gap-2">
-              <div className="buttons flex h-8 w-8 gap-3">
-                <img src={PauseButton} alt="pause" />
-                <img src={StopButton} alt="stop" />
+          <div className="container mx-auto flex flex-col ">
+            <div className="buttons flex h-8 w-8 ">
+              <img src={PauseButton} alt="pause" />
+              <img src={StopButton} alt="stop" />
+            </div>
+            <div className="img">
+              {!isExerciseFinished ? (
+                <img
+                  alt="exercise"
+                  className="lg:w-1/2 w-full sm:h-100 lg:h-auto h-100 object-cover object-center rounded"
+                  src={workoutDataExample.exercises[currentExerciseIndex].image}
+                ></img>
+              ) : animationData ? (
+                <Lottie options={defaultOptions} />
+              ) : null}
+              <div>
+                Remain time :
+                {!isExerciseFinished ? remainingTime : remainingTimeInRest}
               </div>
+            </div>
+            <div className="flex flex-col">
               <div>
                 <p>
                   {!isExerciseFinished
@@ -165,23 +189,7 @@ const WorkoutPlayer = () => {
                     : "Rest time"}
                 </p>
               </div>
-              <div className="img">
-                <img
-                  alt="exercise"
-                  className="lg:w-1/2 w-full lg:h-auto h-64 object-cover object-center rounded"
-                  /* src={workoutDataExample.exercises[currentExerciseIndex].image} */
-                  src={
-                    !isExerciseFinished
-                      ? workoutDataExample.exercises[currentExerciseIndex].image
-                      : "#"
-                  }
-                ></img>
 
-                <div>
-                  Remain time :
-                  {!isExerciseFinished ? remainingTime : remainingTimeInRest}
-                </div>
-              </div>
               <div>
                 Description :
                 {!isExerciseFinished
@@ -201,11 +209,14 @@ const WorkoutPlayer = () => {
                 </p>
               </div> */}
             </div>
+
             <div className="bottom panel"></div>
           </div>
         </section>
       ) : (
-        <div>Workout Finished!</div>
+        <>
+          <div>Workout Finished!</div>
+        </>
       )}
     </>
   );

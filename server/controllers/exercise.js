@@ -16,8 +16,14 @@ const createExercise = async (req, res) => {
 
 const getAllExercises = async (req, res) => {
   try {
-    const ownerUser = await User.find({userId: req.user._id})
-    const allExercises = await ownerUser.populate("exercises").execPopulate();
+    
+    const ownerUser = await User.findOne({ _id: req.user._id }).populate("exercises");
+     if (!ownerUser) {
+       return res.status(404).json({ message: "User not found" });
+     }
+
+     const allExercises = ownerUser.exercises;
+
     res.status(201).json(allExercises);
   } catch (error) {
     res.status(500).json({ message: error.message });

@@ -1,6 +1,6 @@
 import React from "react";
 import { useState, useEffect } from "react";
-import axiosInstance from "../axiosInstance";
+import axiosInstance from "../../axiosInstance";
 import {
   Tabs,
   Button,
@@ -11,8 +11,6 @@ import {
 } from "flowbite-react";
 import ExerciseCard from "./ExerciseCard";
 
-
-
 const Exercise = () => {
   const [exercises, setExercises] = useState([]);
   const [searchType, setSearchType] = useState("");
@@ -20,7 +18,6 @@ const Exercise = () => {
   const [search, setSearch] = useState("");
   const [amount, setAmount] = useState(10);
   const [disableSearch, setDisableSearch] = useState(true);
- 
 
   useEffect(() => {
     search &&
@@ -37,26 +34,23 @@ const Exercise = () => {
   }, [submitted]);
 
   useEffect(() => {
-    checkSearchParameters();}, [searchType, search]);
+    checkSearchParameters();
+  }, [searchType, search]);
 
-    useEffect(() => {
-      
-      setSearch(prevSearch =>"");
-      setSearchType(prevSearchType =>"");
-      
-    },[exercises]);
+  useEffect(() => {
+    setSearch((prevSearch) => "");
+    setSearchType((prevSearchType) => "");
+  }, [exercises]);
 
-    useEffect(() => {
-      console.log(search);
-    },[search]);
+  useEffect(() => {
+    console.log(search);
+  }, [search]);
 
   const handleSearchInput = (e) => {
-    
     setSearch(e.target.value);
   };
 
   const handleMuscleButton = (value) => {
-    
     setSearch(value);
   };
 
@@ -67,12 +61,10 @@ const Exercise = () => {
 
   const handleSearchType = (e) => {
     setSearchType(e.target.value);
-    
   };
 
-  const handleSearchEquipment = (e) => {  
+  const handleSearchEquipment = (e) => {
     setSearch(e.target.value);
-    
   };
 
   const handleAmount = (e) => {
@@ -81,32 +73,28 @@ const Exercise = () => {
   };
 
   const checkSearchParameters = () => {
-    if (searchType  && search) { 
+    if (searchType && search) {
       setDisableSearch(false);
-    }
-    else{
+    } else {
       setDisableSearch(true);
     }
-  }
-  
+  };
 
-const SearchSelectEquipment = () => (
-  <div className="m-4">
-    <Label htmlFor="searchType" value="Select your search type" />
-    <Select id="searchType" value={search} onChange={handleSearchEquipment}>
-      <option value="">Select your equipment type</option>
-      <option value="assisted">Assisted</option>
-      <option value="band">Band</option>
-      <option value="barbell">Barbell</option>
-      <option value="body weight">Body Weight</option>
-      <option value="bosu ball">Bosu ball</option>
-    </Select>
-  </div>
-);
+  const SearchSelectEquipment = () => (
+    <div className="m-4">
+      <Label htmlFor="searchType" value="Select your search type" />
+      <Select id="searchType" value={search} onChange={handleSearchEquipment}>
+        <option value="">Select your equipment type</option>
+        <option value="assisted">Assisted</option>
+        <option value="band">Band</option>
+        <option value="barbell">Barbell</option>
+        <option value="body weight">Body Weight</option>
+        <option value="bosu ball">Bosu ball</option>
+      </Select>
+    </div>
+  );
 
-const SearchResult = () => (
-  <h2>{`Search exercises for ${search}`}</h2>
-);
+  const SearchResult = () => <h2>{`Search exercises for ${search}`}</h2>;
   return (
     <>
       <div className="container">
@@ -265,7 +253,13 @@ const SearchResult = () => (
           {exercises.length > 0 && (
             <Carousel slide={false}>
               {exercises.map((exercise) => (
-                <ExerciseCard key={exercise.id} exercise={exercise} />
+                <ExerciseCard
+                  key={exercise.id}
+                  exercise={exercise}
+                  user={false}
+                  addExercise={null}
+                  inPlan={false}
+                />
               ))}
             </Carousel>
           )}

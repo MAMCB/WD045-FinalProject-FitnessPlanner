@@ -12,7 +12,7 @@ const workoutPlanSchema = new mongoose.Schema({
     difficulty: {type: Number, min: 1, max: 10, required: true, default: 1},
     image: {type: String, required: true, default: "https://freepngimg.com/thumb/hand/76374-fitness-logo-vector-creative-download-hd-png.png"},
     equipment: {type: Boolean, required: true, default: false},
-    type:{type:String,enum:exerciseTypes, required: true, default: "Other"},
+    type:{type:String,enum:exerciseTypes, required: true, default: exerciseTypes[exerciseTypes.length-1]},
     visibility:{type: Boolean, required: true, default: false},//true if public, false if private
     rating: {type: Number, min: 0, max: 5, default: 0},
     exercises: {type: Array, default: []},

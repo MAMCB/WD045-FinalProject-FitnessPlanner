@@ -45,7 +45,17 @@ const Editor = () => {
   }, []);
 
   useEffect(() => {
-    setWorkoutPlan((prev) => ({ ...prev, exercises: blocks }));
+    if(blocks.length>0)
+    {
+       setWorkoutPlan((prev) => ({ ...prev, exercises: blocks }));
+       if (blocks[blocks.length - 1].exercise.equipment !== "body weight") {
+         setWorkoutPlan((prev) => ({ ...prev, equipment: true }));
+       }
+
+    }
+   
+      
+    
   }, [blocks]);
 
   const handlePlan = (e) => {

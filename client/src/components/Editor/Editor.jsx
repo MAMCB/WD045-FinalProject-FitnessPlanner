@@ -159,6 +159,7 @@ const Editor = () => {
                       exercise={exercise}
                       user={true}
                       addExercise={addExercise}
+                      inPlan={false}
                     />
                   ))}
               </div>

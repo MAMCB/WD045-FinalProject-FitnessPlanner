@@ -5,7 +5,7 @@ import { useState, useEffect } from "react";
 import { AuthContext } from "../../context/Auth";
 import { useContext } from "react";
 
-const ExerciseCard = ({ exercise, user, addExercise }) => {
+const ExerciseCard = ({ exercise, user, addExercise,inPlan }) => {
   const [exerciseSaved, setExerciseSaved] = useState(null);
   const [succesfullySaved, setSuccesfullySaved] = useState(false);
   const [inWorkoutPlan, setInWorkoutPlan] = useState(false);
@@ -37,6 +37,9 @@ const ExerciseCard = ({ exercise, user, addExercise }) => {
       setInWorkoutPlan(true);
       addExercise(exercise);
     }
+  };
+
+  const handleDelete = () => {
   };
   return (
     <div className="flex h-full p-4 items-center justify-center bg-gray-400 dark:bg-gray-700 dark:text-white">
@@ -70,14 +73,14 @@ const ExerciseCard = ({ exercise, user, addExercise }) => {
               </p>
             ))
           )}
+
           {user ? (
             <Button
               className="w-1/2 self-center mt-4"
-              onClick={handleExercise}
+              onClick={inPlan?handleDelete:handleExercise}
               disabled={inWorkoutPlan}
             >
-              {" "}
-              Add to workout plan
+              {inPlan ? "Delete from plan" : "Add to workout plan"}
             </Button>
           ) : (
             <Button

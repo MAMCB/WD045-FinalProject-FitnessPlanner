@@ -13,10 +13,11 @@ const Block = ({ exerciseBlock,handleExerciseBlock,index  }) => {
   }, [exerciseB])
 
   return (
-    <div>
+    <div className="flex-col h-full p-4 items-center justify-center bg-gray-400 dark:bg-gray-700 dark:text-white">
       <div className="m-4 ">
         <Label htmlFor="sets" value="How many sets" />
         <TextInput
+          
           id="sets"
           type="number"
           onChange={handleExerciseB}
@@ -43,7 +44,12 @@ const Block = ({ exerciseBlock,handleExerciseBlock,index  }) => {
       </div>
 
       {exerciseB.exercise && (
-        <ExerciseCard exercise={exerciseB.exercise} user={true} />
+        <ExerciseCard
+          exercise={exerciseB.exercise}
+          user={true}
+          inPlan={true}
+          addExercise={null}
+        />
       )}
     </div>
   );

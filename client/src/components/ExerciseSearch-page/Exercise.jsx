@@ -258,6 +258,7 @@ const Exercise = () => {
                   exercise={exercise}
                   user={false}
                   addExercise={null}
+                  inPlan={false}
                 />
               ))}
             </Carousel>

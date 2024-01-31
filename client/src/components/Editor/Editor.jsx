@@ -17,8 +17,11 @@ import Block from "./Block";
 import { v4 as uuidv4 } from "uuid";
 
 
+
 const Editor = () => {
   const [exercises, setExercises] = useState([]);
+  const [exerciseSearch, setExerciseSearch] = useState("");
+  const [exercisesToShow, setExercisesToShow] = useState([]);
   const [blocks, setBlocks] = useState([]);
   const context = useContext(AuthContext);
   const navigate = useNavigate();
@@ -40,7 +43,9 @@ const Editor = () => {
   useEffect(() => {
     axiosInstance
       .get("/api/exercise")
-      .then((res) => setExercises(res.data))
+      .then((res) =>{setExercises(res.data);
+      setExercisesToShow(res.data);} )
+      
       .catch((err) => console.log(err));
   }, []);
 
@@ -95,6 +100,17 @@ const Editor = () => {
     newBlocks.splice(index, 1);
     setBlocks((prev)=>newBlocks);
   };
+
+  const handleSearch = (e) => {
+    setExerciseSearch(e.target.value);
+    setExercisesToShow(
+      exercises.filter((exercise) =>
+        exercise.name.toLowerCase().includes(e.target.value.toLowerCase())
+      )
+    );
+  };
+
+ 
   return (
     <>
       <h1 className="m-10 text-xl font-bold">Workout Plan Editor</h1>
@@ -152,12 +168,13 @@ const Editor = () => {
                 <TextInput
                   id="exercise-search"
                   type="text"
-                  onChange={handlePlan}
+                  onChange={handleSearch}
                 />
+               
               </div>
               <div>
-                {exercises.length > 0 &&
-                  exercises.map((exercise) => (
+                {exercisesToShow.length > 0 &&
+                  exercisesToShow.map((exercise) => (
                     <ExerciseCard
                       key={exercise._id}
                       exercise={exercise}

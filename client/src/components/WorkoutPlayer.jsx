@@ -6,7 +6,8 @@ import PauseButton from "../assets/pause-button.png";
 import Lottie from "react-lottie";
 import { set } from "react-hook-form";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { icon } from "@fortawesome/fontawesome-svg-core/import.macro";
+import { faPenNib } from "@fortawesome/free-solid-svg-icons";
+import { faEnvelope } from "@fortawesome/free-solid-svg-icons";
 
 const WorkoutPlayer = () => {
   const [workoutData, setWorkoutData] = useState({});
@@ -165,7 +166,8 @@ const WorkoutPlayer = () => {
         <section className="p-5 mx-auto body-font">
           <div className="container mx-auto flex flex-col ">
             <div className="buttons flex h-8 w-8 ">
-              <FontAwesomeIcon icon="fa-regular fa-circle-pause" />
+              <FontAwesomeIcon icon={faPenNib} />
+              <FontAwesomeIcon icon={faEnvelope} />
               <img src={StopButton} alt="stop" />
             </div>
             <div className="img">

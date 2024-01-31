@@ -165,6 +165,7 @@ const Editor = () => {
                       addExercise={addExercise}
                       inPlan={false}
                       remove={null}
+                      blocks={blocks}
                     />
                   ))}
               </div>

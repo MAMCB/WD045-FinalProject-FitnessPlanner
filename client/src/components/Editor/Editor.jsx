@@ -14,6 +14,7 @@ import { AuthContext } from "../../context/Auth";
 import { useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import Block from "./Block";
+import { set } from "react-hook-form";
 
 
 const Editor = () => {
@@ -43,18 +44,31 @@ const Editor = () => {
       .catch((err) => console.log(err));
   }, []);
 
+  useEffect(() => {
+    setWorkoutPlan((prev) => ({ ...prev, exercises: blocks }));
+  }, [blocks]);
+
   const handlePlan = (e) => {
     setWorkoutPlan((prev) => ({ ...prev, [e.target.id]: e.target.value }));
   };
 
-  const handleBlock = (e) => {
-    setBlocks((prev) => [...prev, exerciseBlock]);
+
+
+  const handleExerciseBlock = (newBlock,index) => {
+    setBlocks((prev) => {prev[index] = newBlock; return [...prev]})
   };
 
+  // const addExercise = (exercise) => {
+  //   setExerciseBlock((prev) => ({ ...prev, exercise: exercise}));
+  //   const newExercise = {...exercise,...exerciseBlock}
+  //   setWorkoutPlan((prev) => ({ ...prev, exercises: [...prev.exercises, newExercise] }));
+  // };
   const addExercise = (exercise) => {
-    const newExercise = {...exercise,...exerciseBlock}
-    setWorkoutPlan((prev) => ({ ...prev, exercises: [...prev.exercises, newExercise] }));
+    setExerciseBlock((prev) => ({ ...prev, exercise: exercise }));
+    const newExercise = { ...exerciseBlock, exercise: exercise };
+    setBlocks((prev) => [...prev, newExercise]);
   };
+
 
   const saveWorkout = () => {
     workoutPlan.exercises.length>0 &&
@@ -63,7 +77,7 @@ const Editor = () => {
     workoutPlan.exercises.forEach((exercise) => {exercise.duration ===0? exercise.duration = workoutPlan.exerciseDuration: exercise.duration = exercise.duration})
     console.log(workoutPlan);
     axiosInstance
-      .post("/api/workout", workoutPlan)
+      .post("/api/workoutPlan", workoutPlan)
       .then((res) => console.log(res))
       .then(navigate("/workoutPlan"))
       .catch((err) => console.log(err));
@@ -71,7 +85,9 @@ const Editor = () => {
   return (
     <>
       <h1 className="m-10 text-xl font-bold">Workout Plan Editor</h1>
-      <Button type="button" onClick={saveWorkout}>Save workout</Button>
+      <Button type="button" onClick={saveWorkout}>
+        Save workout
+      </Button>
       <div className="flex justify-evenly dark:bg-black">
         <section className="w-1/3">
           <h2>Your plan</h2>
@@ -98,13 +114,18 @@ const Editor = () => {
               onChange={handlePlan}
             />
           </div>
-          <div className="m-4 ">
-            <Label htmlFor="add-button" value="Add Exercise Block" />
-            <Button id="add-button" type="button" onClick={handleBlock}>
-              +
-            </Button>
+         
+          <div>
+            {blocks.length > 0 &&
+              blocks.map((block, index) => (
+                <Block
+                  key={index}
+                  exerciseBlock={block}
+                  handleExerciseBlock={handleExerciseBlock}
+                  index={index}
+                />
+              ))}
           </div>
-          <div>{blocks.length > 0 && blocks.map((block,index)=><Block key={index}/>)}</div>
         </section>
         <section className="w-1/3">
           <Tabs aria-label="Default tabs" style="default">
@@ -124,6 +145,7 @@ const Editor = () => {
                 {exercises.length > 0 &&
                   exercises.map((exercise) => (
                     <ExerciseCard
+                      key={exercise._id}
                       exercise={exercise}
                       user={true}
                       addExercise={addExercise}

@@ -72,7 +72,7 @@ const Editor = () => {
     <>
       <h1 className="m-10 text-xl font-bold">Workout Plan Editor</h1>
       <Button type="button" onClick={saveWorkout}>Save workout</Button>
-      <div className="flex justify-evenly">
+      <div className="flex justify-evenly dark:bg-black">
         <section className="w-1/3">
           <h2>Your plan</h2>
           <div className="m-4 ">

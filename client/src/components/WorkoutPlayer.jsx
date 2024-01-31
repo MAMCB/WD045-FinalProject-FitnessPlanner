@@ -94,62 +94,62 @@ const WorkoutPlayer = () => {
     createdDay: new Date(),
   };
 
- useEffect(() => {
-   let restTimerId;
-   if (
-     isExerciseFinished &&
-     currentExerciseIndex < workoutDataExample.exercises.length &&
-     !isWorkoutPaused
-   ) {
-     console.log("Relax time");
-     setRemainingTimeInRest(workoutDataExample.restDuration);
-     restTimerId = setInterval(() => {
-       setRemainingTimeInRest((prevTime) => {
-         if (prevTime === 1) {
-           setIsExerciseFinished(false);
-           clearInterval(restTimerId);
-         }
-         return prevTime - 1;
-       });
-     }, 1000); 
-   } else if (!isExerciseFinished) {
-     setRemainingTimeInRest(0);
-     console.log("Rest time finished");
-   }
-   return () => clearInterval(restTimerId);
- }, [isExerciseFinished, isWorkoutPaused]);
+  useEffect(() => {
+    let restTimerId;
+    if (
+      isExerciseFinished &&
+      currentExerciseIndex < workoutDataExample.exercises.length &&
+      !isWorkoutPaused
+    ) {
+      console.log("Relax time");
+      setRemainingTimeInRest(workoutDataExample.restDuration);
+      restTimerId = setInterval(() => {
+        setRemainingTimeInRest((prevTime) => {
+          if (prevTime === 1) {
+            setIsExerciseFinished(false);
+            clearInterval(restTimerId);
+          }
+          return prevTime - 1;
+        });
+      }, 1000);
+    } else if (!isExerciseFinished) {
+      setRemainingTimeInRest(0);
+      console.log("Rest time finished");
+    }
+    return () => clearInterval(restTimerId);
+  }, [isExerciseFinished, isWorkoutPaused]);
 
-useEffect(() => {
-  let timerId;
-  if (
-    currentExerciseIndex < workoutDataExample.exercises.length &&
-    !isExerciseFinished &&
-    !isWorkoutPaused
-  ) {
-    setRemainingTime(workoutDataExample.exerciseDuration);
-    timerId = setInterval(() => {
-      setRemainingTime((prevTime) => {
-        if (prevTime === 1) {
-          setIsExerciseFinished(true);
-          setCurrentExerciseIndex((prevIndex) => prevIndex + 1);
+  useEffect(() => {
+    let timerId;
+    if (
+      currentExerciseIndex < workoutDataExample.exercises.length &&
+      !isExerciseFinished &&
+      !isWorkoutPaused
+    ) {
+      setRemainingTime(workoutDataExample.exerciseDuration);
+      timerId = setInterval(() => {
+        setRemainingTime((prevTime) => {
+          if (prevTime === 1) {
+            setIsExerciseFinished(true);
+            setCurrentExerciseIndex((prevIndex) => prevIndex + 1);
 
-          return workoutDataExample.exerciseDuration; // Reset the timer 
-        }
-        return prevTime - 1;
-      });
-    }, 1000);
-  } else if (
-    isExerciseFinished &&
-    currentExerciseIndex >= workoutDataExample.exercises.length
-  ) {
-    setRemainingTime(0);
-    setIsWorkoutFinished(true);
-    console.log("Workout finished");
-  }
-  return () => clearInterval(timerId);
-}, [currentExerciseIndex, isExerciseFinished, isWorkoutPaused]);
+            return workoutDataExample.exerciseDuration; // Reset the timer
+          }
+          return prevTime - 1;
+        });
+      }, 1000);
+    } else if (
+      isExerciseFinished &&
+      currentExerciseIndex >= workoutDataExample.exercises.length
+    ) {
+      setRemainingTime(0);
+      setIsWorkoutFinished(true);
+      console.log("Workout finished");
+    }
+    return () => clearInterval(timerId);
+  }, [currentExerciseIndex, isExerciseFinished, isWorkoutPaused]);
 
-/*   const dataForPauseModel = {
+  const dataForPauseModel = {
     modal_id: "pause-modal",
     modal_title: "Pause workout",
     modal_description: "Your workout is paused",
@@ -173,7 +173,7 @@ useEffect(() => {
     setIsButtonOneClicked: setIsWorkoutPaused,
     setIsButtonTwoClicked: setIsWorkoutFinished,
     setIsModalClosed: setIsWorkoutPaused,
-  }; */
+  };
 
   const handlePauseButton = () => {
     console.log("Pause button clicked");
@@ -212,19 +212,84 @@ useEffect(() => {
                 onClick={handlePauseButton}
                 data-modal-target="default-modal"
                 data-modal-toggle="pause-modal"
+                type="button"
               >
                 <FontAwesomeIcon icon={faCircleStop} className="h-10" />
               </button>
+
+              {/*               <StaticModal
+                modal_id="pause-modal"
+                modal_title="Pause workout"
+                modal_description="Your workout is paused"
+                nameBtnOne="Return to workout"
+                nameBtnTwo="End workout"
+                setIsWorkoutPaused={setIsWorkoutPaused}
+                setIsWorkoutFinished={setIsWorkoutFinished}
+              /> */}
+
+              <div
+                id={dataForPauseModel.modal_id}
+                data-modal-backdrop="static"
+                tabIndex="-1"
+                aria-hidden="true"
+                className="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full"
+              >
+                <div className="relative p-4 w-full max-w-2xl max-h-full">
+                  <div className="relative bg-white rounded-lg shadow dark:bg-gray-700">
+                    <div className="flex items-center justify-between p-4 md:p-5 border-b rounded-t dark:border-gray-600">
+                      <h3 className="text-xl font-semibold text-gray-900 dark:text-white">
+                        {dataForPauseModel.modal_title}
+                      </h3>
+                      <button
+                        type="button"
+                        data-modal-hide={dataForPauseModel.modal_id}
+                        className="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white"
+                      >
+                        <svg
+                          className="w-3 h-3"
+                          aria-hidden="true"
+                          xmlns="http://www.w3.org/2000/svg"
+                          fill="none"
+                          viewBox="0 0 14 14"
+                        >
+                          <path
+                            stroke="currentColor"
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            strokeWidth="2"
+                            d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"
+                          />
+                        </svg>
+                        <span className="sr-only">Close modal</span>
+                      </button>
+                    </div>
+
+                    <div className="p-4 md:p-5 space-y-4">
+                      {dataForPauseModel.modal_description}
+                    </div>
+
+                    <div className="flex items-center p-4 md:p-5 border-t border-gray-200 rounded-b dark:border-gray-600">
+                      <button
+                        onClick={dataForPauseModel.handleButtonOne}
+                        data-modal-hide="static-modal"
+                        type="button"
+                        className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+                      >
+                        {dataForPauseModel.nameBtnOne}
+                      </button>
+                      <button
+                        data-modal-hide="static-modal"
+                        type="button"
+                        className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+                      >
+                        {dataForPauseModel.nameBtnTwo}
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
             </div>
-            <StaticModal
-              modal_id="pause-modal"
-              modal_title="Pause workout"
-              modal_description="Your workout is paused"
-              nameBtnOne="Return to workout"
-              nameBtnTwo="End workout"
-              
-            />
-            {/* <StaticModal {...dataForPauseModel} />   */}
+
             <div className="mb-2">
               <p>
                 {!isExerciseFinished

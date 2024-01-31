@@ -110,6 +110,9 @@ const Editor = () => {
     );
   };
 
+  const handleNewExercise = (e) => {};
+  const createNewExercise = () => {};
+
  
   return (
     <>
@@ -170,7 +173,6 @@ const Editor = () => {
                   type="text"
                   onChange={handleSearch}
                 />
-               
               </div>
               <div>
                 {exercisesToShow.length > 0 &&
@@ -187,7 +189,52 @@ const Editor = () => {
                   ))}
               </div>
             </Tabs.Item>
-            <Tabs.Item title="New exercise"></Tabs.Item>
+            <Tabs.Item title="New exercise">
+              <h2>Create a new exercise</h2>
+              <div className="m-4 ">
+                <Label htmlFor="name" value="Name of the exercise" />
+                <TextInput id="name" type="text" onChange={handleNewExercise} />
+              </div>
+              <div className="m-4 ">
+                <Label
+                  htmlFor="description"
+                  value="Description of the exercise"
+                />
+                <TextInput
+                  id="description"
+                  type="text"
+                  onChange={handleNewExercise}
+                />
+              </div>
+              <div className="m-4 ">
+                <Label
+                  htmlFor="difficulty"
+                  value="Difficulty of the exercise"
+                />
+                <TextInput
+                  id="difficulty"
+                  type="number"
+                  onChange={handleNewExercise}
+                />
+              </div>
+              <div className="m-4 ">
+                <Label htmlFor="image" value="Image of the exercise" />
+                <TextInput
+                  id="image"
+                  type="file"
+                  onChange={handleNewExercise}
+                />
+              </div>
+              <div className="m-4 ">
+                <Label htmlFor="muscleGroup" value="The target muscle group" />
+                <TextInput
+                  id="muscleGroup"
+                  type="text"
+                  onChange={handleNewExercise}
+                />
+              </div>
+              <Button type="button" onClick={createNewExercise}>Create exercise</Button>
+            </Tabs.Item>
           </Tabs>
         </section>
       </div>

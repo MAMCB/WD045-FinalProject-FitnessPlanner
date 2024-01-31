@@ -2,7 +2,7 @@ const User = require("../models/user");
 
 const createUser = async (req, res) => {
   try {
-    const newUser = await user.create({
+    const newUser = await User.create({
       ...req.body,
       userId: req.user._id,
     });
@@ -41,10 +41,10 @@ const updateUserById = async (req, res) => {
     const updatedUser = await User.findOneAndUpdate({ _id: id }, req.body, {
       new: true,
     }); // { new: true } return the new updated doc in the db
-    if (user.length === 0) {
+    if (User.length === 0) {
       res.status(404).json({ message: `User with id ${id} Not Found` });
     } else {
-      res.json(user[0]);
+      res.json(User[0]);
     }
   } catch (error) {
     res.status(500).json({ message: error.message });
@@ -57,7 +57,7 @@ const deleteUserById = async (req, res) => {
     const deletedUser = await User.findOneAndDelete({ _id: id }, req.body, {
       new: true,
     }); // { new: true } return the new updated doc in the db
-    if (user.length === 0) {
+    if (User.length === 0) {
       res.status(404).json({ message: `User with id ${id} Not Found` });
     } else {
       res.json(deletedUser[0]);

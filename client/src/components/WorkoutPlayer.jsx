@@ -3,6 +3,7 @@ import { useState, useEffect } from "react";
 import axiosInstance from "../axiosInstance";
 import StopButton from "../assets/stop-button.png";
 import PauseButton from "../assets/pause-button.png";
+import Lottie from "react-lottie";
 import { set } from "react-hook-form";
 
 const WorkoutPlayer = () => {
@@ -14,6 +15,7 @@ const WorkoutPlayer = () => {
   const [isWorkoutPaused, setIsWorkoutPaused] = useState(false);
   const [isWorkoutFinished, setIsWorkoutFinished] = useState(false);
   const [isExerciseFinished, setIsExerciseFinished] = useState(false);
+  const [animationData, setAnimationData] = useState(null);
 
   const workoutPlanId = "60f9b4b3c9b9a40015f3b3b2";
 
@@ -30,6 +32,14 @@ const WorkoutPlayer = () => {
       })
       .catch((err) => console.log("Error:", err));
   }, []); */
+
+  useEffect(() => {
+    fetch(
+      "https://lottie.host/edf49211-6085-401c-9540-ac81a70fc343/kjQThkC4yK.json"
+    )
+      .then((response) => response.json())
+      .then((data) => setAnimationData(data));
+  }, []);
 
   // example of workout data :
 
@@ -175,12 +185,21 @@ const WorkoutPlayer = () => {
               <div>
                 Description :
                 {!isExerciseFinished
-                  ? workoutDataExample.exercises[currentExerciseIndex].description
+                  ? workoutDataExample.exercises[currentExerciseIndex]
+                      .description
                   : "Relax"}
               </div>
-              <div className="side panel">
-                <p>Next:</p>
-              </div>
+              {/*  <div className="side panel">
+                <p>
+                  {currentExerciseIndex <= workoutDataExample.exercises.length &&
+                  !isExerciseFinished
+                    ? `Next ${
+                        workoutDataExample.exercises[currentExerciseIndex + 1]
+                          .name
+                      }`
+                    : "It is the last exercise"}
+                </p>
+              </div> */}
             </div>
             <div className="bottom panel"></div>
           </div>

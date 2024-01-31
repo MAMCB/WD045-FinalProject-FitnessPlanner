@@ -9,6 +9,7 @@ import Editor from "./components/Editor/Editor";
 import Login from "./components/Login";
 import Register from "./components/Register";
 import Profile from "./components/Profile";
+import EditProfile from "./components/EditProfile";
 import LandingPage from "./components/Landing-Page/LandingPage";
 
 import Protected from "./components/ProtectedRoute";
@@ -33,6 +34,7 @@ function App() {
           <Route path="editor" element={<Editor />} />
           <Route path="workoutPlayer" element={<WorkoutPlayer />} />
           <Route path="profile" element={<Profile />} />
+          <Route path="editProfile/:id" element={<EditProfile />} />
         </Route>
       </Routes>
       <Footer />

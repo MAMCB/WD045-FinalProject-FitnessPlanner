@@ -18,6 +18,7 @@ import { v4 as uuidv4 } from "uuid";
 
 
 
+
 const Editor = () => {
   const [exercises, setExercises] = useState([]);
   const [exerciseSearch, setExerciseSearch] = useState("");
@@ -25,6 +26,8 @@ const Editor = () => {
   const [blocks, setBlocks] = useState([]);
   const context = useContext(AuthContext);
   const navigate = useNavigate();
+  const [newExercise, setNewExercise] = useState(null);
+  const [exerciseCreated, setExerciseCreated] = useState([]);
   const [workoutPlan, setWorkoutPlan] = useState({
     name: "",
     goal: "",
@@ -47,7 +50,9 @@ const Editor = () => {
       setExercisesToShow(res.data);} )
       
       .catch((err) => console.log(err));
-  }, []);
+  }, [exerciseCreated]);
+
+ 
 
   useEffect(() => {
     setWorkoutPlan((prev) => ({ ...prev, exercises: blocks }));
@@ -110,8 +115,12 @@ const Editor = () => {
     );
   };
 
-  const handleNewExercise = (e) => {};
-  const createNewExercise = () => {};
+  const handleNewExercise = (e) => {
+    setNewExercise((prev) => ({ ...prev, [e.target.id]: e.target.value }));
+  };
+  const createNewExercise = () => {
+    axiosInstance.post("/api/exercise", newExercise).then((res) => { setExerciseCreated((prev)=>[...prev,res.data])}).catch((err) => console.log(err));
+  };
 
  
   return (
@@ -226,6 +235,14 @@ const Editor = () => {
                 />
               </div>
               <div className="m-4 ">
+                <Label htmlFor="equipment" value="Equipment required" />
+                <TextInput
+                  id="equipment"
+                  type="text"
+                  onChange={handleNewExercise}
+                />
+              </div>
+              <div className="m-4 ">
                 <Label htmlFor="muscleGroup" value="The target muscle group" />
                 <TextInput
                   id="muscleGroup"
@@ -233,7 +250,9 @@ const Editor = () => {
                   onChange={handleNewExercise}
                 />
               </div>
-              <Button type="button" onClick={createNewExercise}>Create exercise</Button>
+              <Button type="button" onClick={createNewExercise}>
+                Create exercise
+              </Button>
             </Tabs.Item>
           </Tabs>
         </section>

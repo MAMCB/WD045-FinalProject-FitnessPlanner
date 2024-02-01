@@ -5,13 +5,25 @@ import { AuthContext } from "../context/Auth";
 import logo from '../assets/Logo_!.png'
 import Profile from './Profile';
 import { NavLink } from 'react-router-dom';
-import { Link } from 'react-router-dom';
+import axios from "../axiosInstance";
 
 const NavbarForHome = () => {
+    const context = useContext(AuthContext);
+    const [currentUser, setCurrentUser] = useState({
+    });
+  
+    useEffect(() => {
+      axios
+        .get(`api/user/${context.user._id}`)
+        .then((res) => {
+          setCurrentUser(res.data);
+          console.log(res.data);
+        })
+        .catch((e) => console.error(e));
+    }, []);
 
-  const context = useContext(AuthContext);
-  console.log(context)
-  console.log(context.user)
+  
+  console.log(currentUser.profilePicture);
 
   const [theme, setTheme] = useState("dark");
 
@@ -38,7 +50,7 @@ const NavbarForHome = () => {
   
   return (
     <Navbar fluid className="dark:bg-black">
-      <Navbar.Brand href='/'>
+      <Navbar.Brand href="/">
         <img src={logo} className="mr-3 h-9" alt="Logo" />
         <span className="self-center whitespace-nowrap text-xl font-semibold dark:text-white">
           FitLife
@@ -52,8 +64,8 @@ const NavbarForHome = () => {
             <Avatar
               alt="User settings"
               img={
-                context.user
-                  ? context.user.profilePicture
+                currentUser.profilePicture
+                  ? currentUser.profilePicture
                   : "https://lh6.googleusercontent.com/proxy/i3o6o_HVc0XQaPNEpxAVDJw1QyLH6LRIw_OxAKjhOm5lZQDimRQYyz9_vIGDpMnEliSpI6AKhSbDqvzc4zIDdg3Cx5HAaLvjhE0dfz-Wns9I89ULsgeG8w=s0-d"
               }
               rounded
@@ -95,7 +107,10 @@ const NavbarForHome = () => {
         <Navbar.Link href="/" active>
           Home
         </Navbar.Link>
-        <Navbar.Link href="/workoutPlan" className={context.user ? "" : "hidden"}>
+        <Navbar.Link
+          href="/workoutPlan"
+          className={context.user ? "" : "hidden"}
+        >
           Your workouts
         </Navbar.Link>
         <Navbar.Link href="/editor" className={context.user ? "" : "hidden"}>

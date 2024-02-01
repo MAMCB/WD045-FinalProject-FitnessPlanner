@@ -36,7 +36,7 @@ function App() {
           <Route path="workoutPlan/public/:id" element={<WorkoutPlan />} />
           <Route path="workoutPlan/:id" element={<WorkoutPlan />} />
           <Route path="editor" element={<Editor />} />
-          <Route path="workoutPlayer" element={<WorkoutPlayer />} />
+          <Route path="workoutPlayer/:id" element={<WorkoutPlayer />} />
           <Route path="profile" element={<Profile />} />
           <Route path="editProfile/:id" element={<EditProfile />} />
         </Route>

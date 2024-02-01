@@ -90,6 +90,29 @@ const Exercise = () => {
         <option value="barbell">Barbell</option>
         <option value="body weight">Body Weight</option>
         <option value="bosu ball">Bosu ball</option>
+        <option value="cable">Cable</option>
+        <option value="dumbbell">Dumbbell</option>
+        <option value="elliptical machine">Elliptical machine</option>
+        <option value="ez barbell">Ez barbell</option>
+        <option value="hammer">Hammer</option>
+        <option value="kettlebell">Kettlebell</option>
+        <option value="leverage machine">Leverage machine</option>
+        <option value="medicine ball">Medicine ball</option>
+        <option value="olympic barbell">Olympic barbell</option>
+        <option value="resistance band">Resistance band</option>
+        <option value="roller">Roller</option>
+        <option value="rope">rope</option>
+        <option value="skierg machine">Skierg machine</option>
+        <option value="sled machine">Sled machine</option>
+        <option value="smith machine">Smith machine</option>
+        <option value="stability ball">Stability ball</option>
+        <option value="stationary bike">Stationary bike</option>
+        <option value="stepmill machine">Stepmill machine</option>
+        <option value="tire">Tire</option>
+        <option value="trap bar">Trap bar</option>
+        <option value="upper body ergometer">Upper body ergometer</option>
+        <option value="weighted">Weighted</option>
+        <option value="wheel roller">Wheel roller</option>
       </Select>
     </div>
   );
@@ -259,6 +282,7 @@ const Exercise = () => {
                   user={false}
                   addExercise={null}
                   inPlan={false}
+                  remove={null}
                 />
               ))}
             </Carousel>

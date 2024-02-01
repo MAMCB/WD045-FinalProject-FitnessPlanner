@@ -13,7 +13,11 @@ const ExerciseCard = ({ exercise, user, addExercise,inPlan,remove,blocks}) => {
   const formData = new FormData();
 
   useEffect(() => {
-    exerciseSaved &&
+    
+    if(!exerciseSaved)
+    {
+      return;
+    } console.log("trying to save exercise");
     formData.append("userId", exerciseSaved.userId);
     formData.append("name", exerciseSaved.name);
     formData.append("url", exerciseSaved.url);

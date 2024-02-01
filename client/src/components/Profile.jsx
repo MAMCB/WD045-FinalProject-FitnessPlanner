@@ -90,7 +90,7 @@ User Profile
   <div className="flex items-center ">
     <div className="flex-1 min-w-0 ms-4">
       <p className="text-lg font-medium text-gray-900 truncate dark:text-white">
-      Height: {user.user.height}
+      Height: {user.user.height} Kg
       </p>
     </div>
   </div>
@@ -99,7 +99,7 @@ User Profile
   <div className="flex items-center ">
     <div className="flex-1 min-w-0 ms-4">
       <p className="text-lg font-medium text-gray-900 truncate dark:text-white">
-      Weight: {user.user.weight}
+      Weight: {user.user.weight} cm
       </p>
     </div>
   </div>

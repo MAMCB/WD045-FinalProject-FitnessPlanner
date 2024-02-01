@@ -24,7 +24,7 @@ const getAllUsers = async (req, res) => {
 const getUserById = async (req, res) => {
   const { id } = req.params;
   try {
-    const user = await User.find({ _id: id });
+    const user = await User.find({ _id: id }).populate('exercises');
     if (user.length === 0) {
       res.status(404).json({ message: `User with id ${id} Not Found` });
     } else {

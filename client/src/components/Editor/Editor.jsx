@@ -119,18 +119,27 @@ const Editor = () => {
     setNewExercise((prev) => ({ ...prev, [e.target.id]: e.target.value }));
   };
   const createNewExercise = () => {
-    axiosInstance.post("/api/exercise", newExercise).then((res) => { setExerciseCreated((prev)=>[...prev,res.data])}).catch((err) => console.log(err));
+    axiosInstance.post("/api/exercise", newExercise).then((res) => { setExerciseCreated((prev)=>[...prev,res.data])}).then(alert("New exercise created")).catch((err) => console.log(err));
+  };
+
+  const saveDraft = () => {
   };
 
  
   return (
     <>
-      <h1 className="m-10 text-xl font-bold">Workout Plan Editor</h1>
-      <Button type="button" onClick={saveWorkout}>
-        Save workout
-      </Button>
+      <h1 className="m-10  text-xl font-bold">Workout Plan Editor</h1>
+      <div className="flex justify-center">
+        <Button className="m-4" type="button" onClick={saveWorkout}>
+          Save workout
+        </Button>
+        <Button className="m-4" type="button" onClick={saveDraft}>
+          Save draft
+        </Button>
+      </div>
+
       <div className="flex justify-evenly dark:bg-black">
-        <section className="w-1/3">
+        <section className="w-1/3 mt-10">
           <h2>Your plan</h2>
           <div className="m-4 ">
             <Label htmlFor="name" value="Plan name" />
@@ -156,7 +165,7 @@ const Editor = () => {
             />
           </div>
 
-          <div>
+          <div className="overflow-scroll max-h-screen">
             {blocks.length > 0 &&
               blocks.map((block, index) => (
                 <Block
@@ -169,7 +178,7 @@ const Editor = () => {
               ))}
           </div>
         </section>
-        <section className="w-1/3">
+        <section className="w-1/3 mt-10">
           <Tabs aria-label="Default tabs" style="default">
             <Tabs.Item active title="Look for exercises">
               <div className="m-4 ">
@@ -183,7 +192,7 @@ const Editor = () => {
                   onChange={handleSearch}
                 />
               </div>
-              <div>
+              <div className="overflow-scroll max-h-screen">
                 {exercisesToShow.length > 0 &&
                   exercisesToShow.map((exercise) => (
                     <ExerciseCard
@@ -250,7 +259,7 @@ const Editor = () => {
                   onChange={handleNewExercise}
                 />
               </div>
-              <Button type="button" onClick={createNewExercise}>
+              <Button className="m-auto" type="button" onClick={createNewExercise}>
                 Create exercise
               </Button>
             </Tabs.Item>

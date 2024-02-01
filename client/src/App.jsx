@@ -3,7 +3,9 @@ import Home from "./components/Home";
 import { Routes, Route } from "react-router-dom";
 import "./App.css";
 import WorkoutPlan from "./components/WorkoutPlan";
+import EditWorkoutPlan from "./components/EditWorkoutPlan";
 import Exercise from "./components/ExerciseSearch-page/Exercise";
+import EditExercise from "./components/EditExercise";
 import WorkoutPlayer from "./components/WorkoutPlayer";
 import Editor from "./components/Editor/Editor";
 import Login from "./components/Login";
@@ -26,9 +28,11 @@ function App() {
           <Route path="" element={<Home />} />
           <Route path="exercise" element={<Exercise />} />
           <Route path="exercise/:id" element={<Exercise />} />
+          <Route path="editExercise/:id" element={<EditExercise />} />
 
           <Route path="workoutPlan" element={<WorkoutPlan />} />
-          <Route path="workoutPlan/public" element={<WorkoutPlan />} />
+          <Route path="workoutPlan/:id" element={<EditWorkoutPlan />} />
+          <Route path="workoutPlan/public" element={<EditWorkoutPlan />} />
           <Route path="workoutPlan/public/:id" element={<WorkoutPlan />} />
           <Route path="workoutPlan/:id" element={<WorkoutPlan />} />
           <Route path="editor" element={<Editor />} />

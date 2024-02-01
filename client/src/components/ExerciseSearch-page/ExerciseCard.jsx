@@ -10,7 +10,7 @@ const ExerciseCard = ({ exercise, user, addExercise,inPlan,remove,blocks}) => {
   const [succesfullySaved, setSuccesfullySaved] = useState(false);
   const [inWorkoutPlan, setInWorkoutPlan] = useState(false);
   const context = useContext(AuthContext);
-  const formData = new FormData();
+ 
 
   useEffect(() => {
     
@@ -18,16 +18,9 @@ const ExerciseCard = ({ exercise, user, addExercise,inPlan,remove,blocks}) => {
     {
       return;
     } console.log("trying to save exercise");
-    formData.append("userId", exerciseSaved.userId);
-    formData.append("name", exerciseSaved.name);
-    formData.append("url", exerciseSaved.url);
-    formData.append("filename", exerciseSaved.filename);
-    formData.append("muscleGroup", exerciseSaved.muscleGroup);
-    formData.append("equipment", exerciseSaved.equipment);
-    formData.append("description", exerciseSaved.description);
-
+    
       axiosInstance
-        .post("/api/exercise", formData)
+        .post("/api/exercise", exerciseSaved)
         .then(() => setSuccesfullySaved(true))
         .catch((error) => console.log(error));
   }, [exerciseSaved]);
@@ -52,8 +45,7 @@ const ExerciseCard = ({ exercise, user, addExercise,inPlan,remove,blocks}) => {
     const newExercise = {
       userId: context.user._id,
       name: exercise.name,
-      url: exercise.gifUrl,
-      filename:`${exercise.name}.gif`,
+      image: exercise.gifUrl,
       muscleGroup: exercise.target,
       equipment: exercise.equipment,
       description: exercise.instructions.reduce((acc, curr) => acc + curr, ""),

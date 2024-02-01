@@ -10,9 +10,15 @@ const ExerciseCard = ({ exercise, user, addExercise,inPlan,remove,blocks}) => {
   const [succesfullySaved, setSuccesfullySaved] = useState(false);
   const [inWorkoutPlan, setInWorkoutPlan] = useState(false);
   const context = useContext(AuthContext);
+ 
 
   useEffect(() => {
-    exerciseSaved &&
+    
+    if(!exerciseSaved)
+    {
+      return;
+    } console.log("trying to save exercise");
+    
       axiosInstance
         .post("/api/exercise", exerciseSaved)
         .then(() => setSuccesfullySaved(true))
@@ -43,6 +49,7 @@ const ExerciseCard = ({ exercise, user, addExercise,inPlan,remove,blocks}) => {
       muscleGroup: exercise.target,
       equipment: exercise.equipment,
       description: exercise.instructions.reduce((acc, curr) => acc + curr, ""),
+
     };
 
     setExerciseSaved((prev) => newExercise);

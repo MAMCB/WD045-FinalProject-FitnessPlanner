@@ -4,6 +4,10 @@ const cloudinary = require("../config/cloudinary");
 
 const apiImageHandler = async (req, res, next) => {
     console.log(req.body);
+    if(!req.body.image)
+    {
+      return  next();
+    }
   const url = req.body.image;
   const fileName = `${req.body.name}.gif`;
   try {

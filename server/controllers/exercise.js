@@ -2,37 +2,32 @@ const Exercise = require("../models/exercise");
 const User = require("../models/user");
 
 const createExercise = async (req, res) => {
+  let newExercise;
   try {
     if(req.file)
     { console.log(req.file.secure_url);
-      const newExercise = await Exercise.create({
+       newExercise = await Exercise.create({
       ...req.body,
       userId: req.user._id,
       image: req.file.secure_url,
     });
-    User.findByIdAndUpdate(
-      req.user._id,
-      { $push: { exercises: newExercise._id } },
-      { new: true }
-    ).exec();
-    res.status(201).json(newExercise);
-
-
+   
 
     }
     else{
-      const newExercise = await Exercise.create({
+       newExercise = await Exercise.create({
         ...req.body,
         userId: req.user._id,
       });
-      User.findByIdAndUpdate(
-        req.user._id,
-        { $push: { exercises: newExercise._id } },
-        { new: true }
-      ).exec();
-      res.status(201).json(newExercise);
+     
 
     }
+     User.findByIdAndUpdate(
+       req.user._id,
+       { $push: { exercises: newExercise._id } },
+       { new: true }
+     ).exec();
+     res.status(201).json(newExercise);
     
   } catch (error) {
     res.status(500).json({ message: error.message });

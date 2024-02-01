@@ -52,7 +52,7 @@ const WorkoutPlayer = () => {
     autoplay: true,
     animationData: animationData,
     rendererSettings: {
-      preserveAspectRatio: "xMidYMid",
+      preserveAspectRatio: "xMidYMid slice",
     },
   };
 
@@ -90,8 +90,8 @@ const WorkoutPlayer = () => {
           "Sit on the floor with your legs extended in front of you.Bend your knees and bring the soles of your feet together, allowing your knees to fall out to the sides.Hold onto your ankles or feet with your hands.Sit up tall and lengthen your spine.Gently press your knees down towards the floor, feeling a stretch in your inner thighs.Hold this position for a few breaths.To release, slowly bring your knees back up and extend your legs.",
       },
     ],
-    exerciseDuration: 10,
-    restDuration: 5,
+    exerciseDuration: 15,
+    restDuration: 10,
     createdDay: new Date(),
   };
 
@@ -199,10 +199,41 @@ const WorkoutPlayer = () => {
 
   return (
     <>
-      {!isWorkoutFinished ? (
-        <section className="p-5 mx-auto body-font  dark:bg-gray-900">
-          <div className="container mx-auto flex flex-col ">
-            <div className="flex space-x-3 mb-4">
+      {!isWorkoutStarted  ? (
+        <>
+          <section className="bg-gray-50 dark:bg-gray-900">
+            <div className="flex flex-col items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0">
+              <div className="w-full bg-white rounded-lg shadow dark:border md:mt-0 sm:max-w-md xl:p-0 dark:bg-gray-800 dark:border-gray-700">
+                <div className="flex flex-col items-center justify-center p-6 space-y-4 md:space-y-6 sm:p-8">
+                  <h1 className="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-white">
+                    Are you ready to start?
+                  </h1>
+                  <div className="flex items-center p-4 gap-3 md:p-5 border-t border-gray-200 rounded-b dark:border-gray-600">
+                    <Link
+                      to="/"
+                      className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+                    >
+                      Return to Home Page
+                    </Link>
+                    <button
+                      onClick={() => {
+                        setIsWorkoutStarted(true);
+                      }}
+                      type="button"
+                      className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+                    >
+                      Start the Workout
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
+        </>
+      ) : !isWorkoutFinished && isWorkoutStarted ? (
+        <section className="p-5 mx-auto body-font dark:bg-gray-900 min-h-100">
+          <div className="container mx-auto flex flex-col gap-3 h-full">
+            <div className="flex  mb-4 gap-2">
               <button
                 onClick={handlePauseButton}
                 data-modal-target="default-modal"
@@ -240,7 +271,7 @@ const WorkoutPlayer = () => {
                 setIsWorkoutPaus={setIsWorkoutPaused}
                 setIsWorkoutFin={setIsWorkoutFinished}
                 setIsModalOp={setIsModalOpen}
-                isModalOpen={isModalOpen} 
+                isModalOpen={isModalOpen}
               />
             </div>
 
@@ -251,7 +282,7 @@ const WorkoutPlayer = () => {
                   : "Rest time"}
               </p>
             </div>
-            <div className="img">
+            <div className="img max-w-[500px] max-h-[500px] m-auto">
               {!isExerciseFinished ? (
                 <img
                   alt="exercise"

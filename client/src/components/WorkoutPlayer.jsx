@@ -10,8 +10,10 @@ import { faCirclePause } from "@fortawesome/free-solid-svg-icons";
 import { faCircleStop } from "@fortawesome/free-solid-svg-icons";
 import StaticModal from "./StaticModal";
 import { Link } from "react-router-dom";
+import { useParams } from "react-router-dom";
 
 const WorkoutPlayer = () => {
+  const id = useParams();
   const [workoutData, setWorkoutData] = useState({});
   const [currentExerciseIndex, setCurrentExerciseIndex] = useState(0);
   const [remainingTime, setRemainingTime] = useState(0);
@@ -23,21 +25,20 @@ const WorkoutPlayer = () => {
   const [animationData, setAnimationData] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
-  const workoutPlanId = "60f9b4b3c9b9a40015f3b3b2";
+  //const workoutPlanId = "60f9b4b3c9b9a40015f3b3b2";
 
-  /*   useEffect(() => {
+     useEffect(() => {
     axiosInstance
       .get(
-        import.meta.env.VITE_SERVER_BASE_URL +
-          `/api/workoutPlan/${workoutPlanId}`
+        
+          `/api/workoutPlan/${id}`
       )
       .then((res) => {
-        const workoutData = res.data;
-        console.log(workoutData);
-        setWorkoutData(workoutData);
+        
+        setWorkoutData(res.data);
       })
       .catch((err) => console.log("Error:", err));
-  }, []); */
+  }, []); 
 
   useEffect(() => {
     fetch(

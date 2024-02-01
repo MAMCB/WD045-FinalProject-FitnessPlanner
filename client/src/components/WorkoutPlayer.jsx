@@ -13,6 +13,8 @@ import { Link } from "react-router-dom";
 import { useParams } from "react-router-dom";
 
 const WorkoutPlayer = () => {
+
+  
   const id = useParams();
   const [workoutData, setWorkoutData] = useState({});
   const [currentExerciseIndex, setCurrentExerciseIndex] = useState(0);
@@ -27,18 +29,19 @@ const WorkoutPlayer = () => {
 
   //const workoutPlanId = "60f9b4b3c9b9a40015f3b3b2";
 
-     useEffect(() => {
+  useEffect(() => {
     axiosInstance
-      .get(
-        
-          `/api/workoutPlan/${id}`
-      )
+      .get(`/api/workoutPlan/${id.id}`)
       .then((res) => {
-        
         setWorkoutData(res.data);
+        
       })
       .catch((err) => console.log("Error:", err));
-  }, []); 
+  }, []);
+
+  
+
+
 
   useEffect(() => {
     fetch(
@@ -100,11 +103,11 @@ const WorkoutPlayer = () => {
     let restTimerId;
     if (
       isExerciseFinished &&
-      currentExerciseIndex < workoutDataExample.exercises.length &&
+      currentExerciseIndex < workoutData.exercises.length &&
       !isWorkoutPaused
     ) {
       console.log("Relax time");
-      setRemainingTimeInRest(workoutDataExample.restDuration);
+      setRemainingTimeInRest(workoutData.restDuration);
       restTimerId = setInterval(() => {
         setRemainingTimeInRest((prevTime) => {
           if (prevTime === 1) {
@@ -124,25 +127,31 @@ const WorkoutPlayer = () => {
   useEffect(() => {
     let timerId;
     if (
-      currentExerciseIndex < workoutDataExample.exercises.length &&
+      currentExerciseIndex < workoutData.exercises?.length &&
       !isExerciseFinished &&
-      !isWorkoutPaused
+      !isWorkoutPaused &&
+      isWorkoutStarted
     ) {
-      setRemainingTime(workoutDataExample.exerciseDuration);
+      setRemainingTime(workoutData.exercises[currentExerciseIndex].duration);
+      console.log(remainingTime)
       timerId = setInterval(() => {
         setRemainingTime((prevTime) => {
           if (prevTime === 1) {
             setIsExerciseFinished(true);
-            setCurrentExerciseIndex((prevIndex) => prevIndex + 1);
+            setCurrentExerciseIndex((prevIndex) => {
+              const newIndex = prevIndex + 1;
+              setRemainingTime(workoutData.exercises[newIndex].duration); // Reset the timer
+              return newIndex;
+            });
 
-            return workoutDataExample.exerciseDuration; // Reset the timer
+            return workoutData.exercises[currentExerciseIndex].duration; // Reset the timer
           }
           return prevTime - 1;
         });
       }, 1000);
     } else if (
       isExerciseFinished &&
-      currentExerciseIndex >= workoutDataExample.exercises.length
+      currentExerciseIndex >= workoutData.exercises.length
     ) {
       setRemainingTime(0);
       setIsWorkoutFinished(true);
@@ -200,7 +209,7 @@ const WorkoutPlayer = () => {
 
   return (
     <>
-      {!isWorkoutStarted  ? (
+      {!isWorkoutStarted ? (
         <>
           <section className="bg-gray-50 dark:bg-gray-900">
             <div className="flex flex-col items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0">
@@ -279,7 +288,7 @@ const WorkoutPlayer = () => {
             <div className="mb-2">
               <p>
                 {!isExerciseFinished
-                  ? workoutDataExample.exercises[currentExerciseIndex].name
+                  ? workoutData.exercises[currentExerciseIndex].exercise.name
                   : "Rest time"}
               </p>
             </div>
@@ -288,7 +297,7 @@ const WorkoutPlayer = () => {
                 <img
                   alt="exercise"
                   className="lg:w-1/2 w-full sm:h-100 lg:h-auto h-100 object-cover object-center rounded"
-                  src={workoutDataExample.exercises[currentExerciseIndex].image}
+                  src={workoutData.exercises[currentExerciseIndex].exercise.image}
                 ></img>
               ) : animationData ? (
                 <Lottie options={defaultOptions} />
@@ -301,16 +310,15 @@ const WorkoutPlayer = () => {
             <div className="flex flex-col">
               <div>
                 {!isExerciseFinished
-                  ? `Description : ${workoutDataExample.exercises[currentExerciseIndex].description}`
+                  ? `Description : ${workoutData.exercises[currentExerciseIndex].exercise.description}`
                   : ""}
               </div>
               <div className="side panel">
                 <p>
                   {currentExerciseIndex + 1 <
-                    workoutDataExample.exercises.length && !isExerciseFinished
+                    workoutData.exercises.length && !isExerciseFinished
                     ? `Next exercise: ${
-                        workoutDataExample.exercises[currentExerciseIndex + 1]
-                          .name
+                        workoutData.exercises[currentExerciseIndex + 1].exercise.name
                       }`
                     : ""}
                 </p>

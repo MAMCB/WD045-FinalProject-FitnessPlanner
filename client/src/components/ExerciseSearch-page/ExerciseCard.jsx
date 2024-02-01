@@ -5,7 +5,7 @@ import { useState, useEffect } from "react";
 import { AuthContext } from "../../context/Auth";
 import { useContext } from "react";
 
-const ExerciseCard = ({ exercise, user, addExercise,inPlan }) => {
+const ExerciseCard = ({ exercise, user, addExercise,inPlan,remove,blocks}) => {
   const [exerciseSaved, setExerciseSaved] = useState(null);
   const [succesfullySaved, setSuccesfullySaved] = useState(false);
   const [inWorkoutPlan, setInWorkoutPlan] = useState(false);
@@ -18,6 +18,22 @@ const ExerciseCard = ({ exercise, user, addExercise,inPlan }) => {
         .then(() => setSuccesfullySaved(true))
         .catch((error) => console.log(error));
   }, [exerciseSaved]);
+
+  useEffect(() => {
+    if(!blocks)
+    {
+      return;
+    }
+    
+      if (blocks.find((block) => block.exercise._id === exercise._id)) {
+        setInWorkoutPlan(true);
+      } else {
+        setInWorkoutPlan(false);
+      }
+
+    
+    
+  }, [blocks]);
 
   const handleSave = () => {
     const newExercise = {
@@ -40,6 +56,7 @@ const ExerciseCard = ({ exercise, user, addExercise,inPlan }) => {
   };
 
   const handleDelete = () => {
+    remove();
   };
   return (
     <div className="flex h-full p-4 items-center justify-center bg-gray-400 dark:bg-gray-700 dark:text-white">

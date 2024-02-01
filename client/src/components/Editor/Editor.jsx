@@ -14,14 +14,20 @@ import { AuthContext } from "../../context/Auth";
 import { useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import Block from "./Block";
-import { set } from "react-hook-form";
+import { v4 as uuidv4 } from "uuid";
+
+
 
 
 const Editor = () => {
   const [exercises, setExercises] = useState([]);
+  const [exerciseSearch, setExerciseSearch] = useState("");
+  const [exercisesToShow, setExercisesToShow] = useState([]);
   const [blocks, setBlocks] = useState([]);
   const context = useContext(AuthContext);
   const navigate = useNavigate();
+  const [newExercise, setNewExercise] = useState(null);
+  const [exerciseCreated, setExerciseCreated] = useState([]);
   const [workoutPlan, setWorkoutPlan] = useState({
     name: "",
     goal: "",
@@ -40,14 +46,19 @@ const Editor = () => {
   useEffect(() => {
     axiosInstance
       .get("/api/exercise")
-      .then((res) => setExercises(res.data))
+      .then((res) =>{setExercises(res.data);
+      setExercisesToShow(res.data);} )
+      
       .catch((err) => console.log(err));
-  }, []);
+  }, [exerciseCreated]);
+
+ 
 
   useEffect(() => {
+    setWorkoutPlan((prev) => ({ ...prev, exercises: blocks }));
     if(blocks.length>0)
     {
-       setWorkoutPlan((prev) => ({ ...prev, exercises: blocks }));
+       
        if (blocks[blocks.length - 1].exercise.equipment !== "body weight") {
          setWorkoutPlan((prev) => ({ ...prev, equipment: true }));
        }
@@ -68,13 +79,9 @@ const Editor = () => {
     setBlocks((prev) => {prev[index] = newBlock; return [...prev]})
   };
 
-  // const addExercise = (exercise) => {
-  //   setExerciseBlock((prev) => ({ ...prev, exercise: exercise}));
-  //   const newExercise = {...exercise,...exerciseBlock}
-  //   setWorkoutPlan((prev) => ({ ...prev, exercises: [...prev.exercises, newExercise] }));
-  // };
+  
   const addExercise = (exercise) => {
-    setExerciseBlock((prev) => ({ ...prev, exercise: exercise }));
+    setExerciseBlock((prev) => ({ ...prev,id:uuidv4(), exercise: exercise }));
     const newExercise = { ...exerciseBlock, exercise: exercise };
     setBlocks((prev) => [...prev, newExercise]);
   };
@@ -92,14 +99,47 @@ const Editor = () => {
       .then(navigate("/workoutPlan"))
       .catch((err) => console.log(err));
   };
+
+  const removeExercise = (index) => {
+    const newBlocks = [...blocks];
+    newBlocks.splice(index, 1);
+    setBlocks((prev)=>newBlocks);
+  };
+
+  const handleSearch = (e) => {
+    setExerciseSearch(e.target.value);
+    setExercisesToShow(
+      exercises.filter((exercise) =>
+        exercise.name.toLowerCase().includes(e.target.value.toLowerCase())
+      )
+    );
+  };
+
+  const handleNewExercise = (e) => {
+    setNewExercise((prev) => ({ ...prev, [e.target.id]: e.target.value }));
+  };
+  const createNewExercise = () => {
+    axiosInstance.post("/api/exercise", newExercise).then((res) => { setExerciseCreated((prev)=>[...prev,res.data])}).then(alert("New exercise created")).catch((err) => console.log(err));
+  };
+
+  const saveDraft = () => {
+  };
+
+ 
   return (
     <>
-      <h1 className="m-10 text-xl font-bold">Workout Plan Editor</h1>
-      <Button type="button" onClick={saveWorkout}>
-        Save workout
-      </Button>
+      <h1 className="m-10  text-xl font-bold">Workout Plan Editor</h1>
+      <div className="flex justify-center">
+        <Button className="m-4" type="button" onClick={saveWorkout}>
+          Save workout
+        </Button>
+        <Button className="m-4" type="button" onClick={saveDraft}>
+          Save draft
+        </Button>
+      </div>
+
       <div className="flex justify-evenly dark:bg-black">
-        <section className="w-1/3">
+        <section className="w-1/3 mt-10">
           <h2>Your plan</h2>
           <div className="m-4 ">
             <Label htmlFor="name" value="Plan name" />
@@ -124,20 +164,21 @@ const Editor = () => {
               onChange={handlePlan}
             />
           </div>
-         
-          <div>
+
+          <div className="overflow-scroll max-h-screen">
             {blocks.length > 0 &&
               blocks.map((block, index) => (
                 <Block
-                  key={index}
+                  key={block.id}
                   exerciseBlock={block}
                   handleExerciseBlock={handleExerciseBlock}
-                  index={index}
+                  blockIndex={index}
+                  removeExercise={removeExercise}
                 />
               ))}
           </div>
         </section>
-        <section className="w-1/3">
+        <section className="w-1/3 mt-10">
           <Tabs aria-label="Default tabs" style="default">
             <Tabs.Item active title="Look for exercises">
               <div className="m-4 ">
@@ -148,23 +189,80 @@ const Editor = () => {
                 <TextInput
                   id="exercise-search"
                   type="text"
-                  onChange={handlePlan}
+                  onChange={handleSearch}
                 />
               </div>
-              <div>
-                {exercises.length > 0 &&
-                  exercises.map((exercise) => (
+              <div className="overflow-scroll max-h-screen">
+                {exercisesToShow.length > 0 &&
+                  exercisesToShow.map((exercise) => (
                     <ExerciseCard
                       key={exercise._id}
                       exercise={exercise}
                       user={true}
                       addExercise={addExercise}
                       inPlan={false}
+                      remove={null}
+                      blocks={blocks}
                     />
                   ))}
               </div>
             </Tabs.Item>
-            <Tabs.Item title="New exercise"></Tabs.Item>
+            <Tabs.Item title="New exercise">
+              <h2>Create a new exercise</h2>
+              <div className="m-4 ">
+                <Label htmlFor="name" value="Name of the exercise" />
+                <TextInput id="name" type="text" onChange={handleNewExercise} />
+              </div>
+              <div className="m-4 ">
+                <Label
+                  htmlFor="description"
+                  value="Description of the exercise"
+                />
+                <TextInput
+                  id="description"
+                  type="text"
+                  onChange={handleNewExercise}
+                />
+              </div>
+              <div className="m-4 ">
+                <Label
+                  htmlFor="difficulty"
+                  value="Difficulty of the exercise"
+                />
+                <TextInput
+                  id="difficulty"
+                  type="number"
+                  onChange={handleNewExercise}
+                />
+              </div>
+              <div className="m-4 ">
+                <Label htmlFor="image" value="Image of the exercise" />
+                <TextInput
+                  id="image"
+                  type="file"
+                  onChange={handleNewExercise}
+                />
+              </div>
+              <div className="m-4 ">
+                <Label htmlFor="equipment" value="Equipment required" />
+                <TextInput
+                  id="equipment"
+                  type="text"
+                  onChange={handleNewExercise}
+                />
+              </div>
+              <div className="m-4 ">
+                <Label htmlFor="muscleGroup" value="The target muscle group" />
+                <TextInput
+                  id="muscleGroup"
+                  type="text"
+                  onChange={handleNewExercise}
+                />
+              </div>
+              <Button className="m-auto" type="button" onClick={createNewExercise}>
+                Create exercise
+              </Button>
+            </Tabs.Item>
           </Tabs>
         </section>
       </div>

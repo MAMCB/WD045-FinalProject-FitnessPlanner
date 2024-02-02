@@ -14,7 +14,7 @@ import { useParams } from "react-router-dom";
 
 const WorkoutPlayer = () => {
   const id = useParams();
-  const [workoutData, setWorkoutData] = useState({});
+  const [workoutData, setWorkoutData] = useState(null);
   const [currentExerciseIndex, setCurrentExerciseIndex] = useState(0);
   const [remainingTime, setRemainingTime] = useState(0);
   const [remainingTimeInRest, setRemainingTimeInRest] = useState(0);
@@ -53,15 +53,22 @@ const WorkoutPlayer = () => {
   };
 
   useEffect(() => {
+    if (!workoutData) {
+      return;
+    }
+
     let restTimerId;
     if (
       isExerciseFinished &&
-      currentExerciseIndex < workoutData?.exercises?.length &&
+      currentExerciseIndex < workoutData.exercises.length &&
       !isWorkoutPaused &&
       isWorkoutStarted
     ) {
       console.log("Relax time");
-      setRemainingTimeInRest(workoutData.restDuration);
+      if (remainingTimeInRest === 0) {
+        setRemainingTimeInRest(workoutData.restDuration);
+      }
+      
       restTimerId = setInterval(() => {
         setRemainingTimeInRest((prevTime) => {
           if (prevTime === 1) {
@@ -79,41 +86,50 @@ const WorkoutPlayer = () => {
   }, [isExerciseFinished, isWorkoutPaused]);
 
   useEffect(() => {
+    if (!workoutData) {
+      return;
+    }
     console.log(`currentExerciseIndex is : ${currentExerciseIndex}`);
     console.log(`isExerciseFinished is : ${isExerciseFinished}`);
     console.log(`isWorkoutPaused is : ${isWorkoutPaused}`);
     console.log(`isWorkoutStarted is : ${isWorkoutStarted}`);
     console.log(`1. remainingTime is : ${remainingTime}`);
     let timerId;
+    let exercisesLength = workoutData?.exercises?.length;
     if (
-      currentExerciseIndex < workoutData?.exercises?.length &&
+      currentExerciseIndex < workoutData.exercises.length &&
       !isExerciseFinished &&
-      !isWorkoutPaused &&
-      isWorkoutStarted
+      !isWorkoutPaused
     ) {
-      setRemainingTime(workoutData.exercises[currentExerciseIndex].duration);
+      console.log(isWorkoutPaused);
+      if (
+        currentExerciseIndex < workoutData.exercises.length &&
+        !isExerciseFinished &&
+        !isWorkoutPaused
+      ) {
+        if (remainingTime === 0 || isExerciseFinished) {
+          setRemainingTime(
+            workoutData.exercises[currentExerciseIndex].duration
+          );
+        }
+      }
+
       console.log(`after setRemainingTime, Time is : ${remainingTime}`);
       timerId = setInterval(() => {
         setRemainingTime((prevTime) => {
           console.log(`2. remainingTime is : ${remainingTime}`);
           if (prevTime === 1) {
             setIsExerciseFinished(true);
-            console.log("Exercise finished");
-            setCurrentExerciseIndex((prevIndex) => {
-              const newIndex = prevIndex + 1;
-              console.log(`3. remainingTime is : ${remainingTime}`);
-              if (newIndex < workoutData.exercises.length) {
-                setRemainingTime(workoutData.exercises[newIndex].duration); // Reset the timer
-              }
-              return newIndex;
-            });
+            setCurrentExerciseIndex((prevIndex) => prevIndex + 1);
+
+            return workoutData.exercises[currentExerciseIndex].duration; // Reset the timer
           }
           return prevTime - 1;
         });
       }, 1000);
     } else if (
       isExerciseFinished &&
-      currentExerciseIndex >= workoutData.exercises.length 
+      currentExerciseIndex >= workoutData.exercises.length
     ) {
       setRemainingTime(0);
       setIsWorkoutFinished(true);

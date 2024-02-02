@@ -83,6 +83,11 @@ const deleteExerciseById = async (req, res) => {
     const { id } = req.params;
   try {
     const deletedExercise = await Exercise.findOneAndDelete({ _id: id });
+    User.findByIdAndUpdate(
+      req.user._id,
+      { $pull: { exercises: id } },
+      { new: true }
+    ).exec();
 
     if (!deletedExercise) {
       res.status(404).json({ message: `Exercise with id ${id} Not Found` });

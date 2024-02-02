@@ -6,6 +6,7 @@ import logo from "../assets/Logo_!.png";
 import Profile from "./Profile";
 import { NavLink } from "react-router-dom";
 import axios from "../axiosInstance";
+import userAvatar from "../assets/userAvatar.png";
 
 const NavbarForHome = () => {
   const context = useContext(AuthContext);
@@ -25,9 +26,12 @@ const NavbarForHome = () => {
 
   console.log(currentUser.profilePic);
 
-  const [theme, setTheme] = useState("dark");
+  // Theme start
+  const [theme, setTheme] = useState(localStorage.getItem("theme") || "dark");
+  
 
   useEffect(() => {
+    localStorage.setItem("theme", theme);
     if (theme === "dark") {
       document.documentElement.classList.add("dark");
     } else {
@@ -36,9 +40,11 @@ const NavbarForHome = () => {
   }, [theme]);
 
   const handleToggleTheme = () => {
-    setTheme(theme === "light" ? "dark" : "light");
-    console.log(theme);
+    const newTheme = theme === "light" ? "dark" : "light";
+    setTheme(newTheme);
   };
+
+  //Theme end
 
   const handleLogOut = () => {
     if (context) {
@@ -61,11 +67,7 @@ const NavbarForHome = () => {
           label={
             <Avatar
               alt="User settings"
-              img={
-                currentUser.profilePic
-                  ? currentUser.profilePic
-                  : "https://lh6.googleusercontent.com/proxy/i3o6o_HVc0XQaPNEpxAVDJw1QyLH6LRIw_OxAKjhOm5lZQDimRQYyz9_vIGDpMnEliSpI6AKhSbDqvzc4zIDdg3Cx5HAaLvjhE0dfz-Wns9I89ULsgeG8w=s0-d"
-              }
+              img={currentUser.profilePic ? currentUser.profilePic : userAvatar}
               rounded
               className="mr-1"
             />

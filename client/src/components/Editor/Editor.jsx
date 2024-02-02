@@ -98,6 +98,7 @@ const Editor = () => {
       .then((res) => console.log(res))
       .then(navigate("/workoutPlan"))
       .catch((err) => console.log(err));
+      window.location.reload();
   };
 
   const removeExercise = (index) => {

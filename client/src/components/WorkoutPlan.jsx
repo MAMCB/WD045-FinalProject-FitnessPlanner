@@ -45,6 +45,7 @@ useEffect(() => {
     deleteWorkoutTask(id)
 }
 
+console.log(workout)
 
 const deleteHandlerExercises = (id) =>{
   axios.delete(`/api/exercise/${id}`)

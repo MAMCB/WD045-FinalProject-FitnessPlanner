@@ -1,8 +1,6 @@
 import React from "react";
 import { useState, useEffect, useRef } from "react";
 import axiosInstance from "../axiosInstance";
-import StopButton from "../assets/stop-button.png";
-import PauseButton from "../assets/pause-button.png";
 import Lottie from "react-lottie";
 import { set } from "react-hook-form";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -24,6 +22,13 @@ const WorkoutPlayer = () => {
   const [isExerciseFinished, setIsExerciseFinished] = useState(false);
   const [animationData, setAnimationData] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
+
+  // new code
+
+
+
+
+  // new code
 
   useEffect(() => {
     axiosInstance
@@ -68,7 +73,7 @@ const WorkoutPlayer = () => {
       if (remainingTimeInRest === 0) {
         setRemainingTimeInRest(workoutData.restDuration);
       }
-      
+
       restTimerId = setInterval(() => {
         setRemainingTimeInRest((prevTime) => {
           if (prevTime === 1) {

@@ -1,5 +1,5 @@
 import React from "react";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import axiosInstance from "../axiosInstance";
 import StopButton from "../assets/stop-button.png";
 import PauseButton from "../assets/pause-button.png";
@@ -13,8 +13,6 @@ import { Link } from "react-router-dom";
 import { useParams } from "react-router-dom";
 
 const WorkoutPlayer = () => {
-
-  
   const id = useParams();
   const [workoutData, setWorkoutData] = useState({});
   const [currentExerciseIndex, setCurrentExerciseIndex] = useState(0);
@@ -27,21 +25,15 @@ const WorkoutPlayer = () => {
   const [animationData, setAnimationData] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
-  //const workoutPlanId = "60f9b4b3c9b9a40015f3b3b2";
-
   useEffect(() => {
     axiosInstance
       .get(`/api/workoutPlan/${id.id}`)
       .then((res) => {
         setWorkoutData(res.data);
-        
+        console.log(res.data);
       })
       .catch((err) => console.log("Error:", err));
   }, []);
-
-  
-
-
 
   useEffect(() => {
     fetch(
@@ -60,51 +52,13 @@ const WorkoutPlayer = () => {
     },
   };
 
-  // example of workout data :
-
-  const workoutDataExample = {
-    userId: "60d6c7e160b3f2c8c7e35d7a",
-    name: "Workout Plan 1",
-    goal: "Muscle Gain",
-    difficulty: 5,
-    image:
-      "https://freepngimg.com/thumb/hand/76374-fitness-logo-vector-creative-download-hd-png.png",
-    equipment: true,
-    type: "Cardio",
-    visibility: true,
-    rating: 4.5,
-    exercises: [
-      {
-        equipment: "leverage machine",
-        image: "https://v2.exercisedb.io/image/ocPU7YLtlQTGXe",
-        id: "0002",
-        name: "lever seated hip adduction",
-        muscleGroup: "adductors",
-        description:
-          "Adjust the seat height and position yourself on the machine with your back against the backrest.Place your feet on the footrests and grasp the handles for stability.Engage your adductor muscles and slowly bring your legs together, squeezing your inner thighs.Pause for a moment at the peak contraction, then slowly return to the starting position.Repeat for the desired number of repetitions.",
-      },
-      {
-        equipment: "body weight",
-        image: "https://v2.exercisedb.io/image/iF0rL7-HK5vaK5",
-        id: "0001",
-        name: "butterfly yoga pose",
-        muscleGroup: "adductors",
-        secondaryMuscles: ["hip flexors", "lower back"],
-        description:
-          "Sit on the floor with your legs extended in front of you.Bend your knees and bring the soles of your feet together, allowing your knees to fall out to the sides.Hold onto your ankles or feet with your hands.Sit up tall and lengthen your spine.Gently press your knees down towards the floor, feeling a stretch in your inner thighs.Hold this position for a few breaths.To release, slowly bring your knees back up and extend your legs.",
-      },
-    ],
-    exerciseDuration: 15,
-    restDuration: 10,
-    createdDay: new Date(),
-  };
-
   useEffect(() => {
     let restTimerId;
     if (
       isExerciseFinished &&
-      currentExerciseIndex < workoutData.exercises.length &&
-      !isWorkoutPaused
+      currentExerciseIndex < workoutData?.exercises?.length &&
+      !isWorkoutPaused &&
+      isWorkoutStarted
     ) {
       console.log("Relax time");
       setRemainingTimeInRest(workoutData.restDuration);
@@ -125,83 +79,62 @@ const WorkoutPlayer = () => {
   }, [isExerciseFinished, isWorkoutPaused]);
 
   useEffect(() => {
+    console.log(`currentExerciseIndex is : ${currentExerciseIndex}`);
+    console.log(`isExerciseFinished is : ${isExerciseFinished}`);
+    console.log(`isWorkoutPaused is : ${isWorkoutPaused}`);
+    console.log(`isWorkoutStarted is : ${isWorkoutStarted}`);
+    console.log(`1. remainingTime is : ${remainingTime}`);
     let timerId;
     if (
-      currentExerciseIndex < workoutData.exercises?.length &&
+      currentExerciseIndex < workoutData?.exercises?.length &&
       !isExerciseFinished &&
       !isWorkoutPaused &&
       isWorkoutStarted
     ) {
       setRemainingTime(workoutData.exercises[currentExerciseIndex].duration);
-      console.log(remainingTime)
+      console.log(`after setRemainingTime, Time is : ${remainingTime}`);
       timerId = setInterval(() => {
         setRemainingTime((prevTime) => {
+          console.log(`2. remainingTime is : ${remainingTime}`);
           if (prevTime === 1) {
             setIsExerciseFinished(true);
+            console.log("Exercise finished");
             setCurrentExerciseIndex((prevIndex) => {
               const newIndex = prevIndex + 1;
-              setRemainingTime(workoutData.exercises[newIndex].duration); // Reset the timer
+              console.log(`3. remainingTime is : ${remainingTime}`);
+              if (newIndex < workoutData.exercises.length) {
+                setRemainingTime(workoutData.exercises[newIndex].duration); // Reset the timer
+              }
               return newIndex;
             });
-
-            return workoutData.exercises[currentExerciseIndex].duration; // Reset the timer
           }
           return prevTime - 1;
         });
       }, 1000);
     } else if (
       isExerciseFinished &&
-      currentExerciseIndex >= workoutData.exercises.length
+      currentExerciseIndex >= workoutData.exercises.length 
     ) {
       setRemainingTime(0);
       setIsWorkoutFinished(true);
-      console.log("Workout finished");
+      console.log("exercise finished");
     }
     return () => clearInterval(timerId);
-  }, [currentExerciseIndex, isExerciseFinished, isWorkoutPaused]);
-
-  const dataForPauseModel = {
-    modal_id: "pause-modal",
-    modal_title: "Pause workout",
-    modal_description: "Your workout is paused",
-    isButtonOne: true,
-    isButtonTwo: true,
-    nameBtnOne: "Return to workout",
-    nameBtnTwo: "End workout",
-    setIsButtonOneClicked: setIsWorkoutPaused,
-    setIsButtonTwoClicked: setIsWorkoutFinished,
-    setIsModalClosed: setIsWorkoutPaused,
-  };
-
-  const dataForStopModel = {
-    modal_id: "stop-modal",
-    modal_title: "Stop workout",
-    modal_description: "Your workout is stopped",
-    isButtonOne: true,
-    isButtonTwo: true,
-    nameBtnOne: "Return to workout",
-    nameBtnTwo: "End workout",
-    setIsButtonOneClicked: setIsWorkoutPaused,
-    setIsButtonTwoClicked: setIsWorkoutFinished,
-    setIsModalClosed: setIsWorkoutPaused,
-  };
+  }, [
+    currentExerciseIndex,
+    isExerciseFinished,
+    isWorkoutPaused,
+    isWorkoutStarted,
+  ]);
 
   const handlePauseButton = () => {
     setIsModalOpen(true);
     console.log("Pause button clicked");
     console.log(isWorkoutPaused);
-    setIsWorkoutPaused(!isWorkoutPaused);
+    setIsWorkoutPaused(true);
   };
 
-  // function to start the timer
-  // function to pause the timer
-  // function to stop the timer
-  // function to skip to the next exersice
-  // function to go back to the previous exersice
-  // function to restart the workout
-  // function to end the workout
   // next button
-  // previous button exersice
   // music button to play music
   // sound button to mute the sound
   // timer
@@ -270,6 +203,7 @@ const WorkoutPlayer = () => {
                 setIsWorkoutFin={setIsWorkoutFinished}
                 setIsModalOp={setIsModalOpen}
                 isModalOpen={isModalOpen}
+                setIsWorkoutStarted={setIsWorkoutStarted}
               />
 
               <StaticModal
@@ -282,6 +216,7 @@ const WorkoutPlayer = () => {
                 setIsWorkoutFin={setIsWorkoutFinished}
                 setIsModalOp={setIsModalOpen}
                 isModalOpen={isModalOpen}
+                setIsWorkoutStarted={setIsWorkoutStarted}
               />
             </div>
 
@@ -297,7 +232,9 @@ const WorkoutPlayer = () => {
                 <img
                   alt="exercise"
                   className="lg:w-1/2 w-full sm:h-100 lg:h-auto h-100 object-cover object-center rounded"
-                  src={workoutData.exercises[currentExerciseIndex].exercise.image}
+                  src={
+                    workoutData.exercises[currentExerciseIndex].exercise.image
+                  }
                 ></img>
               ) : animationData ? (
                 <Lottie options={defaultOptions} />
@@ -315,10 +252,11 @@ const WorkoutPlayer = () => {
               </div>
               <div className="side panel">
                 <p>
-                  {currentExerciseIndex + 1 <
-                    workoutData.exercises.length && !isExerciseFinished
+                  {currentExerciseIndex + 1 < workoutData.exercises.length &&
+                  !isExerciseFinished
                     ? `Next exercise: ${
-                        workoutData.exercises[currentExerciseIndex + 1].exercise.name
+                        workoutData.exercises[currentExerciseIndex + 1].exercise
+                          .name
                       }`
                     : ""}
                 </p>

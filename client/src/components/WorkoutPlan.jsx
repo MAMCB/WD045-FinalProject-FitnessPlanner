@@ -1,8 +1,3 @@
-
-
-
-
-
 ("use client");
 import React from "react";
 import axios from "../axiosInstance";
@@ -15,9 +10,11 @@ const WorkoutPlan = () => {
   const [workout, setWorkout] = useState([]);
   const [userExercise, setUserExercise] = useState([]);
 
+
   const context = useContext(AuthContext);
   const navigate = useNavigate();
   
+  console.log(workout)
 
   useEffect(() => {
     axios
@@ -29,27 +26,34 @@ const WorkoutPlan = () => {
 useEffect(() => {
     axios
       .get(`/api/user/${context.user._id}`)
-      .then((res) => setUserExercise(res.data))
+      .then((res) => setUserExercise(res.data?.exercises))
       .catch((e) => console.error(e));
   }, []); 
+
+  const deleteWorkoutTask = (id) =>{
+    setWorkout((state)=>(state.filter(x=> x._id !== id)))
+  }
+
+  const deleteExerciseTask = (id) =>{
+    setUserExercise((state)=>(state.filter(x=>x._id !== id)))
+  }
 
   const deleteHandler = (id) =>{
     axios.delete(`/api/workoutPlan/${id}`)
     .then(res=> navigate(`/workoutPlan`))
     .catch(e=>console.error(e))
+    deleteWorkoutTask(id)
 }
-
 
 
 const deleteHandlerExercises = (id) =>{
   axios.delete(`/api/exercise/${id}`)
   .then(res=> navigate(`/workoutPlan`))
   .catch(e=>console.error(e))
-  console.log(`/api/exercises/${id}`)
+  deleteExerciseTask(id)
+ 
 }
  
-  
-
 
   return (
     <div className="py-[100px] bg-white border border-gray-200 rounded-lg dark:bg-gray-800 w-[100%] dark:border-gray-700 m-[10px]">
@@ -57,8 +61,8 @@ const deleteHandlerExercises = (id) =>{
         <div className='w-[50%] "bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700 m-[5px] '>
           {workout.map((workout) => {
             return (
-              <>
-                <div>
+              <div key={workout._id}>
+                <div className="my-[20px] bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
                   <div className="flex">
                     <div className="w-2/4 bg-white border border-gray-200 rounded-lg dark:bg-gray-800 p-10 dark:border-gray-700 m-[10px]">
                       <img
@@ -99,8 +103,8 @@ const deleteHandlerExercises = (id) =>{
                   </div>
                   {workout.exercises.map((x) => {
                     return (
-                      <>
-                        <Accordion className="m-[10px]">
+                      <div key={x.exercise._id}>
+                        <Accordion collapseAll className="m-[10px]">
                           <Accordion.Panel className="m-[10px]">
                             <Accordion.Title>
                               <span className="font-bold">Exercise name:</span>{" "}
@@ -138,6 +142,24 @@ const deleteHandlerExercises = (id) =>{
                                     <span className="font-bold">Rating:</span>{" "}
                                     {x.exercise.rating}
                                   </li>
+                                  <li>
+                                    <span className="font-bold">
+                                      Sets:
+                                    </span>{" "}
+                                    {x.sets}
+                                  </li>
+                                  <li>
+                                    <span className="font-bold">
+                                      Duration:
+                                    </span>{" "}
+                                    {x.duration}
+                                  </li>
+                                  <li>
+                                    <span className="font-bold">
+                                      Weights:
+                                    </span>{" "}
+                                    {x.weights}
+                                  </li>
                                 </ul>
                               </div>
                               <p className="mb-2 text-gray-500 dark:text-gray-400">
@@ -146,16 +168,16 @@ const deleteHandlerExercises = (id) =>{
                             </Accordion.Content>
                           </Accordion.Panel>
                         </Accordion>
-                      </>
+                      </div>
                     );
                   })}
                 </div>
-              </>
+              </div>
             );
           })}
         </div>
         <div className="w-[50%] m-[5px]">
-          {userExercise.exercises?.map((x) => {
+          {userExercise.map((x) => {
             return (
               <div
                 key={x._id}

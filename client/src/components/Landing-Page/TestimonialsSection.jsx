@@ -31,13 +31,13 @@ const TestimonialsSection = () => {
     ],
   };
   return (
-    <section className="relative bg-black-color py-[100px] overflow-hidden">
-      <h2 className="text-2xl lg:text-6xl text-center text-primary-color mb-[150px] uppercase font-bold">
+    <section className="relative bg-white shadow dark:bg-gray-900 py-[100px]">
+      <h2 className="text-2xl lg:text-6xl  text-center text-gray-500 mb-[30px] dark:text-gray-400 sm:mb-[150px] uppercase font-bold">
         Testimonials
       </h2>
 
       <Slider {...settings}>
-        <div className="border-box-shadow mb-8  p-8  border-2 text-primary-color button border-primary-color rounded-lg shadow">
+        <div className="border-box-shadow mb-8  p-8  border-2 text-gray-500 sm:mb-0 dark:text-gray-400 button border-primary-color rounded-lg shadow">
           <svg
             width={40}
             viewBox="0 0 47 38"
@@ -52,7 +52,7 @@ const TestimonialsSection = () => {
             />
           </svg>
 
-          <p className="font-normal text-primary-color mt-10 text-lg">
+          <p className="font-normal text-gray-500 sm:mb-0 dark:text-gray-400 mt-10 text-lg">
             As someone who is always on the go, this app has been a game-changer
             for my fitness journey. The workout plans are diverse and adaptable
             to my schedule, and the progress tracking keeps me motivated every
@@ -69,7 +69,7 @@ const TestimonialsSection = () => {
             <p className="ml-4">John Doe</p>
           </div>
         </div>
-        <div className="border-box-shadow mb-8  p-8  border-2 text-primary-color button border-primary-color rounded-lg shadow">
+        <div className="border-box-shadow mb-8  p-8  border-2 text-gray-500 sm:mb-0 dark:text-gray-400 button border-primary-color rounded-lg shadow">
           <svg
             width={40}
             viewBox="0 0 47 38"
@@ -84,7 +84,7 @@ const TestimonialsSection = () => {
             />
           </svg>
 
-          <p className="font-normal text-primary-color mt-10 text-lg">
+          <p className="font-normal text-gray-500 sm:mb-0 dark:text-gray-400 mt-10 text-lg">
             I have tried numerous fitness apps before, but none compare to this
             one. The exercise library is extensive, catering to both beginners
             and seasoned athletes. Plus, the nutritional guidance is a fantastic
@@ -101,7 +101,7 @@ const TestimonialsSection = () => {
             <p className="ml-4">John Doe</p>
           </div>
         </div>
-        <div className="border-box-shadow mb-8  p-8  border-2 text-primary-color button border-primary-color rounded-lg shadow">
+        <div className="border-box-shadow mb-8  p-8  border-2 text-gray-500 sm:mb-0 dark:text-gray-400 button border-primary-color rounded-lg shadow">
           <svg
             width={40}
             viewBox="0 0 47 38"
@@ -116,7 +116,7 @@ const TestimonialsSection = () => {
             />
           </svg>
 
-          <p className="font-normal text-primary-color mt-10 text-lg">
+          <p className="font-normal text-gray-500 sm:mb-0 dark:text-gray-400 mt-10 text-lg">
             Being a busy professional, finding time for the gym was a challenge
             until I discovered this app. With its customizable workout plans and
             quick, effective routines, I can squeeze in a session anytime,
@@ -133,7 +133,7 @@ const TestimonialsSection = () => {
             <p className="ml-4">John Doe</p>
           </div>
         </div>
-        <div className="border-box-shadow mb-8  p-8  border-2 text-primary-color button border-primary-color rounded-lg shadow">
+        <div className="border-box-shadow mb-8  p-8  border-2 text-gray-500 sm:mb-0 dark:text-gray-400 button border-primary-color rounded-lg shadow">
           <svg
             width={40}
             viewBox="0 0 47 38"
@@ -148,7 +148,7 @@ const TestimonialsSection = () => {
             />
           </svg>
 
-          <p className="font-normal text-primary-color mt-10 text-lg">
+          <p className="font-normal text-gray-500 sm:mb-0 dark:text-gray-400 mt-10 text-lg">
             I haveve been using this app to prep for my first bodybuilding
             competition, and I couldn't be happier with the results. The
             detailed workout plans and expert tips have helped me pack on muscle
@@ -166,7 +166,7 @@ const TestimonialsSection = () => {
             <p className="ml-4">John Doe</p>
           </div>
         </div>
-        <div className="border-box-shadow mb-8  p-8  border-2 text-primary-color button border-primary-color rounded-lg shadow">
+        <div className="border-box-shadow mb-8  p-8  border-2 text-gray-500 sm:mb-0 dark:text-gray-400 button border-primary-color rounded-lg shadow">
           <svg
             width={40}
             viewBox="0 0 47 38"
@@ -181,7 +181,7 @@ const TestimonialsSection = () => {
             />
           </svg>
 
-          <p className="font-normal text-primary-color mt-10 text-lg">
+          <p className="font-normal text-gray-500 sm:mb-0 dark:text-gray-400 mt-10 text-lg">
             Being a busy professional, finding time for the gym was a challenge
             until I discovered this app. With its customizable workout plans and
             quick, effective routines, I can squeeze in a session anytime,
@@ -198,7 +198,7 @@ const TestimonialsSection = () => {
             <p className="ml-4">John Doe</p>
           </div>
         </div>
-        <div className="border-box-shadow mb-8  p-8  border-2 text-primary-color button border-primary-color rounded-lg shadow">
+        <div className="border-box-shadow mb-8  p-8  border-2 text-gray-500 sm:mb-0 dark:text-gray-400 button border-primary-color rounded-lg shadow">
           <svg
             width={40}
             viewBox="0 0 47 38"
@@ -213,7 +213,7 @@ const TestimonialsSection = () => {
             />
           </svg>
 
-          <p className="font-normal text-primary-color mt-10 text-lg">
+          <p className="font-normal text-gray-500 sm:mb-0 dark:text-gray-400 mt-10 text-lg">
             After struggling to stay consistent with my fitness routine, this
             app has been a lifesaver. The intuitive interface makes it easy to
             track my progress and stay accountable, while the variety of

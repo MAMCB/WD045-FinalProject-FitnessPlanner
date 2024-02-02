@@ -120,7 +120,7 @@ const Exercise = () => {
   const SearchResult = () => <h2>{`Search exercises for ${search}`}</h2>;
   return (
     <>
-      <div className="container">
+      <div className="bg-white shadow dark:bg-gray-900 py-[100px]">
         <div className="flex justify-center">
           <h1 className="m-10 text-xl font-bold">Search for an exercise</h1>
         </div>

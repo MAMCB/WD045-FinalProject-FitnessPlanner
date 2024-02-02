@@ -57,6 +57,7 @@ const deleteWorkoutPlanById = async (req, res) => {
     try{
         const workoutPlanId = req.params.id;
         const deletedWorkoutPlan = await WorkoutPlan.findByIdAndDelete(workoutPlanId);
+        User.findByIdAndUpdate(req.user._id, { $pull: { workoutPlans: workoutPlanId } }, { new: true }).exec();
         if(!deletedWorkoutPlan){
             res.status(404).json({ message: `Workout Plan with id ${workoutPlanId} Not Found` });
 

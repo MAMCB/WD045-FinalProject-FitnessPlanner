@@ -1,18 +1,18 @@
-import React, { useEffect } from 'react'
+import React, { useEffect } from "react";
 import { Avatar, Dropdown, Navbar } from "flowbite-react";
-import { useContext, useState } from 'react'
+import { useContext, useState } from "react";
 import { AuthContext } from "../context/Auth";
-import logo from '../assets/Logo_!.png'
-import Profile from './Profile';
-import { NavLink } from 'react-router-dom';
+import logo from "../assets/Logo_!.png";
+import Profile from "./Profile";
+import { NavLink } from "react-router-dom";
 import axios from "../axiosInstance";
 
 const NavbarForHome = () => {
-    const context = useContext(AuthContext);
-    const [currentUser, setCurrentUser] = useState({
-    });
-  
-    useEffect(() => {
+  const context = useContext(AuthContext);
+  const [currentUser, setCurrentUser] = useState({});
+
+  useEffect(() => {
+    if (context.user) {
       axios
         .get(`api/user/${context.user._id}`)
         .then((res) => {
@@ -20,34 +20,32 @@ const NavbarForHome = () => {
           console.log(res.data);
         })
         .catch((e) => console.error(e));
-    }, []);
+    }
+  }, []);
 
-  
-  console.log(currentUser.profilePicture);
+  console.log(currentUser.profilePic);
 
   const [theme, setTheme] = useState("dark");
 
   useEffect(() => {
     if (theme === "dark") {
-        document.documentElement.classList.add('dark');
+      document.documentElement.classList.add("dark");
     } else {
-        document.documentElement.classList.remove('dark')
+      document.documentElement.classList.remove("dark");
     }
-  }
-  ,[theme])
+  }, [theme]);
 
   const handleToggleTheme = () => {
     setTheme(theme === "light" ? "dark" : "light");
-    console.log(theme)
-   };
-    
+    console.log(theme);
+  };
+
   const handleLogOut = () => {
     if (context) {
       context.logout();
     }
-  }
+  };
 
-  
   return (
     <Navbar fluid className="dark:bg-black">
       <Navbar.Brand href="/">
@@ -64,8 +62,8 @@ const NavbarForHome = () => {
             <Avatar
               alt="User settings"
               img={
-                currentUser.profilePicture
-                  ? currentUser.profilePicture
+                currentUser.profilePic
+                  ? currentUser.profilePic
                   : "https://lh6.googleusercontent.com/proxy/i3o6o_HVc0XQaPNEpxAVDJw1QyLH6LRIw_OxAKjhOm5lZQDimRQYyz9_vIGDpMnEliSpI6AKhSbDqvzc4zIDdg3Cx5HAaLvjhE0dfz-Wns9I89ULsgeG8w=s0-d"
               }
               rounded
@@ -130,8 +128,6 @@ const NavbarForHome = () => {
       </Navbar.Collapse>
     </Navbar>
   );
+};
 
-}
-
-
-export default NavbarForHome
+export default NavbarForHome;

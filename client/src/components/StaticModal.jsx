@@ -11,6 +11,7 @@ const StaticModal = ({
   nameBtnTwo,
   setisModalOpen,
   isModalOpen,
+  setIsWorkoutStarted,
 }) => {
   const HandleClosedBtn = () => {
     setIsModalOp(false);
@@ -27,12 +28,13 @@ const StaticModal = ({
       modal_title,
       nameBtnOne,
       nameBtnTwo,
-      setisModalOpen
+      setIsWorkoutStarted,
     );
   };
 
   const handleButtonTwo = () => {
     setIsWorkoutFin(true);
+    setIsWorkoutStarted(false);
   };
 
   return (

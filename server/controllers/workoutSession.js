@@ -63,6 +63,7 @@ const deleteWorkoutSessionById = async (req, res) => {
     try {
 const WorkoutSession = require('../models/workoutSession');
       const deletedWorkoutSessionById = await WorkoutSession.findOneAndDelete({ _id: id });
+      User.findByIdAndUpdate(req.user._id, { $pull: { workoutSessions: id } }, { new: true }).exec();
   
       if (!deletedWorkoutSessionById) {
         res.status(404).json({ message: `Workout session with id ${id} Not Found` });

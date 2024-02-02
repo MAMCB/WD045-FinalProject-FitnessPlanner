@@ -11,10 +11,10 @@ const Home = () => {
   const context = useContext(AuthContext);
 
   return (
-    <div className="dark:bg-black py-[100px]">
+    <div className="bg-white shadow dark:bg-gray-900 py-[100px]">
       <div className="container mx-auto mb-10">
         <div className="mb-12">
-          <h3 className="text-4xl text-center text-primary-color">Welcome Back {context.user.username}!</h3>
+          <h3 className="text-4xl text-center text-gray-500 sm:mb-0 dark:text-gray-400">Welcome Back {context.user.username}!</h3>
         </div>
         <div className="flex justify-center flex-wrap xl:center">
         <div className="h-[300px] w-[300px] mt-[50px] flex flex-col m-4 xl:m-8">
@@ -22,7 +22,7 @@ const Home = () => {
             <div className="h-full w-full">
               <img className="h-full w-full object-cover" src={workoutPlan} alt="workout-img" />
             </div>
-            <p className="text-primary-color text-lg text-center my-5">Your workouts</p>
+            <p className="text-gray-500 sm:mb-0 dark:text-gray-400 text-lg text-center my-5">Your workouts</p>
             </Link>
           </div>
           <div className="h-[300px] w-[300px] mt-[50px] flex flex-col m-4 xl:m-8">
@@ -30,7 +30,7 @@ const Home = () => {
             <div className="h-full w-full">
               <img className="h-full w-full object-cover" src={exerciseImg} alt="" />
             </div>
-            <p className="text-primary-color text-lg text-center my-5">Look for exercises</p>
+            <p className="text-gray-500 sm:mb-0 dark:text-gray-400 text-lg text-center my-5">Look for exercises</p>
             </Link>
           </div>
           <div className="h-[300px] w-[300px] mt-[50px] flex flex-col m-4 xl:m-8">
@@ -38,7 +38,7 @@ const Home = () => {
             <div className="h-full w-full">
               <img className="h-full w-full object-cover" src={writePlanImg} alt="" />
             </div>
-            <p className="text-primary-color text-lg text-center my-5" >Create new plan</p>
+            <p className="text-gray-500 sm:mb-0 dark:text-gray-400 text-lg text-center my-5" >Create new plan</p>
             </Link>
           </div>
         </div>

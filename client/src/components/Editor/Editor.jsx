@@ -128,7 +128,7 @@ const Editor = () => {
 
  
   return (
-    <>
+    <section className="bg-white shadow dark:bg-gray-900 py-[10px]">
       <h1 className="m-10  text-xl font-bold">Workout Plan Editor</h1>
       <div className="flex justify-center">
         <Button className="m-4" type="button" onClick={saveWorkout}>
@@ -139,7 +139,7 @@ const Editor = () => {
         </Button>
       </div>
 
-      <div className="flex justify-evenly dark:bg-black">
+      <div className="flex justify-evenly bg-white shadow dark:bg-gray-900 py-[100px]">
         <section className="w-1/3 mt-10">
           <h2>Your plan</h2>
           <div className="m-4 ">
@@ -267,7 +267,7 @@ const Editor = () => {
           </Tabs>
         </section>
       </div>
-    </>
+    </section>
   );
 };
 

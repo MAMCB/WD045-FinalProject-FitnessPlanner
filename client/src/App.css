@@ -11,7 +11,7 @@
     bottom: 0;
     left: 30%;
 }
-
+/*
 @font-face {
     font-family: "Roboto";
     src: url("../fonts/Roboto/Roboto-Regular.ttf");
@@ -23,26 +23,19 @@
   }
 
   h1,h2,h3,h4,h5,h6{
-    font-family: roboto;
+   font-family: roboto;
   }
   p{
     font-family: montserrat;
   }
+*/
 
-  button.button {
-    border-radius: 3px;
-    display: block;
-    background: linear-gradient(to right, #4FB5A9 50%, transparent 50%);
-    background-size: 200% 100%;
-    background-position: right bottom;
-    transition: all .5s ease-out;
+img.rounded-full.w-10.h-10{
+  object-fit: cover;
+}
 
-  }
-  
-  button.button:hover {
-    background-position: left bottom;
-   color: black;
-  }
+
+
 
   .border-box-shadow{
     box-shadow: 0px 0px 10px 0px #4FB5A9!important;
@@ -63,6 +56,13 @@
     left: 0;
     right: 0;
     background-color: rgba(0,0,0,.3);
+}
+
+#root {
+  min-height: calc(100vh - 70px);
+}
+footer {
+  height: 170px;
 }
 
 .slick-slide{

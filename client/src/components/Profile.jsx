@@ -29,7 +29,7 @@ const Profile = () => {
 
 
   return (
-    <div className="py-[100px]">
+    <div className="bg-white shadow dark:bg-gray-900 py-[100px]">
       <div key={currentUser._id} className="flex justify-center w-full">
         <div className="bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 w-[100%] dark:border-gray-700 m-[10px] md:w-[40%] ">
           <div className="flex justify-center items-center h-full">
@@ -100,7 +100,7 @@ const Profile = () => {
                   <div className="flex items-center ">
                     <div className="flex-1 min-w-0 ms-4">
                       <p className="text-lg font-medium text-gray-900 truncate dark:text-white">
-                        Height: {currentUser.height}
+                        Height: {currentUser.height} cm
                       </p>
                     </div>
                   </div>
@@ -109,7 +109,7 @@ const Profile = () => {
                   <div className="flex items-center ">
                     <div className="flex-1 min-w-0 ms-4">
                       <p className="text-lg font-medium text-gray-900 truncate dark:text-white">
-                        Weight: {currentUser.weight}
+                        Weight: {currentUser.weight} Kg
                       </p>
                     </div>
                   </div>

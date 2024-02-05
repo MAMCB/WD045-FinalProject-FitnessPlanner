@@ -100,7 +100,14 @@ const Editor = () => {
     console.log(workoutPlan);
     axiosInstance
       .post("/api/workoutPlan", workoutPlan)
-      .then((res) => console.log(res))
+      .then((res) =>{if(res.status===200){
+        alert("Workout plan saved successfully")
+        
+      }
+      else{
+        alert(res.data)
+      };
+   } )
       .then(navigate("/workoutPlan"))
       .catch((err) => console.log(err));
       window.location.reload();
@@ -143,7 +150,12 @@ const Editor = () => {
     <section className="bg-white shadow dark:bg-gray-900 py-[10px]">
       <h1 className="m-10  text-xl font-bold">Workout Plan Editor</h1>
       <div className="flex justify-center">
-        <Button className="m-4" type="button" onClick={saveWorkout} disabled={!planIsValid}>
+        <Button
+          className="m-4"
+          type="button"
+          onClick={saveWorkout}
+          disabled={!planIsValid}
+        >
           Save workout
         </Button>
         <Button className="m-4" type="button" onClick={saveDraft}>
@@ -272,7 +284,11 @@ const Editor = () => {
                   onChange={handleNewExercise}
                 />
               </div>
-              <Button className="m-auto" type="button" onClick={createNewExercise}>
+              <Button
+                className="m-auto"
+                type="button"
+                onClick={createNewExercise}
+              >
                 Create exercise
               </Button>
             </Tabs.Item>

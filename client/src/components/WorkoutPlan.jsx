@@ -57,9 +57,9 @@ const deleteHandlerExercises = (id) =>{
  
 
   return (
-    <div className="py-[100px] bg-white border border-gray-200 rounded-lg dark:bg-gray-800 w-[100%] dark:border-gray-700 m-[10px]">
-      <div className="flex">
-        <div className='w-[50%] "bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700 m-[5px] '>
+    <div className="w-[100%] bg-white shadow dark:bg-gray-900 py-[100px]">
+      <div className="flex flex-wrap justify-between">
+        <div className='w-[100%] lg:w-[49%] "bg-white shadow dark:bg-gray-800 m-[5px]'>
           {workout.map((workout) => {
             return (
               <div key={workout._id}>
@@ -67,7 +67,7 @@ const deleteHandlerExercises = (id) =>{
                   <div className="flex">
                     <div className="w-2/4 bg-white border border-gray-200 rounded-lg dark:bg-gray-800 p-10 dark:border-gray-700 m-[10px]">
                       <img
-                        className="rounded-lg"
+                        className="rounded-lg object-contein"
                         src={workout.image}
                         alt="workout img"
                       />
@@ -77,7 +77,7 @@ const deleteHandlerExercises = (id) =>{
                       <p>Goal: {workout.goal}</p>
                       <p>Difficulty: {workout.difficulty}</p>
                       <p>Rating: {workout.rating}</p>
-                      <div>
+                      <div className="mt-4">
                       <Link
                         to={`/workoutPlayer/${workout._id}`}
                           type="button"
@@ -115,7 +115,7 @@ const deleteHandlerExercises = (id) =>{
                               <div className="flex">
                                 <div className="w-[60%] bg-white border border-gray-200 rounded-lg dark:bg-gray-800 p-2 dark:border-gray-700 m-[10px]">
                                   <img
-                                    className="rounded-lg"
+                                    className="rounded-lg object-contein"
                                     src={x.exercise.image}
                                     alt="exercise-image"
                                   />
@@ -177,22 +177,22 @@ const deleteHandlerExercises = (id) =>{
             );
           })}
         </div>
-        <div className="w-[50%] m-[5px]">
+        <div className="w-[100%] lg:w-[49%] m-[5px]">
           {userExercise.map((x) => {
             return (
               <div
                 key={x._id}
-                className="p-2 mb-[15px] bg-white border border-gray-200 rounded-lg dark:bg-gray-800 dark:border-gray-700"
+                className="p-[10px] mb-[15px] bg-white border border-gray-200 rounded-lg dark:bg-gray-800 dark:border-gray-700"
               >
                 <div className="flex">
-                  <div className="w-[300px] h-[300px] mr-[10px] mb-[10px] bg-white border border-gray-200 p-2 rounded-lg dark:bg-gray-800 dark:border-gray-700">
+                  <div className="w-[60%] h-[300px] mr-[10px] bg-white border border-gray-200 p-4 rounded-lg dark:bg-gray-800 dark:border-gray-700">
                     <img
-                      className="w-full h-full rounded-lg"
+                      className="w-full h-full rounded-lg object-contein"
                       src={x.image}
                       alt="exercise image"
                     />
                   </div>
-                  <div>
+                  <div className="w-[40%]  bg-white border border-gray-200 p-4 rounded-lg dark:bg-gray-800 dark:border-gray-700">
                     <p>
                       <span className="font-bold">Exercises Name: </span>
                       {x.name}
@@ -213,7 +213,7 @@ const deleteHandlerExercises = (id) =>{
                       <span className="font-bold">Rating: </span>
                       {x.rating}
                     </p>
-                    <div>
+                    <div className="mt-4">
                         <Link
                         to={`/editExercise/${x._id}`}
                           type="button"
@@ -231,7 +231,7 @@ const deleteHandlerExercises = (id) =>{
                       </div>
                   </div>
                 </div>
-                <p>{x.description}</p>
+                <p className="mt-[15px]">{x.description}</p>
               </div>
             );
           })}

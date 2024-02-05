@@ -5,18 +5,18 @@ import workoutIcon from "../../assets/workout.svg";
 
 const PresentationSection = () => {
   return (
-    <section className="relative bg-black-color py-[100px]">
+    <section className="relativebg-white shadow dark:bg-gray-900 py-[100px]">
       <div className="flex container mx-auto">
         <div className="flex flex-col mx-auto md:flex-row">
         <div className="w-full my-10 pr-[0px] md:w-3/5 lg:pr-[50px] md:pr-[15px]">
-          <h2 className="text-primary-color mb-[50px] uppercase text-xl  font-bold lg:text-6xl">
+          <h2 className="text-gray-500 sm:mb-0 dark:text-gray-400 mb-[50px] uppercase text-xl  font-bold lg:text-6xl">
             Start
-            <span className="rounded-xl bottom-[0px] m-2 py-0 px-2 relative inline-block  border border-primary-color sm:text-xl lg:text-2xl lg:m-3 lg:py-1 lg:px-6 lg:bottom-[15px]">
+            <span className="rounded-xl bottom-[0px] m-2 py-0 px-2 relative border-2 border-box-shadow inline-block sm:text-xl lg:text-2xl lg:m-3 lg:py-1 lg:px-6 lg:bottom-[15px]">
               transforming
             </span>
             your fitness journey today
           </h2>
-          <p className="text-primary-color text-xl">
+          <p className="text-gray-500 sm:mb-0 dark:text-gray-400 text-xl">
             The ultimate app for accessing top-notch personal trainers who will
             help you reach your fitness goals. Whether you're a beginner or an
             experienced fitness enthusiast, our team of certified coaches is
@@ -31,7 +31,7 @@ const PresentationSection = () => {
               <div className="h-24 w-24 mr-auto ml-auto mb-4">
               <img className="h-full w-full text-center" src={timeIcon} alt=" "/>
               </div>
-              <p className="font-normal text-primary-color text-center">
+              <p className="font-normal text-gray-500 sm:mb-0 dark:text-gray-400 text-center">
                 Track Your Achievement.
               </p>
             </div>
@@ -39,7 +39,7 @@ const PresentationSection = () => {
             <div className="h-24 w-24 mr-auto ml-auto mb-4">
             <img className="h-full w-full" src={workoutIcon} alt="" />
             </div>
-              <p className="font-normal text-primary-color text-center">
+              <p className="font-normal text-gray-500 sm:mb-0 dark:text-gray-400 text-center">
                 Track Your Achievement.
               </p>
             </div>
@@ -47,14 +47,14 @@ const PresentationSection = () => {
               <div className="h-24 w-24 mr-auto ml-auto mb-4">
             <img className="h-full w-full" src={timeIcon} alt="" />
             </div>
-              <p className="font-normal text-primary-color text-center">
+              <p className="font-normal text-gray-500 sm:mb-0 dark:text-gray-400 text-center">
                 Track Your Achievement.
               </p>
             </div>
           </div>
         </div>
         <div className="w-full md:w-2/5">
-          <div className="h-[800px] border-2 rounded-lg border-box-shadow  border-primary-color">
+          <div className="h-[800px] border-2 rounded-lg border-box-shadow">
             <img
               className="h-[100%] width-[100%] object-cover rounded-lg"
               src={bodyBuilding}

@@ -100,17 +100,17 @@ const Editor = () => {
     console.log(workoutPlan);
     axiosInstance
       .post("/api/workoutPlan", workoutPlan)
-      .then((res) =>{if(res.status===200){
-        alert("Workout plan saved successfully")
+      .then((res) =>{
         
-      }
-      else{
-        alert(res.data)
-      };
+        alert("Workout plan saved successfully")
+        navigate("/workoutPlan");
+        
+     
    } )
-      .then(navigate("/workoutPlan"))
-      .catch((err) => console.log(err));
-      window.location.reload();
+     // .then(navigate("/workoutPlan"))
+      .catch((err) => {console.log(err);
+      alert(err.response.data.message);});
+      //window.location.reload();
   };
 
   const removeExercise = (index) => {

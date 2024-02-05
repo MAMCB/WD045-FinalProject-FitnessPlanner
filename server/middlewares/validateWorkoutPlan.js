@@ -6,10 +6,11 @@ const validateWorkoutPlan = (req, res, next) => {
     exerciseDuration,
     exercises
   } = req.body;
+  console.log(req.body);
 
   if (
-    !name ||
-    !goal ||
+    name==="" ||
+    goal==="" ||
     exercises.length === 0 ||
     restDuration <= 0 ||
     exerciseDuration <= 0

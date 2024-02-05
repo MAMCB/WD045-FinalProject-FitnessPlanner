@@ -2,6 +2,7 @@ const WorkoutPlan = require('../models/workoutPlan');
 const User = require('../models/user');
 
 const createWorkoutPlan = async (req, res) => {
+   
     try{
         const newWorkoutPlan = await WorkoutPlan.create({
           ...req.body,

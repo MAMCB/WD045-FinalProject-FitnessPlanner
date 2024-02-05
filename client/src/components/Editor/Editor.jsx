@@ -28,6 +28,7 @@ const Editor = () => {
   const navigate = useNavigate();
   const [newExercise, setNewExercise] = useState(null);
   const [exerciseCreated, setExerciseCreated] = useState([]);
+  const [planIsValid, setPlanIsValid] = useState(false);
   const [workoutPlan, setWorkoutPlan] = useState({
     name: "",
     goal: "",
@@ -69,6 +70,10 @@ const Editor = () => {
     
   }, [blocks]);
 
+  useEffect(() => {
+    validatePlan();
+  }, [workoutPlan]);
+
   const handlePlan = (e) => {
     setWorkoutPlan((prev) => ({ ...prev, [e.target.id]: e.target.value }));
   };
@@ -95,10 +100,17 @@ const Editor = () => {
     console.log(workoutPlan);
     axiosInstance
       .post("/api/workoutPlan", workoutPlan)
-      .then((res) => console.log(res))
-      .then(navigate("/workoutPlan"))
-      .catch((err) => console.log(err));
-      window.location.reload();
+      .then((res) =>{
+        
+        alert("Workout plan saved successfully")
+        navigate("/workoutPlan");
+        
+     
+   } )
+     // .then(navigate("/workoutPlan"))
+      .catch((err) => {console.log(err);
+      alert(err.response.data.message);});
+      //window.location.reload();
   };
 
   const removeExercise = (index) => {
@@ -123,6 +135,13 @@ const Editor = () => {
     axiosInstance.post("/api/exercise", newExercise).then((res) => { setExerciseCreated((prev)=>[...prev,res.data])}).then(alert("New exercise created")).catch((err) => console.log(err));
   };
 
+  const validatePlan = () => {
+    if (workoutPlan.name === "" || workoutPlan.goal === "" || workoutPlan.exercises.length === 0 || workoutPlan.restDuration <= 0 || workoutPlan.exerciseDuration <= 0) {
+      return setPlanIsValid(false);
+    }
+    return setPlanIsValid(true);
+  };
+
   const saveDraft = () => {
   };
 
@@ -131,7 +150,12 @@ const Editor = () => {
     <section className="bg-white shadow dark:bg-gray-900 py-[10px]">
       <h1 className="m-10  text-xl font-bold">Workout Plan Editor</h1>
       <div className="flex justify-center">
-        <Button className="m-4" type="button" onClick={saveWorkout}>
+        <Button
+          className="m-4"
+          type="button"
+          onClick={saveWorkout}
+          disabled={!planIsValid}
+        >
           Save workout
         </Button>
         <Button className="m-4" type="button" onClick={saveDraft}>
@@ -260,7 +284,11 @@ const Editor = () => {
                   onChange={handleNewExercise}
                 />
               </div>
-              <Button className="m-auto" type="button" onClick={createNewExercise}>
+              <Button
+                className="m-auto"
+                type="button"
+                onClick={createNewExercise}
+              >
                 Create exercise
               </Button>
             </Tabs.Item>

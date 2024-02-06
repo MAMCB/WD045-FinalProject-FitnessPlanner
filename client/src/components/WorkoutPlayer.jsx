@@ -22,8 +22,28 @@ const WorkoutPlayer = () => {
   const [isExerciseFinished, setIsExerciseFinished] = useState(false);
   const [animationData, setAnimationData] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
-
   // new code
+
+let arrayEx = [];
+
+useEffect(() => {
+  if (!workoutData) {
+    return;
+  }
+  console.log(workoutData);
+  const ArrayofExer = workoutData.exercises;
+  console.log(ArrayofExer);
+  ArrayofExer.forEach((exer) => {
+    if (exer.sets > 1) {
+      for (let i = 0; i < exer.sets; i++) {
+        arrayEx.push(exer);
+      }
+    } else {
+      arrayEx.push(exer);
+    }
+  });
+  console.log(arrayEx);
+}, [workoutData]);
 
 
 

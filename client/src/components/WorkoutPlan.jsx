@@ -5,7 +5,7 @@ import { useState, useEffect, useContext } from "react";
 import { AuthContext } from "../context/Auth";
 import { Accordion } from "flowbite-react";
 import { Link, useParams, useNavigate } from "react-router-dom";
-import { Select } from "flowbite-react";
+import { Select,Button } from "flowbite-react";
 
 const WorkoutPlan = () => {
   const [workout, setWorkout] = useState([]);
@@ -72,6 +72,14 @@ const handleVersionChange = (index) => (e) => {
   newVersion[index] = Number(e.target.value)
   setWorkoutVersion(newVersion)
   ;}
+
+  const createNewVersion = (index) => ()=>{
+    console.log("creating new version")
+    axios
+      .put(`/api/workoutPlan/${workout[index]._id}/version`, {...workout[index],exercises:workout[index].exercises.map(x=>({...x,weights:10}))})
+      .then((res) => console.log(res))
+      .catch((e) => console.error(e));
+  }
  
 
   return (
@@ -124,6 +132,7 @@ const handleVersionChange = (index) => (e) => {
                             <option key={Math.random()*100} value={Number(i)}>{x.name}</option>
                           ))}
                         </Select>
+                          <Button onClick={createNewVersion(index)}>Create new Version</Button>
                       </div>
                     </div>
                   </div>

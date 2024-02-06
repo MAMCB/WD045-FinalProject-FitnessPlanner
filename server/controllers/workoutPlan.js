@@ -71,5 +71,35 @@ catch(error){
     res.status(500).json({ message: error.message });
 }}
 
-module.exports = {createWorkoutPlan,getAllWorkoutPlans,getWorkoutPlanById,updateWorkoutPlanById,deleteWorkoutPlanById};
+const createNewVersion = async (req, res) => {
+    try{
+        const workoutPlanId = req.params.id;
+        const workoutPlan = await WorkoutPlan.findById(workoutPlanId);
+       
+        if(!workoutPlan){
+            res.status(404).json({ message: `Workout Plan with id ${workoutPlanId} Not Found` });
+        }
+        else{
+            const workoutPlan = await WorkoutPlan.findById(workoutPlanId);
+            const newVersion = await WorkoutPlan.findByIdAndUpdate(
+              workoutPlanId,
+              {
+                $push: {
+                  planVersions: {
+                    ...req.body,
+                    name: `${req.body.name} -V${workoutPlan.planVersions.length}`,
+                    createdDay: new Date(),
+                  },
+                },
+              },
+              { new: true }
+            );
+            res.status(201).json(newVersion);
+        }
+    }catch(error){
+        res.status(500).json({ message: error.message });
+    }
+};
+
+module.exports = {createWorkoutPlan,getAllWorkoutPlans,getWorkoutPlanById,updateWorkoutPlanById,deleteWorkoutPlanById,createNewVersion};
 

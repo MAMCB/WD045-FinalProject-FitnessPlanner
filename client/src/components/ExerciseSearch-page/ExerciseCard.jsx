@@ -44,7 +44,7 @@ const ExerciseCard = ({ exercise, user, addExercise,inPlan,remove,blocks}) => {
   const handleSave = () => {
     const newExercise = {
       userId: context.user._id,
-      name: exercise.name,
+      name: exercise.name.replace("/", ""),
       image: exercise.gifUrl,
       muscleGroup: exercise.target,
       equipment: exercise.equipment,

@@ -11,7 +11,7 @@ const PresentationSection = () => {
         <div className="w-full my-10 pr-[0px] md:w-3/5 lg:pr-[50px] md:pr-[15px]">
           <h2 className="text-gray-500 sm:mb-0 dark:text-gray-400 mb-[50px] uppercase text-xl  font-bold lg:text-6xl">
             Start
-            <span className="rounded-xl bottom-[0px] m-2 py-0 px-2 relative border-2 border-box-shadow inline-block sm:text-xl lg:text-2xl lg:m-3 lg:py-1 lg:px-6 lg:bottom-[15px]">
+            <span className="rounded-xl bottom-[0px] m-2 py-0 px-2 relative border-2   border-box-shadow inline-block sm:text-xl lg:text-2xl lg:m-3 lg:py-1 lg:px-6 lg:bottom-[15px]">
               transforming
             </span>
             your fitness journey today

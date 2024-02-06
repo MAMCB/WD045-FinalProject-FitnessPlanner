@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
 const bcrypt = require("bcrypt");
-
+const cloudinary = require("../config/cloudinary");
+const fs = require("fs")
 const userSchema = new mongoose.Schema(
   {
     username: {
@@ -60,15 +61,15 @@ userSchema.virtual("confirmPassword")
   .set((value) => (this._confirmPassword = value));
 
   userSchema.pre("validate", function (next) {
+    
     if (this.password !== this.confirmPassword) {
       this.invalidate("confirmPassword", "Passwords must match!!!");
       console.log("Passwords don't match!");
     }
     next();
   });
-
   userSchema.pre("save", async function (next) {
-    console.log("in pre save");
+    if (!this.isModified("password")) return next();
     //hash the password BEFORE it's saved to the db
     //Remember, we know they match from middleware above
     try {
@@ -80,6 +81,26 @@ userSchema.virtual("confirmPassword")
     } catch (error) {
       console.log("IS THERE ANY ERROR", error);
     }
+
+  })
+
+   userSchema.pre("findOneAndUpdate", async function (next) {
+    if(!this.getUpdate().profilePic) {return next()}
+     try{
+       const options = {
+         public_id:this._id,
+         folder:process.env.CLOUDINARY_USER_FOLDER_NAME,
+       }
+       const imagePath = this.getUpdate().profilePic;
+       const res = await cloudinary.uploader.upload(imagePath, options);
+       console.log('res.secure_url',res.secure_url)
+       this.getUpdate().profilePic=res.secure_url;
+       fs.unlinkSync(imagePath);
+       next();
+     }catch(e){
+       console.log('error', e.message)
+       next(e.message)
+     }
   });
 
   const User = mongoose.model("User", userSchema);

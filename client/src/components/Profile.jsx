@@ -1,25 +1,28 @@
-import { useContext, useState,useEffect } from "react";
+import { useContext, useState, useEffect } from "react";
 import { AuthContext } from "../context/Auth";
-import {Link} from 'react-router-dom'
+import { Link } from "react-router-dom";
 import axios from "../axiosInstance";
 import React from "react";
-
-
+import { useNavigate } from "react-router-dom";
 
 const Profile = () => {
   const context = useContext(AuthContext);
   const [currentUser, setCurrentUser] = useState({
-    username:context.user.username,
+    username: context.user.username,
   });
-    useEffect(() => {
-      axios
-        .get(`api/user/${context.user._id}`)
-        .then((res) => {
-          setCurrentUser(res.data);
-          console.log(res.data);
-        })
-        .catch((e) => console.error(e));
-    }, []);
+
+const navigate = useNavigate();
+
+
+  useEffect(() => {
+    axios
+      .get(`api/user/${context.user._id}`)
+      .then((res) => {
+        setCurrentUser(res.data);
+        console.log(res.data);
+      })
+      .catch((e) => console.error(e));
+  }, []);
   let day = new Date(currentUser.joinedDate);
 
   let date = day.getDate();
@@ -44,7 +47,7 @@ const Profile = () => {
                   <p>Username: {currentUser.username}</p>
                 </h5>
                 <span className="text-sm text-gray-500 dark:text-gray-400"></span>
-                <div className="flex mt-4 md:mt-6">
+                <div className="flex mt-4 md:mt-6 flex-wrap">
                   <Link
                     to={`/EditProfile/${currentUser._id}`}
                     className="inline-flex items-center px-4 py-2 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"

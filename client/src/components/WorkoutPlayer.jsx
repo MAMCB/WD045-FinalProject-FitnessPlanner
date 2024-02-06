@@ -31,7 +31,6 @@ useEffect(() => {
   }
   console.log(workoutData);
   const ArrayofExer = workoutData.exercises;
-  console.log(ArrayofExer);
   let newArrayEx = [];
   ArrayofExer.forEach((exer) => {
     if (exer.sets > 1) {
@@ -43,7 +42,6 @@ useEffect(() => {
     }
   });
   setArrayEx(newArrayEx);
-  console.log(arrayEx);
 }, [workoutData]);
 
 

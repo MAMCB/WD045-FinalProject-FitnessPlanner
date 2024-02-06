@@ -60,6 +60,7 @@ const deleteHandlerExercises = (id) =>{
     <div className="w-[100%] bg-white shadow dark:bg-gray-900 py-[100px]">
       <div className="flex flex-wrap justify-between">
         <div className='w-[100%] lg:w-[49%] "bg-white shadow dark:bg-gray-800 m-[5px]'>
+          <h2 className="text-xl">Your Workout plans</h2>
           {workout.map((workout) => {
             return (
               <div key={workout._id}>
@@ -67,7 +68,7 @@ const deleteHandlerExercises = (id) =>{
                   <div className="flex">
                     <div className="w-2/4 bg-white border border-gray-200 rounded-lg dark:bg-gray-800 p-10 dark:border-gray-700 m-[10px]">
                       <img
-                        className="rounded-lg object-contein"
+                        className="rounded-lg object-contain"
                         src={workout.image}
                         alt="workout img"
                       />
@@ -78,22 +79,22 @@ const deleteHandlerExercises = (id) =>{
                       <p>Difficulty: {workout.difficulty}</p>
                       <p>Rating: {workout.rating}</p>
                       <div className="mt-4">
-                      <Link
-                        to={`/workoutPlayer/${workout._id}`}
+                        <Link
+                          to={`/workoutPlayer/${workout._id}`}
                           type="button"
                           className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800"
                         >
                           Play
                         </Link>
                         <Link
-                        to={`/workoutPlan/${workout._id}`}
+                          to={`/workoutPlan/${workout._id}`}
                           type="button"
                           className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800"
                         >
                           Edit
                         </Link>
                         <Link
-                        onClick={()=>deleteHandler(`${workout._id}`)}
+                          onClick={() => deleteHandler(`${workout._id}`)}
                           type="button"
                           className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800"
                         >
@@ -115,7 +116,7 @@ const deleteHandlerExercises = (id) =>{
                               <div className="flex">
                                 <div className="w-[60%] bg-white border border-gray-200 rounded-lg dark:bg-gray-800 p-2 dark:border-gray-700 m-[10px]">
                                   <img
-                                    className="rounded-lg object-contein"
+                                    className="rounded-lg object-contain"
                                     src={x.exercise.image}
                                     alt="exercise-image"
                                   />
@@ -144,21 +145,15 @@ const deleteHandlerExercises = (id) =>{
                                     {x.exercise.rating}
                                   </li>
                                   <li>
-                                    <span className="font-bold">
-                                      Sets:
-                                    </span>{" "}
+                                    <span className="font-bold">Sets:</span>{" "}
                                     {x.sets}
                                   </li>
                                   <li>
-                                    <span className="font-bold">
-                                      Duration:
-                                    </span>{" "}
+                                    <span className="font-bold">Duration:</span>{" "}
                                     {x.duration}
                                   </li>
                                   <li>
-                                    <span className="font-bold">
-                                      Weights:
-                                    </span>{" "}
+                                    <span className="font-bold">Weights:</span>{" "}
                                     {x.weights}
                                   </li>
                                 </ul>
@@ -178,6 +173,7 @@ const deleteHandlerExercises = (id) =>{
           })}
         </div>
         <div className="w-[100%] lg:w-[49%] m-[5px]">
+          <h2 className="text-xl">Your exercises</h2>
           {userExercise.map((x) => {
             return (
               <div
@@ -187,7 +183,7 @@ const deleteHandlerExercises = (id) =>{
                 <div className="flex">
                   <div className="w-[60%] h-[300px] mr-[10px] bg-white border border-gray-200 p-4 rounded-lg dark:bg-gray-800 dark:border-gray-700">
                     <img
-                      className="w-full h-full rounded-lg object-contein"
+                      className="w-full h-full rounded-lg object-contain"
                       src={x.image}
                       alt="exercise image"
                     />
@@ -214,21 +210,21 @@ const deleteHandlerExercises = (id) =>{
                       {x.rating}
                     </p>
                     <div className="mt-4">
-                        <Link
+                      <Link
                         to={`/editExercise/${x._id}`}
-                          type="button"
-                          className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800"
-                        >
-                          Edit
-                        </Link>
-                        <Link
-                        onClick={()=>deleteHandlerExercises(`${x._id}`)}
-                          type="button"
-                          className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800"
-                        >
-                          Delete
-                        </Link>
-                      </div>
+                        type="button"
+                        className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800"
+                      >
+                        Edit
+                      </Link>
+                      <Link
+                        onClick={() => deleteHandlerExercises(`${x._id}`)}
+                        type="button"
+                        className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800"
+                      >
+                        Delete
+                      </Link>
+                    </div>
                   </div>
                 </div>
                 <p className="mt-[15px]">{x.description}</p>

@@ -5,9 +5,12 @@ import { useState, useEffect, useContext } from "react";
 import { AuthContext } from "../context/Auth";
 import { Accordion } from "flowbite-react";
 import { Link, useParams, useNavigate } from "react-router-dom";
+import { Select } from "flowbite-react";
 
 const WorkoutPlan = () => {
   const [workout, setWorkout] = useState([]);
+  const [workoutVersion, setWorkoutVersion] = useState([]);
+ 
   const [userExercise, setUserExercise] = useState([]);
 
 
@@ -15,11 +18,14 @@ const WorkoutPlan = () => {
   const navigate = useNavigate();
   
   console.log(workout)
+  useEffect(() => {
+    console.log(workoutVersion)},[workoutVersion])
 
   useEffect(() => {
     axios
       .get("/api/workoutPlan")
       .then((res) => setWorkout(res.data))
+      
       .catch((e) => console.error(e));
   }, []);
 
@@ -29,6 +35,10 @@ useEffect(() => {
       .then((res) => setUserExercise(res.data?.exercises))
       .catch((e) => console.error(e));
   }, []); 
+
+  useEffect(() => {
+    setWorkoutVersion([...Array(workout.length).fill(0)])
+  }, [workout])
 
   const deleteWorkoutTask = (id) =>{
     setWorkout((state)=>(state.filter(x=> x._id !== id)))
@@ -54,6 +64,14 @@ const deleteHandlerExercises = (id) =>{
   deleteExerciseTask(id)
  
 }
+
+const handleVersionChange = (index) => (e) => {
+  console.log(e.target.value)
+  console.log(index)
+  const newVersion = [...workoutVersion]
+  newVersion[index] = Number(e.target.value)
+  setWorkoutVersion(newVersion)
+  ;}
  
 
   return (
@@ -61,7 +79,7 @@ const deleteHandlerExercises = (id) =>{
       <div className="flex flex-wrap justify-between">
         <div className='w-[100%] lg:w-[49%] "bg-white shadow dark:bg-gray-800 m-[5px]'>
           <h2 className="text-xl">Your Workout plans</h2>
-          {workout.map((workout) => {
+          {workout.map((workout,index) => {
             return (
               <div key={workout._id}>
                 <div className="my-[20px] bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
@@ -80,7 +98,7 @@ const deleteHandlerExercises = (id) =>{
                       <p>Rating: {workout.rating}</p>
                       <div className="mt-4">
                         <Link
-                          to={`/workoutPlayer/${workout._id}`}
+                          to={`/workoutPlayer/${workout._id}/${workoutVersion[index]}`}
                           type="button"
                           className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800"
                         >
@@ -100,6 +118,12 @@ const deleteHandlerExercises = (id) =>{
                         >
                           Delete
                         </Link>
+                        <Select onChange={handleVersionChange(index)}>
+                          <option>Choose a plan</option>
+                          {workout.planVersions.map((x,i) => (
+                            <option key={Math.random()*100} value={Number(i)}>{x.name}</option>
+                          ))}
+                        </Select>
                       </div>
                     </div>
                   </div>

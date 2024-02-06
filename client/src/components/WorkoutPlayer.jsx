@@ -12,6 +12,7 @@ import { useParams } from "react-router-dom";
 
 const WorkoutPlayer = () => {
   const id = useParams();
+  const version = useParams();
   const [workoutData, setWorkoutData] = useState(null);
   const [currentExerciseIndex, setCurrentExerciseIndex] = useState(0);
   const [remainingTime, setRemainingTime] = useState(0);
@@ -23,14 +24,25 @@ const WorkoutPlayer = () => {
   const [animationData, setAnimationData] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [arrayEx, setArrayEx] = useState([]);
+  const[planVersion,setPlanVersion] = useState(0);
   // new code
+useEffect(() => {
+  console.log(version.version);
+  if(version.version){
+    console.log(version.version);
+    console.log("version found");
+    setPlanVersion(version.version);
+  }
+    
+    
+  },[]);
 
 useEffect(() => {
   if (!workoutData) {
     return;
   }
-  console.log(workoutData);
-  const ArrayofExer = workoutData.exercises;
+  console.log(workoutData.planVersions[planVersion]);
+  const ArrayofExer = workoutData.planVersions[planVersion].exercises;
   let newArrayEx = [];
   ArrayofExer.forEach((exer) => {
     if (exer.sets > 1) {
@@ -91,7 +103,9 @@ useEffect(() => {
     ) {
       console.log("Relax time");
       if (remainingTimeInRest === 0) {
-        setRemainingTimeInRest(workoutData.restDuration);
+        setRemainingTimeInRest(
+          workoutData.planVersions[planVersion].restDuration
+        );
       }
 
       restTimerId = setInterval(() => {
@@ -214,7 +228,9 @@ useEffect(() => {
             </div>
           </section>
         </>
-      ) : !isWorkoutFinished && isWorkoutStarted && workoutData !== undefined ? (
+      ) : !isWorkoutFinished &&
+        isWorkoutStarted &&
+        workoutData.planVersions[planVersion] !== undefined ? (
         <section className="p-5 mx-auto body-font dark:bg-gray-900 min-h-100">
           <div className="container mx-auto flex flex-col gap-3 h-full">
             <div className="flex  mb-4 gap-2">

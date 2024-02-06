@@ -6,6 +6,7 @@ const workoutSessionSchema = new mongoose.Schema({
         ref: "WorkoutPlan",
         required: true,
     },
+    version: {type: Number, required: true, default: 0},
     finishedDate: {type: Date, required: true},
     completed: {type: Boolean, required: true, default: false},
     comments: {type: [String], required: true, default: []},  

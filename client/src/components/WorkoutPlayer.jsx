@@ -22,9 +22,8 @@ const WorkoutPlayer = () => {
   const [isExerciseFinished, setIsExerciseFinished] = useState(false);
   const [animationData, setAnimationData] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [arrayEx, setArrayEx] = useState([]);
   // new code
-
-let arrayEx = [];
 
 useEffect(() => {
   if (!workoutData) {
@@ -33,15 +32,17 @@ useEffect(() => {
   console.log(workoutData);
   const ArrayofExer = workoutData.exercises;
   console.log(ArrayofExer);
+  let newArrayEx = [];
   ArrayofExer.forEach((exer) => {
     if (exer.sets > 1) {
       for (let i = 0; i < exer.sets; i++) {
-        arrayEx.push(exer);
+        newArrayEx.push(exer);
       }
     } else {
-      arrayEx.push(exer);
+      newArrayEx.push(exer);
     }
   });
+  setArrayEx(newArrayEx);
   console.log(arrayEx);
 }, [workoutData]);
 
@@ -78,14 +79,15 @@ useEffect(() => {
   };
 
   useEffect(() => {
-    if (!workoutData) {
+    if (!workoutData && !arrayEx.length > 0) {
       return;
     }
 
     let restTimerId;
+    console.log(arrayEx.length);
     if (
       isExerciseFinished &&
-      currentExerciseIndex < workoutData.exercises.length &&
+      currentExerciseIndex < arrayEx.length &&
       !isWorkoutPaused &&
       isWorkoutStarted
     ) {
@@ -114,27 +116,27 @@ useEffect(() => {
     if (!workoutData) {
       return;
     }
-    console.log(`currentExerciseIndex is : ${currentExerciseIndex}`);
+    /* console.log(`currentExerciseIndex is : ${currentExerciseIndex}`);
     console.log(`isExerciseFinished is : ${isExerciseFinished}`);
     console.log(`isWorkoutPaused is : ${isWorkoutPaused}`);
     console.log(`isWorkoutStarted is : ${isWorkoutStarted}`);
-    console.log(`1. remainingTime is : ${remainingTime}`);
+    console.log(`1. remainingTime is : ${remainingTime}`); */
     let timerId;
-    let exercisesLength = workoutData?.exercises?.length;
+    let exercisesLength = arrayEx.length;
     if (
-      currentExerciseIndex < workoutData.exercises.length &&
+      currentExerciseIndex < arrayEx.length &&
       !isExerciseFinished &&
       !isWorkoutPaused
     ) {
       console.log(isWorkoutPaused);
       if (
-        currentExerciseIndex < workoutData.exercises.length &&
+        currentExerciseIndex < arrayEx.length &&
         !isExerciseFinished &&
         !isWorkoutPaused
       ) {
         if (remainingTime === 0 || isExerciseFinished) {
           setRemainingTime(
-            workoutData.exercises[currentExerciseIndex].duration
+            arrayEx[currentExerciseIndex].duration
           );
         }
       }
@@ -147,14 +149,14 @@ useEffect(() => {
             setIsExerciseFinished(true);
             setCurrentExerciseIndex((prevIndex) => prevIndex + 1);
 
-            return workoutData.exercises[currentExerciseIndex].duration; // Reset the timer
+            return arrayEx[currentExerciseIndex].duration; // Reset the timer
           }
           return prevTime - 1;
         });
       }, 1000);
     } else if (
       isExerciseFinished &&
-      currentExerciseIndex >= workoutData.exercises.length
+      currentExerciseIndex >= arrayEx.length
     ) {
       setRemainingTime(0);
       setIsWorkoutFinished(true);
@@ -214,7 +216,7 @@ useEffect(() => {
             </div>
           </section>
         </>
-      ) : !isWorkoutFinished && isWorkoutStarted ? (
+      ) : !isWorkoutFinished && isWorkoutStarted && workoutData !== undefined ? (
         <section className="p-5 mx-auto body-font dark:bg-gray-900 min-h-100">
           <div className="container mx-auto flex flex-col gap-3 h-full">
             <div className="flex  mb-4 gap-2">
@@ -264,7 +266,7 @@ useEffect(() => {
             <div className="mb-2">
               <p>
                 {!isExerciseFinished
-                  ? workoutData.exercises[currentExerciseIndex].exercise.name
+                  ? arrayEx[currentExerciseIndex].exercise.name
                   : "Rest time"}
               </p>
             </div>
@@ -273,9 +275,7 @@ useEffect(() => {
                 <img
                   alt="exercise"
                   className="lg:w-1/2 w-full sm:h-100 lg:h-auto h-100 object-cover object-center rounded"
-                  src={
-                    workoutData.exercises[currentExerciseIndex].exercise.image
-                  }
+                  src={arrayEx[currentExerciseIndex].exercise.image}
                 ></img>
               ) : animationData ? (
                 <Lottie options={defaultOptions} />
@@ -288,16 +288,15 @@ useEffect(() => {
             <div className="flex flex-col">
               <div>
                 {!isExerciseFinished
-                  ? `Description : ${workoutData.exercises[currentExerciseIndex].exercise.description}`
+                  ? `Description : ${arrayEx[currentExerciseIndex].exercise.description}`
                   : ""}
               </div>
               <div className="side panel">
                 <p>
-                  {currentExerciseIndex + 1 < workoutData.exercises.length &&
+                  {currentExerciseIndex + 1 < arrayEx.length &&
                   !isExerciseFinished
                     ? `Next exercise: ${
-                        workoutData.exercises[currentExerciseIndex + 1].exercise
-                          .name
+                        arrayEx[currentExerciseIndex + 1].exercise.name
                       }`
                     : ""}
                 </p>

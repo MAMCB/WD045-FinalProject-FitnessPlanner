@@ -9,6 +9,8 @@ import { faCircleStop } from "@fortawesome/free-solid-svg-icons";
 import StaticModal from "./StaticModal";
 import { Link } from "react-router-dom";
 import { useParams } from "react-router-dom";
+import useSound from "use-sound";
+import countSound from "../assets/sounds/finalSound.mp3";
 
 const WorkoutPlayer = () => {
   const id = useParams();
@@ -23,7 +25,6 @@ const WorkoutPlayer = () => {
   const [animationData, setAnimationData] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [arrayEx, setArrayEx] = useState([]);
-  // new code
 
 useEffect(() => {
   if (!workoutData) {
@@ -44,10 +45,6 @@ useEffect(() => {
   setArrayEx(newArrayEx);
 }, [workoutData]);
 
-
-
-
-  // new code
 
   useEffect(() => {
     axiosInstance
@@ -96,6 +93,9 @@ useEffect(() => {
 
       restTimerId = setInterval(() => {
         setRemainingTimeInRest((prevTime) => {
+          if (prevTime === 3) {
+            play();
+          }
           if (prevTime === 1) {
             setIsExerciseFinished(false);
             clearInterval(restTimerId);
@@ -114,11 +114,6 @@ useEffect(() => {
     if (!workoutData) {
       return;
     }
-    /* console.log(`currentExerciseIndex is : ${currentExerciseIndex}`);
-    console.log(`isExerciseFinished is : ${isExerciseFinished}`);
-    console.log(`isWorkoutPaused is : ${isWorkoutPaused}`);
-    console.log(`isWorkoutStarted is : ${isWorkoutStarted}`);
-    console.log(`1. remainingTime is : ${remainingTime}`); */
     let timerId;
     let exercisesLength = arrayEx.length;
     if (
@@ -143,10 +138,12 @@ useEffect(() => {
       timerId = setInterval(() => {
         setRemainingTime((prevTime) => {
           console.log(`2. remainingTime is : ${remainingTime}`);
+          if (prevTime === 3) {
+            play();
+          }
           if (prevTime === 1) {
             setIsExerciseFinished(true);
             setCurrentExerciseIndex((prevIndex) => prevIndex + 1);
-
             return arrayEx[currentExerciseIndex].duration; // Reset the timer
           }
           return prevTime - 1;
@@ -175,11 +172,7 @@ useEffect(() => {
     setIsWorkoutPaused(true);
   };
 
-  // next button
-  // music button to play music
-  // sound button to mute the sound
-  // timer
-  // how much repids required
+  const [play] = useSound(countSound);
 
   return (
     <>

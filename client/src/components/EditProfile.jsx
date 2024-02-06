@@ -1,33 +1,51 @@
 import { useContext, useState,useEffect } from "react";
 import { AuthContext } from "../context/Auth";
 import axios from "../axiosInstance";
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate} from "react-router-dom";
+
 
 const EditProfile = () => {
   const context = useContext(AuthContext);
   const navigate = useNavigate();
+  const [user, setUser] = useState({});
 
-  const [user, setUser] = useState({
-    username: context.user.username,
-  });
+
 
   useEffect(() => {
-    axios.get(`api/user/${context.user._id}`).then((res) => {setUser(res.data);console.log(res.data)}).catch((e) => console.error(e));
+    axios.get(`api/user/${context.user._id}`)
+    .then(res => setUser(res.data))
+    .catch((e) => console.error(e));
   },[]);
 
+
   const handleChange = (e) => {
-    setUser((state) => ({
-      ...state,
-      [e.target.name]: e.target.value,
-    }));
+    if (e.target.name === "profilePic") {
+      setUser({ ...user, profilePic: e.target.files[0] });
+      console.log(e.target.files[0]);
+    } else {
+      setUser({ ...user, [e.target.name]: e.target.value });
+    }
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
+
+    const { username, age, height, weight, profilePic } = user;
+    console.log(profilePic);
+    const formData = new FormData();
+    formData.append("username", username);
+    formData.append("age", age);
+    formData.append("height", height);
+    formData.append("weight", weight);
+    formData.append("profilePic", profilePic);
+   
     axios
-      .put(`api/user/${context.user._id}`, user)
-      .then((res) => navigate("/profile"))
+      .put(`api/user/${context.user._id}`, formData)
+      .then(res => navigate('/profile'))
       .catch((e) => console.error(e));
+      console.log('user:',user)
+      console.log('context:',context.user)
+
   };
 
   return (
@@ -38,7 +56,7 @@ const EditProfile = () => {
             Edit user profile
           </h1>
 
-          <form onSubmit={handleSubmit} className="max-w-sm mx-auto">
+          <form onSubmit={handleSubmit} encType="multipart/form-data" className="max-w-sm mx-auto">
             <div className="mb-5">
               <label
                 htmlFor="username"
@@ -119,14 +137,14 @@ const EditProfile = () => {
                 Your profile picture
               </label>
               <input
-                type="text"
+                type="file"
                 id="profile"
-                className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                 placeholder="profile"
-                required=""
+                accept="image/*"
                 name="profilePic"
-                defaultValue={user.profilePic}
+                required
                 onChange={handleChange}
+                defaultValue={user.profilePic}
               />
             </div>
             <button
@@ -143,3 +161,4 @@ const EditProfile = () => {
 };
 
 export default EditProfile;
+

@@ -1,7 +1,10 @@
 const User = require("../models/user");
+const multer = require('multer');
+const path = require('path');
 
 const createUser = async (req, res) => {
   try {
+    console.log('MULTER FILE??',req.file.path);
     const newUser = await User.create({
       ...req.body,
       userId: req.user._id,
@@ -37,14 +40,21 @@ const getUserById = async (req, res) => {
 
 const updateUserById = async (req, res) => {
   const { id } = req.params;
+
+ 
   try {
-    const updatedUser = await User.findOneAndUpdate({ _id: id }, req.body, {
+    console.log(req.file.path)
+    const updatedUser = await User.findOneAndUpdate({ _id: id },  {...req.body, profilePic:req.file.path},{
       new: true,
     }); // { new: true } return the new updated doc in the db
-    if (User.length === 0) {
+  
+    if (Object.keys(updatedUser).length === 0) {
+    
       res.status(404).json({ message: `User with id ${id} Not Found` });
     } else {
-      res.json(User[0]);
+      //res.json(User[0]);
+        console.log('update user', updatedUser)
+      res.json(updatedUser);
     }
   } catch (error) {
     res.status(500).json({ message: error.message });

@@ -19,6 +19,7 @@ import { v4 as uuidv4 } from "uuid";
 
 
 
+
 const Editor = () => {
   const [exercises, setExercises] = useState([]);
   const [exerciseSearch, setExerciseSearch] = useState("");
@@ -40,9 +41,27 @@ const Editor = () => {
     sets: 1,
     weights: 0,
     duration: 0,
-    
+    id:Math.random()*10
     
   });
+
+  useEffect(() => {
+    const storedName = localStorage.getItem("workoutPlanName");
+    const storedGoal = localStorage.getItem("workoutPlanGoal");
+    const storedRestDuration = localStorage.getItem("workoutPlanRestDuration");
+    const storedExerciseDuration = localStorage.getItem("workoutPlanExerciseDuration");
+    const storedExercises = localStorage.getItem("workoutPlanExercises");
+    if (storedName || storedGoal || storedRestDuration || storedExerciseDuration || storedExercises) {
+      const initialExercises = JSON.parse(storedExercises);
+      const initialName =JSON.parse(storedName);
+      const initialGoal =JSON.parse(storedGoal);
+      const initialRestDuration =JSON.parse(storedRestDuration);
+      const initialExerciseDuration =JSON.parse(storedExerciseDuration);
+
+      setWorkoutPlan((prev) => ({
+        ...prev,name: initialName, goal: initialGoal, restDuration: initialRestDuration, exerciseDuration: initialExerciseDuration}));
+      setBlocks(initialExercises);
+      }}, []);
 
   useEffect(() => {
     axiosInstance
@@ -143,7 +162,24 @@ const Editor = () => {
   };
 
   const saveDraft = () => {
+    localStorage.setItem("workoutPlanName", JSON.stringify(workoutPlan.name));
+    localStorage.setItem("workoutPlanGoal", JSON.stringify(workoutPlan.goal));
+    localStorage.setItem("workoutPlanRestDuration", JSON.stringify(workoutPlan.restDuration));
+    localStorage.setItem("workoutPlanExerciseDuration", JSON.stringify(workoutPlan.exerciseDuration));
+    localStorage.setItem("workoutPlanExercises", JSON.stringify(workoutPlan.exercises));
+    alert("Draft saved")
   };
+
+  const clearDraft = () => {
+    localStorage.removeItem("workoutPlanName");
+    localStorage.removeItem("workoutPlanGoal");
+    localStorage.removeItem("workoutPlanRestDuration");
+    localStorage.removeItem("workoutPlanExerciseDuration");
+    localStorage.removeItem("workoutPlanExercises");
+    setWorkoutPlan((prev) => ({ ...prev, name: "", goal: "", restDuration: 0, exerciseDuration: 0, exercises: [] }));
+    setBlocks([]);
+    alert("Draft cleared")
+  }
 
  
   return (
@@ -161,6 +197,9 @@ const Editor = () => {
         <Button className="m-4" type="button" onClick={saveDraft}>
           Save draft
         </Button>
+        <Button className="m-4" type="button" onClick={clearDraft}>
+          Clear draft
+        </Button>
       </div>
 
       <div className="flex justify-evenly bg-white shadow dark:bg-gray-900 py-[100px]">
@@ -168,15 +207,15 @@ const Editor = () => {
           <h2>Your plan</h2>
           <div className="m-4 ">
             <Label htmlFor="name" value="Plan name" />
-            <TextInput id="name" type="text" onChange={handlePlan} />
+            <TextInput id="name" type="text" onChange={handlePlan} value={workoutPlan.name}/>
           </div>
           <div className="m-4 ">
             <Label htmlFor="goal" value="Goal" />
-            <TextInput id="goal" type="text" onChange={handlePlan} />
+            <TextInput id="goal" type="text" onChange={handlePlan} value={workoutPlan.goal}/>
           </div>
           <div className="m-4 ">
             <Label htmlFor="restDuration" value="Rest duration" />
-            <TextInput id="restDuration" type="number" onChange={handlePlan} />
+            <TextInput id="restDuration" type="number" onChange={handlePlan} value={workoutPlan.restDuration} />
           </div>
           <div className="m-4 ">
             <Label
@@ -187,6 +226,7 @@ const Editor = () => {
               id="exerciseDuration"
               type="number"
               onChange={handlePlan}
+              value={workoutPlan.exerciseDuration}
             />
           </div>
 

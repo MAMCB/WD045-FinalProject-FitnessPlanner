@@ -1,5 +1,6 @@
 const Exercise = require("../models/exercise");
 const User = require("../models/user");
+const cloudinary = require("../config/cloudinary");
 
 const createExercise = async (req, res) => {
   let newExercise;
@@ -82,6 +83,16 @@ const updateExerciseById = async (req, res) => {
 const deleteExerciseById = async (req, res) => {
     const { id } = req.params;
   try {
+    const exercise = await Exercise.findOne({ _id: id });
+    if (!exercise) {
+      return res.status(404).json({ message: `Exercise with id ${id} Not Found` });
+    }
+    if(exercise.image.startsWith("https://res.cloudinary.com/")) {
+      const public_id = exercise.image.match(/\/([^\/]+)\.gif$/)[1];
+      console.log(public_id);
+      await cloudinary.uploader.destroy(public_id);
+    }
+
     const deletedExercise = await Exercise.findOneAndDelete({ _id: id });
     User.findByIdAndUpdate(
       req.user._id,

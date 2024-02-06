@@ -19,6 +19,7 @@ import { v4 as uuidv4 } from "uuid";
 
 
 
+
 const Editor = () => {
   const [exercises, setExercises] = useState([]);
   const [exerciseSearch, setExerciseSearch] = useState("");
@@ -28,6 +29,7 @@ const Editor = () => {
   const navigate = useNavigate();
   const [newExercise, setNewExercise] = useState(null);
   const [exerciseCreated, setExerciseCreated] = useState([]);
+  const [planIsValid, setPlanIsValid] = useState(false);
   const [workoutPlan, setWorkoutPlan] = useState({
     name: "",
     goal: "",
@@ -39,9 +41,27 @@ const Editor = () => {
     sets: 1,
     weights: 0,
     duration: 0,
-    
+    id:Math.random()*10
     
   });
+
+  useEffect(() => {
+    const storedName = localStorage.getItem("workoutPlanName");
+    const storedGoal = localStorage.getItem("workoutPlanGoal");
+    const storedRestDuration = localStorage.getItem("workoutPlanRestDuration");
+    const storedExerciseDuration = localStorage.getItem("workoutPlanExerciseDuration");
+    const storedExercises = localStorage.getItem("workoutPlanExercises");
+    if (storedName || storedGoal || storedRestDuration || storedExerciseDuration || storedExercises) {
+      const initialExercises = JSON.parse(storedExercises);
+      const initialName =JSON.parse(storedName);
+      const initialGoal =JSON.parse(storedGoal);
+      const initialRestDuration =JSON.parse(storedRestDuration);
+      const initialExerciseDuration =JSON.parse(storedExerciseDuration);
+
+      setWorkoutPlan((prev) => ({
+        ...prev,name: initialName, goal: initialGoal, restDuration: initialRestDuration, exerciseDuration: initialExerciseDuration}));
+      setBlocks(initialExercises);
+      }}, []);
 
   useEffect(() => {
     axiosInstance
@@ -69,6 +89,10 @@ const Editor = () => {
     
   }, [blocks]);
 
+  useEffect(() => {
+    validatePlan();
+  }, [workoutPlan]);
+
   const handlePlan = (e) => {
     setWorkoutPlan((prev) => ({ ...prev, [e.target.id]: e.target.value }));
   };
@@ -95,10 +119,17 @@ const Editor = () => {
     console.log(workoutPlan);
     axiosInstance
       .post("/api/workoutPlan", workoutPlan)
-      .then((res) => console.log(res))
-      .then(navigate("/workoutPlan"))
-      .catch((err) => console.log(err));
-      window.location.reload();
+      .then((res) =>{
+        
+        alert("Workout plan saved successfully")
+        navigate("/workoutPlan");
+        
+     
+   } )
+     // .then(navigate("/workoutPlan"))
+      .catch((err) => {console.log(err);
+      alert(err.response.data.message);});
+      //window.location.reload();
   };
 
   const removeExercise = (index) => {
@@ -123,19 +154,51 @@ const Editor = () => {
     axiosInstance.post("/api/exercise", newExercise).then((res) => { setExerciseCreated((prev)=>[...prev,res.data])}).then(alert("New exercise created")).catch((err) => console.log(err));
   };
 
-  const saveDraft = () => {
+  const validatePlan = () => {
+    if (workoutPlan.name === "" || workoutPlan.goal === "" || workoutPlan.exercises.length === 0 || workoutPlan.restDuration <= 0 || workoutPlan.exerciseDuration <= 0) {
+      return setPlanIsValid(false);
+    }
+    return setPlanIsValid(true);
   };
+
+  const saveDraft = () => {
+    localStorage.setItem("workoutPlanName", JSON.stringify(workoutPlan.name));
+    localStorage.setItem("workoutPlanGoal", JSON.stringify(workoutPlan.goal));
+    localStorage.setItem("workoutPlanRestDuration", JSON.stringify(workoutPlan.restDuration));
+    localStorage.setItem("workoutPlanExerciseDuration", JSON.stringify(workoutPlan.exerciseDuration));
+    localStorage.setItem("workoutPlanExercises", JSON.stringify(workoutPlan.exercises));
+    alert("Draft saved")
+  };
+
+  const clearDraft = () => {
+    localStorage.removeItem("workoutPlanName");
+    localStorage.removeItem("workoutPlanGoal");
+    localStorage.removeItem("workoutPlanRestDuration");
+    localStorage.removeItem("workoutPlanExerciseDuration");
+    localStorage.removeItem("workoutPlanExercises");
+    setWorkoutPlan((prev) => ({ ...prev, name: "", goal: "", restDuration: 0, exerciseDuration: 0, exercises: [] }));
+    setBlocks([]);
+    alert("Draft cleared")
+  }
 
  
   return (
     <section className="bg-white shadow dark:bg-gray-900 py-[10px]">
       <h1 className="m-10  text-xl font-bold">Workout Plan Editor</h1>
       <div className="flex justify-center">
-        <Button className="m-4" type="button" onClick={saveWorkout}>
+        <Button
+          className="m-4"
+          type="button"
+          onClick={saveWorkout}
+          disabled={!planIsValid}
+        >
           Save workout
         </Button>
         <Button className="m-4" type="button" onClick={saveDraft}>
           Save draft
+        </Button>
+        <Button className="m-4" type="button" onClick={clearDraft}>
+          Clear draft
         </Button>
       </div>
 
@@ -144,15 +207,15 @@ const Editor = () => {
           <h2>Your plan</h2>
           <div className="m-4 ">
             <Label htmlFor="name" value="Plan name" />
-            <TextInput id="name" type="text" onChange={handlePlan} />
+            <TextInput id="name" type="text" onChange={handlePlan} value={workoutPlan.name}/>
           </div>
           <div className="m-4 ">
             <Label htmlFor="goal" value="Goal" />
-            <TextInput id="goal" type="text" onChange={handlePlan} />
+            <TextInput id="goal" type="text" onChange={handlePlan} value={workoutPlan.goal}/>
           </div>
           <div className="m-4 ">
             <Label htmlFor="restDuration" value="Rest duration" />
-            <TextInput id="restDuration" type="number" onChange={handlePlan} />
+            <TextInput id="restDuration" type="number" onChange={handlePlan} value={workoutPlan.restDuration} />
           </div>
           <div className="m-4 ">
             <Label
@@ -163,6 +226,7 @@ const Editor = () => {
               id="exerciseDuration"
               type="number"
               onChange={handlePlan}
+              value={workoutPlan.exerciseDuration}
             />
           </div>
 
@@ -260,7 +324,11 @@ const Editor = () => {
                   onChange={handleNewExercise}
                 />
               </div>
-              <Button className="m-auto" type="button" onClick={createNewExercise}>
+              <Button
+                className="m-auto"
+                type="button"
+                onClick={createNewExercise}
+              >
                 Create exercise
               </Button>
             </Tabs.Item>

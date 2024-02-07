@@ -9,9 +9,12 @@ import { faCircleStop } from "@fortawesome/free-solid-svg-icons";
 import StaticModal from "./StaticModal";
 import { Link } from "react-router-dom";
 import { useParams } from "react-router-dom";
+import useSound from "use-sound";
+import countSound from "../assets/sounds/finalSound.mp3";
 
 const WorkoutPlayer = () => {
   const id = useParams();
+  const version = useParams();
   const [workoutData, setWorkoutData] = useState(null);
   const [currentExerciseIndex, setCurrentExerciseIndex] = useState(0);
   const [remainingTime, setRemainingTime] = useState(0);
@@ -22,13 +25,43 @@ const WorkoutPlayer = () => {
   const [isExerciseFinished, setIsExerciseFinished] = useState(false);
   const [animationData, setAnimationData] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
-
+  const [arrayEx, setArrayEx] = useState([]);
+  const[planVersion,setPlanVersion] = useState(0);
   // new code
+useEffect(() => {
+  console.log(version.version);
+  if(version.version){
+    console.log(version.version);
+    console.log("version found");
+    setPlanVersion(version.version);
+  }
+    
+    
+  },[]);
 
+useEffect(() => {
+  if (!workoutData) {
+    return;
+  }
+  console.log(workoutData.planVersions[planVersion]);
+  const ArrayofExer = workoutData.planVersions[planVersion].exercises;
+  let newArrayEx = [];
+  ArrayofExer.forEach((exer) => {
+    if (exer.sets > 1) {
+      for (let i = 0; i < exer.sets; i++) {
+        newArrayEx.push(exer);
+      }
+    } else {
+      newArrayEx.push(exer);
+    }
+  });
+  setArrayEx(newArrayEx);
+}, [workoutData]);
+  
+  useEffect(() => { 
+    console.log(arrayEx);
+  }, [arrayEx]);
 
-
-
-  // new code
 
   useEffect(() => {
     axiosInstance
@@ -58,24 +91,30 @@ const WorkoutPlayer = () => {
   };
 
   useEffect(() => {
-    if (!workoutData) {
+    if (!workoutData && !arrayEx.length > 0) {
       return;
     }
 
     let restTimerId;
+    console.log(arrayEx.length);
     if (
       isExerciseFinished &&
-      currentExerciseIndex < workoutData.exercises.length &&
+      currentExerciseIndex < arrayEx.length &&
       !isWorkoutPaused &&
       isWorkoutStarted
     ) {
       console.log("Relax time");
       if (remainingTimeInRest === 0) {
-        setRemainingTimeInRest(workoutData.restDuration);
+        setRemainingTimeInRest(
+          workoutData.planVersions[planVersion].restDuration
+        );
       }
 
       restTimerId = setInterval(() => {
         setRemainingTimeInRest((prevTime) => {
+          if (prevTime === 3) {
+            play();
+          }
           if (prevTime === 1) {
             setIsExerciseFinished(false);
             clearInterval(restTimerId);
@@ -94,28 +133,22 @@ const WorkoutPlayer = () => {
     if (!workoutData) {
       return;
     }
-    console.log(`currentExerciseIndex is : ${currentExerciseIndex}`);
-    console.log(`isExerciseFinished is : ${isExerciseFinished}`);
-    console.log(`isWorkoutPaused is : ${isWorkoutPaused}`);
-    console.log(`isWorkoutStarted is : ${isWorkoutStarted}`);
-    console.log(`1. remainingTime is : ${remainingTime}`);
     let timerId;
-    let exercisesLength = workoutData?.exercises?.length;
+    let exercisesLength = arrayEx.length;
     if (
-      currentExerciseIndex < workoutData.exercises.length &&
+      currentExerciseIndex < arrayEx.length &&
       !isExerciseFinished &&
-      !isWorkoutPaused
+      !isWorkoutPaused &&
+      isWorkoutStarted
     ) {
       console.log(isWorkoutPaused);
       if (
-        currentExerciseIndex < workoutData.exercises.length &&
+        currentExerciseIndex < arrayEx.length &&
         !isExerciseFinished &&
         !isWorkoutPaused
       ) {
         if (remainingTime === 0 || isExerciseFinished) {
-          setRemainingTime(
-            workoutData.exercises[currentExerciseIndex].duration
-          );
+          setRemainingTime(arrayEx[currentExerciseIndex].duration);
         }
       }
 
@@ -123,19 +156,18 @@ const WorkoutPlayer = () => {
       timerId = setInterval(() => {
         setRemainingTime((prevTime) => {
           console.log(`2. remainingTime is : ${remainingTime}`);
+          if (prevTime === 3) {
+            play();
+          }
           if (prevTime === 1) {
             setIsExerciseFinished(true);
             setCurrentExerciseIndex((prevIndex) => prevIndex + 1);
-
-            return workoutData.exercises[currentExerciseIndex].duration; // Reset the timer
+            return arrayEx[currentExerciseIndex].duration; // Reset the timer
           }
           return prevTime - 1;
         });
       }, 1000);
-    } else if (
-      isExerciseFinished &&
-      currentExerciseIndex >= workoutData.exercises.length
-    ) {
+    } else if (isExerciseFinished && currentExerciseIndex >= arrayEx.length) {
       setRemainingTime(0);
       setIsWorkoutFinished(true);
       console.log("exercise finished");
@@ -155,11 +187,7 @@ const WorkoutPlayer = () => {
     setIsWorkoutPaused(true);
   };
 
-  // next button
-  // music button to play music
-  // sound button to mute the sound
-  // timer
-  // how much repids required
+  const [play] = useSound(countSound);
 
   return (
     <>
@@ -194,7 +222,9 @@ const WorkoutPlayer = () => {
             </div>
           </section>
         </>
-      ) : !isWorkoutFinished && isWorkoutStarted ? (
+      ) : !isWorkoutFinished &&
+        isWorkoutStarted &&
+        workoutData.planVersions[planVersion] !== undefined ? (
         <section className="p-5 mx-auto body-font dark:bg-gray-900 min-h-100">
           <div className="container mx-auto flex flex-col gap-3 h-full">
             <div className="flex  mb-4 gap-2">
@@ -244,7 +274,7 @@ const WorkoutPlayer = () => {
             <div className="mb-2">
               <p>
                 {!isExerciseFinished
-                  ? workoutData.exercises[currentExerciseIndex].exercise.name
+                  ? arrayEx[currentExerciseIndex].exercise.name
                   : "Rest time"}
               </p>
             </div>
@@ -253,13 +283,12 @@ const WorkoutPlayer = () => {
                 <img
                   alt="exercise"
                   className="lg:w-1/2 w-full sm:h-100 lg:h-auto h-100 object-cover object-center rounded"
-                  src={
-                    workoutData.exercises[currentExerciseIndex].exercise.image
-                  }
+                  src={arrayEx[currentExerciseIndex].exercise.image}
                 ></img>
               ) : animationData ? (
                 <Lottie options={defaultOptions} />
               ) : null}
+                  <div>{!isExerciseFinished ? `Weight: ${arrayEx[currentExerciseIndex].weights}` : "" }</div>
               <div>
                 Remain time :
                 {!isExerciseFinished ? remainingTime : remainingTimeInRest}
@@ -268,16 +297,15 @@ const WorkoutPlayer = () => {
             <div className="flex flex-col">
               <div>
                 {!isExerciseFinished
-                  ? `Description : ${workoutData.exercises[currentExerciseIndex].exercise.description}`
+                  ? `Description : ${arrayEx[currentExerciseIndex].exercise.description}`
                   : ""}
               </div>
               <div className="side panel">
                 <p>
-                  {currentExerciseIndex + 1 < workoutData.exercises.length &&
+                  {currentExerciseIndex + 1 < arrayEx.length &&
                   !isExerciseFinished
                     ? `Next exercise: ${
-                        workoutData.exercises[currentExerciseIndex + 1].exercise
-                          .name
+                        arrayEx[currentExerciseIndex + 1].exercise.name
                       }`
                     : ""}
                 </p>

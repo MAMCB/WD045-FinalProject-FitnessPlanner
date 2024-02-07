@@ -86,33 +86,41 @@ userSchema.virtual("confirmPassword")
   })
 
    userSchema.pre("findOneAndUpdate", async function (next) {
-
-    /*
-    if(this.profilePic.startsWith("https://res.cloudinary.com/")) {
-      const public_id = this.profilePic.match(/([^/]+).gif$/)[1];
-      console.log('public id',public_id)
-      await cloudinary.uploader.destroy(public_id)
-    }
-
-*/
-
-    if(!this.getUpdate().profilePic) {return next()}
-     try{
+    console.log("this.getUpdate()", this.getUpdate());
+     if (!this.getUpdate().profilePic) {
+       return next();
+     }
+     if (this.getUpdate().updateProfilePic === "false") {
+       return next();
+     }
+     //get the current image url of the user
+     //check if the image url startsWith("https://res.cloudinary.com/"))
+     //if it does execute this code:   const public_id = user.profilePic.match(//([^/]+).gif$/)[1];
+    // console.log(public_id);
+    // await cloudinary.uploader.destroy(public_id);
+    console.log("trying to update image")
+    console.log("this.profilePic", this.profilePic);
+    console.log("this.getUpdate().profilePic", this.getUpdate().profilePic);
+     try {
        const options = {
-         public_id:this._id,
-         folder:process.env.CLOUDINARY_USER_FOLDER_NAME,
-       }
+         public_id: this._id,
+         folder: process.env.CLOUDINARY_USER_FOLDER_NAME,
+       };
        const imagePath = this.getUpdate().profilePic;
        const res = await cloudinary.uploader.upload(imagePath, options);
-       console.log('res.secure_url',res.secure_url)
-       this.getUpdate().profilePic=res.secure_url;
+       console.log("res.secure_url", res.secure_url);
+       this.getUpdate().profilePic = res.secure_url;
        fs.unlinkSync(imagePath);
        next();
-     }catch(e){
-       console.log('error', e.message)
-       next(e.message)
+     } catch (e) {
+       console.log("error", e.message);
+       if(this.getUpdate().profilePic){
+        const imagePath = this.getUpdate().profilePic;
+       fs.unlinkSync(imagePath);}
+       
+       next(e.message);
      }
-  });
+   });
 
   const User = mongoose.model("User", userSchema);
 

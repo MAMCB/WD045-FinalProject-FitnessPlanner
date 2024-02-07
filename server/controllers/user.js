@@ -43,29 +43,33 @@ const getUserById = async (req, res) => {
 
 const updateUserById = async (req, res) => {
   const { id } = req.params;
-  let currentUrl;
+  let updatedUser;
 
+ 
   try {
-
-    axios.get(`http://localhost:8000/api/user/${id}`)
-    .then(res =>  { console.log('****+++++',res.data.profilePic);
-  currentUrl = res.data.profilePic 
-  console.log('currentUrl-----',currentUrl)
-})
-    .catch(e=>console.error(e)) 
-  
-  
-    const updatedUser = await User.findOneAndUpdate({ _id: id },  {...req.body, profilePic:req.file.path},{
-      new: true,
-    }); // { new: true } return the new updated doc in the db
-
-    
-    if(updatedUser.profilePic.startsWith("https://res.cloudinary.com/")) {
-      const public_id = updatedUser.profilePic.match(/\.(jpg|jpeg|png|gif)$/)[1]
-      console.log('',public_id);
-      await cloudinary.uploader.destroy(public_id);
+    if(req.file)
+    {
+      console.log(req.file.path);
+      updatedUser = await User.findOneAndUpdate(
+        { _id: id },
+        { ...req.body, profilePic: req.file.path },
+        {
+          new: true,
+        }
+      ); // { new: true } return the new updated doc in the db
     }
-
+    else{
+      console.log('no file');
+      updatedUser = await User.findOneAndUpdate(
+        { _id: id },
+       req.body,
+        {
+          new: true,
+        }
+      );
+    }
+   
+  
     if (Object.keys(updatedUser).length === 0) {
     
       res.status(404).json({ message: `User with id ${id} Not Found` });

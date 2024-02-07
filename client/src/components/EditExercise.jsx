@@ -37,7 +37,7 @@ const EditExercise = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     axios
-      .put(`api/exercise/${id}`, exercise)
+      .put(`/api/exercise/${id}`, exercise)
       .then((res) => navigate("/workoutPlan"))
       .catch((e) => console.error(e));
   };

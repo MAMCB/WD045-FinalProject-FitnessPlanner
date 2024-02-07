@@ -143,7 +143,7 @@ const EditProfile = () => {
                 placeholder="profile"
                 accept="image/*"
                 name="profilePic"
-                required
+                
                 onChange={handleChange}
                 defaultValue={user.profilePic}
               />

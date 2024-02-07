@@ -44,6 +44,10 @@ useEffect(() => {
   });
   setArrayEx(newArrayEx);
 }, [workoutData]);
+  
+  useEffect(() => { 
+    console.log(arrayEx);
+  }, [arrayEx]);
 
 
   useEffect(() => {
@@ -119,7 +123,8 @@ useEffect(() => {
     if (
       currentExerciseIndex < arrayEx.length &&
       !isExerciseFinished &&
-      !isWorkoutPaused
+      !isWorkoutPaused &&
+      isWorkoutStarted
     ) {
       console.log(isWorkoutPaused);
       if (
@@ -128,9 +133,7 @@ useEffect(() => {
         !isWorkoutPaused
       ) {
         if (remainingTime === 0 || isExerciseFinished) {
-          setRemainingTime(
-            arrayEx[currentExerciseIndex].duration
-          );
+          setRemainingTime(arrayEx[currentExerciseIndex].duration);
         }
       }
 
@@ -149,10 +152,7 @@ useEffect(() => {
           return prevTime - 1;
         });
       }, 1000);
-    } else if (
-      isExerciseFinished &&
-      currentExerciseIndex >= arrayEx.length
-    ) {
+    } else if (isExerciseFinished && currentExerciseIndex >= arrayEx.length) {
       setRemainingTime(0);
       setIsWorkoutFinished(true);
       console.log("exercise finished");
@@ -207,7 +207,9 @@ useEffect(() => {
             </div>
           </section>
         </>
-      ) : !isWorkoutFinished && isWorkoutStarted && workoutData !== undefined ? (
+      ) : !isWorkoutFinished &&
+        isWorkoutStarted &&
+        workoutData !== undefined ? (
         <section className="p-5 mx-auto body-font dark:bg-gray-900 min-h-100">
           <div className="container mx-auto flex flex-col gap-3 h-full">
             <div className="flex  mb-4 gap-2">
@@ -271,6 +273,7 @@ useEffect(() => {
               ) : animationData ? (
                 <Lottie options={defaultOptions} />
               ) : null}
+                  <div>{!isExerciseFinished ? `Weight: ${arrayEx[currentExerciseIndex].weights}` : "" }</div>
               <div>
                 Remain time :
                 {!isExerciseFinished ? remainingTime : remainingTimeInRest}

@@ -1,6 +1,9 @@
 const User = require("../models/user");
 const multer = require('multer');
 const path = require('path');
+const cloudinary = require("../config/cloudinary");
+const axios = require("axios")
+
 
 const createUser = async (req, res) => {
   try {
@@ -40,14 +43,29 @@ const getUserById = async (req, res) => {
 
 const updateUserById = async (req, res) => {
   const { id } = req.params;
+  let currentUrl;
 
- 
   try {
-    console.log(req.file.path)
+
+    axios.get(`http://localhost:8000/api/user/${id}`)
+    .then(res =>  { console.log('****+++++',res.data.profilePic);
+  currentUrl = res.data.profilePic 
+  console.log('currentUrl-----',currentUrl)
+})
+    .catch(e=>console.error(e)) 
+  
+  
     const updatedUser = await User.findOneAndUpdate({ _id: id },  {...req.body, profilePic:req.file.path},{
       new: true,
     }); // { new: true } return the new updated doc in the db
-  
+
+    
+    if(updatedUser.profilePic.startsWith("https://res.cloudinary.com/")) {
+      const public_id = updatedUser.profilePic.match(/\.(jpg|jpeg|png|gif)$/)[1]
+      console.log('',public_id);
+      await cloudinary.uploader.destroy(public_id);
+    }
+
     if (Object.keys(updatedUser).length === 0) {
     
       res.status(404).json({ message: `User with id ${id} Not Found` });
@@ -60,6 +78,8 @@ const updateUserById = async (req, res) => {
     res.status(500).json({ message: error.message });
   }
 };
+
+
 
 const deleteUserById = async (req, res) => {
   const { id } = req.params;

@@ -1,6 +1,7 @@
 const express = require('express');
 const cloudinary = require("../config/cloudinary");
 const {cloudinaryUpload} = require("../middlewares/cloudinaryUpload")
+
 const { createUser, getAllUsers, getUserById, updateUserById, deleteUserById } = require('../controllers/user');
 
 const userRouter = express.Router();

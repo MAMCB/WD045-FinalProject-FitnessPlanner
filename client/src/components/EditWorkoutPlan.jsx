@@ -20,6 +20,7 @@ const EditWorkoutPlan = () =>{
 useEffect(()=>{
     axios.get(`/api/workoutPlan/${id}`)
     .then(res=>setWorkout(res.data))
+    .catch((e) => console.error(e));
 },[])
 
 const handleChange = (e) =>{

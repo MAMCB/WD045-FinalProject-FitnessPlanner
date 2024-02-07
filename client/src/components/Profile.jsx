@@ -11,6 +11,10 @@ const Profile = () => {
     username: context.user.username,
   });
 
+console.log(currentUser)
+
+
+
 const navigate = useNavigate();
 
 

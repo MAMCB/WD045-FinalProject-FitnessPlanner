@@ -8,6 +8,8 @@ const EditProfile = () => {
   const context = useContext(AuthContext);
   const navigate = useNavigate();
   const [user, setUser] = useState({});
+  const [image, setImage] = useState(null);
+  const [error, setError] = useState(null);
 
 
 
@@ -20,6 +22,15 @@ const EditProfile = () => {
 
   const handleChange = (e) => {
     if (e.target.name === "profilePic") {
+
+      const file = e.target.files[0];
+      if (file.size <= 320 * 320) { // Check file size limit
+        setImage(file);
+        setError(null);
+      } else {
+        setImage(null);
+        setError('File size exceeds the limit');
+      }
       setUser({ ...user, profilePic: e.target.files[0] });
       console.log(e.target.files[0]);
     } else {
@@ -29,6 +40,11 @@ const EditProfile = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+
+    if (!image) {
+      setError('Please select an image');
+      return;
+    }
 
     const { username, age, height, weight, profilePic } = user;
     console.log(profilePic);
@@ -142,7 +158,6 @@ const EditProfile = () => {
                 placeholder="profile"
                 accept="image/*"
                 name="profilePic"
-                required
                 onChange={handleChange}
                 defaultValue={user.profilePic}
               />
@@ -154,6 +169,7 @@ const EditProfile = () => {
               Edit
             </button>
           </form>
+          {error && <p style={{ color: 'red' }}>{error}</p>} {/* Display error message */}
         </div>
       </div>
     </div>

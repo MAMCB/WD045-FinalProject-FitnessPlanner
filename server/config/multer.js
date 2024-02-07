@@ -22,6 +22,16 @@ if(!file.originalname.match(/\.(jpg|jpeg|png|gif)$/)){
     cb(null, true)
   
   }
-  const upload = multer({ storage: storage, fileFilter:fileFilter })
+  //const upload = multer({ storage: storage, fileFilter:fileFilter })
 
+  const upload = multer({
+    storage: storage,
+    fileFilter: fileFilter,
+    limits: {
+      fileSize: 400 * 400, // size limit
+      files: 5 // Limit number of files to 5
+    }
+  
+  });
+   console.log('upload.limits.fileSize', upload.limits.fileSize)
   module.exports=upload;

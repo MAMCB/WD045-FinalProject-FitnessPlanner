@@ -23,6 +23,7 @@ const userSchema = new mongoose.Schema(
       type: String,
       default:
         "https://lh6.googleusercontent.com/proxy/i3o6o_HVc0XQaPNEpxAVDJw1QyLH6LRIw_OxAKjhOm5lZQDimRQYyz9_vIGDpMnEliSpI6AKhSbDqvzc4zIDdg3Cx5HAaLvjhE0dfz-Wns9I89ULsgeG8w=s0-d",
+
     },
     joinedDate: { type: Date, default: Date.now },
     age: { type: Number, default: 0 },
@@ -85,6 +86,16 @@ userSchema.virtual("confirmPassword")
   })
 
    userSchema.pre("findOneAndUpdate", async function (next) {
+
+    /*
+    if(this.profilePic.startsWith("https://res.cloudinary.com/")) {
+      const public_id = this.profilePic.match(/([^/]+).gif$/)[1];
+      console.log('public id',public_id)
+      await cloudinary.uploader.destroy(public_id)
+    }
+
+*/
+
     if(!this.getUpdate().profilePic) {return next()}
      try{
        const options = {

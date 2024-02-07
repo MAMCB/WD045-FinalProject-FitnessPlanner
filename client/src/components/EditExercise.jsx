@@ -1,5 +1,4 @@
-import { useContext, useState, useEffect } from "react";
-import { AuthContext } from "../context/Auth";
+import { useState, useEffect } from "react";
 import axios from "../axiosInstance";
 import { useNavigate, useParams } from "react-router-dom";
 
@@ -36,17 +35,18 @@ const EditExercise = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    axios
-      .put(`api/exercise/${id}`, exercise)
+    axios.put(`api/exercise/${id}`, exercise)
       .then((res) => navigate("/workoutPlan"))
       .catch((e) => console.error(e));
   };
 
+  /*
   const deleteHandler = (id) =>{
     axios.delete(`/api/exercise/${id}`)
     .then(res=> navigate(`/workoutPlan`))
     .catch(e=>console.error(e))
 }
+*/
 
   return (
     <div className="py-[100px]">

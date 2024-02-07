@@ -75,10 +75,18 @@ const handleVersionChange = (index) => (e) => {
 
   const createNewVersion = (index) => ()=>{
     console.log("creating new version")
-    const newVersion ={
+    console.log(workout[index])
+    const newVersion = {
       ...workout[index],
-      exercises: workout[index].exercises.map(x=>({...x,weights:prompt(`Set weights for ${x.exercise.name}`)}))
-    }
+      exercises: workout[index].planVersions[
+        workout[index].planVersions.length - 1
+      ].exercises.map((x) => {
+        const newWeights = prompt(`Set weights for ${x.exercise.name}`);
+        const weights = newWeights !== null ? newWeights : x.weights;
+        return { ...x, weights };
+      }),
+    };
+   
     console.log(newVersion)
     axios
       .put(`/api/workoutPlan/${workout[index]._id}/version`, newVersion)

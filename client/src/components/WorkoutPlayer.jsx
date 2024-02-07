@@ -26,42 +26,39 @@ const WorkoutPlayer = () => {
   const [animationData, setAnimationData] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [arrayEx, setArrayEx] = useState([]);
-  const[planVersion,setPlanVersion] = useState(0);
+  const [planVersion, setPlanVersion] = useState(0);
   // new code
-useEffect(() => {
-  console.log(version.version);
-  if(version.version){
+  useEffect(() => {
     console.log(version.version);
-    console.log("version found");
-    setPlanVersion(version.version);
-  }
-    
-    
-  },[]);
+    if (version.version) {
+      console.log(version.version);
+      console.log("version found");
+      setPlanVersion(version.version);
+    }
+  }, []);
 
-useEffect(() => {
-  if (!workoutData) {
-    return;
-  }
-  console.log(workoutData.planVersions[planVersion]);
-  const ArrayofExer = workoutData.planVersions[planVersion].exercises;
-  let newArrayEx = [];
-  ArrayofExer.forEach((exer) => {
-    if (exer.sets > 1) {
-      for (let i = 0; i < exer.sets; i++) {
+  useEffect(() => {
+    if (!workoutData) {
+      return;
+    }
+    console.log(workoutData.planVersions[planVersion]);
+    const ArrayofExer = workoutData.planVersions[planVersion].exercises;
+    let newArrayEx = [];
+    ArrayofExer.forEach((exer) => {
+      if (exer.sets > 1) {
+        for (let i = 0; i < exer.sets; i++) {
+          newArrayEx.push(exer);
+        }
+      } else {
         newArrayEx.push(exer);
       }
-    } else {
-      newArrayEx.push(exer);
-    }
-  });
-  setArrayEx(newArrayEx);
-}, [workoutData]);
-  
-  useEffect(() => { 
+    });
+    setArrayEx(newArrayEx);
+  }, [workoutData]);
+
+  useEffect(() => {
     console.log(arrayEx);
   }, [arrayEx]);
-
 
   useEffect(() => {
     axiosInstance
@@ -226,16 +223,16 @@ useEffect(() => {
         isWorkoutStarted &&
         workoutData.planVersions[planVersion] !== undefined ? (
         <section className="p-5 body-font dark:bg-gray-900 w-full">
-          <div className="container  gap-3  border">
-            <div className="right_side flex flex-col justify-center mb-4 border lg:w-1/2 w-full h-full">
-              <div className="mb-2 border self-center">
+          <div className="container lg:flex gap-3  ">
+            <div className="right_side flex flex-col justify-center mb-4  w-full h-full">
+              <div className="mb-2  self-center">
                 <p>
                   {!isExerciseFinished
                     ? arrayEx[currentExerciseIndex].exercise.name
                     : "Rest time"}
                 </p>
               </div>
-              <div className="img m-0 border self-center">
+              <div className="img m-0  self-center">
                 {!isExerciseFinished ? (
                   <img
                     alt="exercise"
@@ -245,15 +242,15 @@ useEffect(() => {
                 ) : animationData ? (
                   <Lottie options={defaultOptions} />
                 ) : null}
-                <div className="justify-center">
+                <div className="flex justify-center">
                   {!isExerciseFinished
                     ? `Weight: ${arrayEx[currentExerciseIndex].weights}`
                     : ""}
                 </div>
               </div>
             </div>
-            <div className="left_side bottom panel flex flex-col justify-center lg:w-1/2 w-full h-full">
-              <div className="flex  mb-4 gap-2 border">
+            <div className="left_side bottom panel flex flex-col justify-center w-full h-full gap-4">
+              <div className="flex gap-6 justify-center">
                 <button
                   onClick={handlePauseButton}
                   data-modal-target="default-modal"
@@ -296,7 +293,19 @@ useEffect(() => {
                   setIsWorkoutStarted={setIsWorkoutStarted}
                 />
               </div>
-              <div className="side_panel border">
+              <div className="flex flex-col justify-center self-center">
+                <p>Remaining time</p>
+                <span className="countdown font-mono text-6xl">
+                  <span
+                    style={{
+                      "--value": !isExerciseFinished
+                        ? remainingTime
+                        : remainingTimeInRest,
+                    }}
+                  ></span>
+                </span>
+              </div>
+              <div className="side_panel ">
                 <div>
                   {!isExerciseFinished
                     ? `Description : ${arrayEx[currentExerciseIndex].exercise.description}`
@@ -310,10 +319,6 @@ useEffect(() => {
                       }`
                     : ""}
                 </div>
-              </div>
-              <div>
-                Remaining time :
-                {!isExerciseFinished ? remainingTime : remainingTimeInRest}
               </div>
             </div>
           </div>

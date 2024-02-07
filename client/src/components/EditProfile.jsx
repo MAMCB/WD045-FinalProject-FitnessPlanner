@@ -40,9 +40,10 @@ const EditProfile = () => {
     formData.append("profilePic", profilePic);
    
     axios
-      .put(`api/user/${context.user._id}`, formData)
+      .put(`/api/user/${context.user._id}`, formData)
       .then(res => navigate('/profile'))
-      .catch((e) => console.error(e));
+      .catch((e) => {console.error(e)
+     alert("Something went wrong, maybe the image is to large? Make sure its not over 5Mb") });
       console.log('user:',user)
       console.log('context:',context.user)
 

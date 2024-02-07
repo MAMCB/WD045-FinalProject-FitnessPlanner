@@ -106,8 +106,10 @@ userSchema.virtual("confirmPassword")
        next();
      } catch (e) {
        console.log("error", e.message);
-       const imagePath = this.getUpdate().profilePic;
-       fs.unlinkSync(imagePath);
+       if(this.getUpdate().profilePic){
+        const imagePath = this.getUpdate().profilePic;
+       fs.unlinkSync(imagePath);}
+       
        next(e.message);
      }
    });

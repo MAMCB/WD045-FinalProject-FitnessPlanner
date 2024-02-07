@@ -40,13 +40,31 @@ const getUserById = async (req, res) => {
 
 const updateUserById = async (req, res) => {
   const { id } = req.params;
+  let updatedUser;
 
  
   try {
-    console.log(req.file.path)
-    const updatedUser = await User.findOneAndUpdate({ _id: id },  {...req.body, profilePic:req.file.path},{
-      new: true,
-    }); // { new: true } return the new updated doc in the db
+    if(req.file)
+    {
+      console.log(req.file.path);
+      updatedUser = await User.findOneAndUpdate(
+        { _id: id },
+        { ...req.body, profilePic: req.file.path },
+        {
+          new: true,
+        }
+      ); // { new: true } return the new updated doc in the db
+    }
+    else{
+      updatedUser = await User.findOneAndUpdate(
+        { _id: id },
+       req.body,
+        {
+          new: true,
+        }
+      );
+    }
+   
   
     if (Object.keys(updatedUser).length === 0) {
     

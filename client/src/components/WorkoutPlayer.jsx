@@ -223,16 +223,22 @@ const WorkoutPlayer = () => {
         isWorkoutStarted &&
         workoutData.planVersions[planVersion] !== undefined ? (
         <section className="p-5 body-font dark:bg-gray-900 w-full">
-          <div className="container lg:flex gap-3  ">
-            <div className="right_side flex flex-col justify-center mb-4  w-full h-full">
-              <div className="mb-2  self-center">
+          <div
+            className={
+              isExerciseFinished
+                ? "container gap-3 "
+                : "container lg:flex gap-3"
+            }
+          >
+            <div className="right_side flex gap-4 flex-col content-center justify-center mb-4  w-full h-full">
+              <div className="mb-2 text-xl self-center">
                 <p>
                   {!isExerciseFinished
                     ? arrayEx[currentExerciseIndex].exercise.name
                     : "Rest time"}
                 </p>
               </div>
-              <div className="img m-0  self-center">
+              <div className="img m-0 flex-col self-center">
                 {!isExerciseFinished ? (
                   <img
                     alt="exercise"
@@ -242,11 +248,11 @@ const WorkoutPlayer = () => {
                 ) : animationData ? (
                   <Lottie options={defaultOptions} />
                 ) : null}
-                <div className="flex justify-center">
-                  {!isExerciseFinished
-                    ? `Weight: ${arrayEx[currentExerciseIndex].weights}`
-                    : ""}
-                </div>
+              </div>
+              <div className="flex justify-center">
+                {!isExerciseFinished
+                  ? `Weight: ${arrayEx[currentExerciseIndex].weights}`
+                  : ""}
               </div>
             </div>
             <div className="left_side bottom panel flex flex-col justify-center w-full h-full gap-4">
@@ -293,10 +299,13 @@ const WorkoutPlayer = () => {
                   setIsWorkoutStarted={setIsWorkoutStarted}
                 />
               </div>
-              <div className="flex flex-col justify-center self-center">
+              <div className="flex justify-center">
                 <p>Remaining time</p>
-                <span className="countdown font-mono text-6xl">
+              </div>
+              <div className="flex flex-col  justify-center self-center">
+                <span className="countdown font-mono text-6xl ">
                   <span
+                    className=" flex justify-center"
                     style={{
                       "--value": !isExerciseFinished
                         ? remainingTime

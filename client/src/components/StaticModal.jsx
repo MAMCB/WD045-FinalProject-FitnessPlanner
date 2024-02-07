@@ -28,7 +28,7 @@ const StaticModal = ({
       modal_title,
       nameBtnOne,
       nameBtnTwo,
-      setIsWorkoutStarted,
+      setIsWorkoutStarted
     );
   };
 
@@ -36,7 +36,6 @@ const StaticModal = ({
     setIsWorkoutFin(true);
     setIsWorkoutStarted(false);
   };
-
   return (
     <>
       <div

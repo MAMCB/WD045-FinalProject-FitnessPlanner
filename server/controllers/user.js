@@ -56,6 +56,7 @@ const updateUserById = async (req, res) => {
       ); // { new: true } return the new updated doc in the db
     }
     else{
+      console.log('no file');
       updatedUser = await User.findOneAndUpdate(
         { _id: id },
        req.body,

@@ -9,6 +9,8 @@ import { faCircleStop } from "@fortawesome/free-solid-svg-icons";
 import StaticModal from "./StaticModal";
 import { Link } from "react-router-dom";
 import { useParams } from "react-router-dom";
+import useSound from "use-sound";
+import countSound from "../assets/sounds/finalSound.mp3";
 
 const WorkoutPlayer = () => {
   const id = useParams();
@@ -55,11 +57,11 @@ useEffect(() => {
   });
   setArrayEx(newArrayEx);
 }, [workoutData]);
+  
+  useEffect(() => { 
+    console.log(arrayEx);
+  }, [arrayEx]);
 
-
-
-
-  // new code
 
   useEffect(() => {
     axiosInstance
@@ -110,6 +112,9 @@ useEffect(() => {
 
       restTimerId = setInterval(() => {
         setRemainingTimeInRest((prevTime) => {
+          if (prevTime === 3) {
+            play();
+          }
           if (prevTime === 1) {
             setIsExerciseFinished(false);
             clearInterval(restTimerId);
@@ -128,17 +133,13 @@ useEffect(() => {
     if (!workoutData) {
       return;
     }
-    /* console.log(`currentExerciseIndex is : ${currentExerciseIndex}`);
-    console.log(`isExerciseFinished is : ${isExerciseFinished}`);
-    console.log(`isWorkoutPaused is : ${isWorkoutPaused}`);
-    console.log(`isWorkoutStarted is : ${isWorkoutStarted}`);
-    console.log(`1. remainingTime is : ${remainingTime}`); */
     let timerId;
     let exercisesLength = arrayEx.length;
     if (
       currentExerciseIndex < arrayEx.length &&
       !isExerciseFinished &&
-      !isWorkoutPaused
+      !isWorkoutPaused &&
+      isWorkoutStarted
     ) {
       console.log(isWorkoutPaused);
       if (
@@ -147,9 +148,7 @@ useEffect(() => {
         !isWorkoutPaused
       ) {
         if (remainingTime === 0 || isExerciseFinished) {
-          setRemainingTime(
-            arrayEx[currentExerciseIndex].duration
-          );
+          setRemainingTime(arrayEx[currentExerciseIndex].duration);
         }
       }
 
@@ -157,19 +156,18 @@ useEffect(() => {
       timerId = setInterval(() => {
         setRemainingTime((prevTime) => {
           console.log(`2. remainingTime is : ${remainingTime}`);
+          if (prevTime === 3) {
+            play();
+          }
           if (prevTime === 1) {
             setIsExerciseFinished(true);
             setCurrentExerciseIndex((prevIndex) => prevIndex + 1);
-
             return arrayEx[currentExerciseIndex].duration; // Reset the timer
           }
           return prevTime - 1;
         });
       }, 1000);
-    } else if (
-      isExerciseFinished &&
-      currentExerciseIndex >= arrayEx.length
-    ) {
+    } else if (isExerciseFinished && currentExerciseIndex >= arrayEx.length) {
       setRemainingTime(0);
       setIsWorkoutFinished(true);
       console.log("exercise finished");
@@ -189,11 +187,7 @@ useEffect(() => {
     setIsWorkoutPaused(true);
   };
 
-  // next button
-  // music button to play music
-  // sound button to mute the sound
-  // timer
-  // how much repids required
+  const [play] = useSound(countSound);
 
   return (
     <>
@@ -294,6 +288,7 @@ useEffect(() => {
               ) : animationData ? (
                 <Lottie options={defaultOptions} />
               ) : null}
+                  <div>{!isExerciseFinished ? `Weight: ${arrayEx[currentExerciseIndex].weights}` : "" }</div>
               <div>
                 Remain time :
                 {!isExerciseFinished ? remainingTime : remainingTimeInRest}

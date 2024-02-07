@@ -225,94 +225,97 @@ useEffect(() => {
       ) : !isWorkoutFinished &&
         isWorkoutStarted &&
         workoutData.planVersions[planVersion] !== undefined ? (
-        <section className="p-5 mx-auto body-font dark:bg-gray-900 min-h-100">
-          <div className="container mx-auto flex flex-col gap-3 h-full">
-            <div className="flex  mb-4 gap-2">
-              <button
-                onClick={handlePauseButton}
-                data-modal-target="default-modal"
-                data-modal-toggle="pause-modal"
-              >
-                <FontAwesomeIcon icon={faCirclePause} className="h-10" />
-              </button>
-              <button
-                onClick={handlePauseButton}
-                data-modal-target="default-modal"
-                data-modal-toggle="pause-modal"
-                type="button"
-              >
-                <FontAwesomeIcon icon={faCircleStop} className="h-10" />
-              </button>
-
-              <StaticModal
-                modal_id="pause-modal"
-                modal_title="Pause workout"
-                modal_description="Your workout is paused"
-                nameBtnOne="Return to workout"
-                nameBtnTwo="End workout"
-                setIsWorkoutPaus={setIsWorkoutPaused}
-                setIsWorkoutFin={setIsWorkoutFinished}
-                setIsModalOp={setIsModalOpen}
-                isModalOpen={isModalOpen}
-                setIsWorkoutStarted={setIsWorkoutStarted}
-              />
-
-              <StaticModal
-                modal_id="stop-modal"
-                modal_title="Stop workout"
-                modal_description="Your workout is stopped"
-                nameBtnOne="Return to workout"
-                nameBtnTwo="End workout"
-                setIsWorkoutPaus={setIsWorkoutPaused}
-                setIsWorkoutFin={setIsWorkoutFinished}
-                setIsModalOp={setIsModalOpen}
-                isModalOpen={isModalOpen}
-                setIsWorkoutStarted={setIsWorkoutStarted}
-              />
-            </div>
-
-            <div className="mb-2">
-              <p>
-                {!isExerciseFinished
-                  ? arrayEx[currentExerciseIndex].exercise.name
-                  : "Rest time"}
-              </p>
-            </div>
-            <div className="img max-w-[500px] max-h-[500px] m-auto">
-              {!isExerciseFinished ? (
-                <img
-                  alt="exercise"
-                  className="lg:w-1/2 w-full sm:h-100 lg:h-auto h-100 object-cover object-center rounded"
-                  src={arrayEx[currentExerciseIndex].exercise.image}
-                ></img>
-              ) : animationData ? (
-                <Lottie options={defaultOptions} />
-              ) : null}
-                  <div>{!isExerciseFinished ? `Weight: ${arrayEx[currentExerciseIndex].weights}` : "" }</div>
-              <div>
-                Remain time :
-                {!isExerciseFinished ? remainingTime : remainingTimeInRest}
-              </div>
-            </div>
-            <div className="flex flex-col">
-              <div>
-                {!isExerciseFinished
-                  ? `Description : ${arrayEx[currentExerciseIndex].exercise.description}`
-                  : ""}
-              </div>
-              <div className="side panel">
+        <section className="p-5 body-font dark:bg-gray-900 w-full">
+          <div className="container  gap-3  border">
+            <div className="right_side flex flex-col justify-center mb-4 border lg:w-1/2 w-full h-full">
+              <div className="mb-2 border self-center">
                 <p>
+                  {!isExerciseFinished
+                    ? arrayEx[currentExerciseIndex].exercise.name
+                    : "Rest time"}
+                </p>
+              </div>
+              <div className="img m-0 border self-center">
+                {!isExerciseFinished ? (
+                  <img
+                    alt="exercise"
+                    className=" sm:h-100 lg:h-auto h-100 object-cover object-center rounded"
+                    src={arrayEx[currentExerciseIndex].exercise.image}
+                  ></img>
+                ) : animationData ? (
+                  <Lottie options={defaultOptions} />
+                ) : null}
+                <div className="justify-center">
+                  {!isExerciseFinished
+                    ? `Weight: ${arrayEx[currentExerciseIndex].weights}`
+                    : ""}
+                </div>
+              </div>
+            </div>
+            <div className="left_side bottom panel flex flex-col justify-center lg:w-1/2 w-full h-full">
+              <div className="flex  mb-4 gap-2 border">
+                <button
+                  onClick={handlePauseButton}
+                  data-modal-target="default-modal"
+                  data-modal-toggle="pause-modal"
+                >
+                  <FontAwesomeIcon icon={faCirclePause} className="h-10" />
+                </button>
+                <button
+                  onClick={handlePauseButton}
+                  data-modal-target="default-modal"
+                  data-modal-toggle="pause-modal"
+                  type="button"
+                >
+                  <FontAwesomeIcon icon={faCircleStop} className="h-10" />
+                </button>
+
+                <StaticModal
+                  modal_id="pause-modal"
+                  modal_title="Pause workout"
+                  modal_description="Your workout is paused"
+                  nameBtnOne="Return to workout"
+                  nameBtnTwo="End workout"
+                  setIsWorkoutPaus={setIsWorkoutPaused}
+                  setIsWorkoutFin={setIsWorkoutFinished}
+                  setIsModalOp={setIsModalOpen}
+                  isModalOpen={isModalOpen}
+                  setIsWorkoutStarted={setIsWorkoutStarted}
+                />
+
+                <StaticModal
+                  modal_id="stop-modal"
+                  modal_title="Stop workout"
+                  modal_description="Your workout is stopped"
+                  nameBtnOne="Return to workout"
+                  nameBtnTwo="End workout"
+                  setIsWorkoutPaus={setIsWorkoutPaused}
+                  setIsWorkoutFin={setIsWorkoutFinished}
+                  setIsModalOp={setIsModalOpen}
+                  isModalOpen={isModalOpen}
+                  setIsWorkoutStarted={setIsWorkoutStarted}
+                />
+              </div>
+              <div className="side_panel border">
+                <div>
+                  {!isExerciseFinished
+                    ? `Description : ${arrayEx[currentExerciseIndex].exercise.description}`
+                    : ""}
+                </div>
+                <div>
                   {currentExerciseIndex + 1 < arrayEx.length &&
                   !isExerciseFinished
                     ? `Next exercise: ${
                         arrayEx[currentExerciseIndex + 1].exercise.name
                       }`
                     : ""}
-                </p>
+                </div>
+              </div>
+              <div>
+                Remaining time :
+                {!isExerciseFinished ? remainingTime : remainingTimeInRest}
               </div>
             </div>
-
-            <div className="bottom panel"></div>
           </div>
         </section>
       ) : (

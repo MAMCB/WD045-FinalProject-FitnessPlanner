@@ -85,18 +85,20 @@ userSchema.virtual("confirmPassword")
   })
 
    userSchema.pre("findOneAndUpdate", async function (next) {
+    console.log("this.getUpdate()", this.getUpdate());
      if (!this.getUpdate().profilePic) {
        return next();
      }
-     if(this.getUpdate().profilePic.startsWith("https://res.cloudinary.com/")){
-        return next();
-      }
+     if (this.getUpdate().updateProfilePic === "false") {
+       return next();
+     }
      //get the current image url of the user
      //check if the image url startsWith("https://res.cloudinary.com/"))
      //if it does execute this code:   const public_id = user.profilePic.match(//([^/]+).gif$/)[1];
     // console.log(public_id);
     // await cloudinary.uploader.destroy(public_id);
     console.log("trying to update image")
+    console.log("this.profilePic", this.profilePic);
     console.log("this.getUpdate().profilePic", this.getUpdate().profilePic);
      try {
        const options = {

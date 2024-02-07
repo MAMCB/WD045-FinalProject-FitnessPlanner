@@ -255,7 +255,7 @@ const WorkoutPlayer = () => {
                   : ""}
               </div>
             </div>
-            <div className="left_side bottom panel flex flex-col justify-center w-full h-full gap-4">
+            <div className="left_side bottom panel flex flex-col justify-center w-full h-full gap-4 content-center items-center self-center">
               <div className="flex gap-6 justify-center">
                 <button
                   onClick={handlePauseButton}
@@ -314,7 +314,7 @@ const WorkoutPlayer = () => {
                   ></span>
                 </span>
               </div>
-              <div className="side_panel ">
+              <div className="side_panel">
                 <div>
                   {!isExerciseFinished
                     ? `Description : ${arrayEx[currentExerciseIndex].exercise.description}`

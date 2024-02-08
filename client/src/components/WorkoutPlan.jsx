@@ -6,13 +6,15 @@ import { AuthContext } from "../context/Auth";
 import { Accordion } from "flowbite-react";
 import { Link, useParams, useNavigate } from "react-router-dom";
 import { Select,Button } from "flowbite-react";
+import SessionCalendar from "./SessionCalendar";
+import axiosInstance from "../axiosInstance";
 
 const WorkoutPlan = () => {
   const [workout, setWorkout] = useState([]);
   const [workoutVersion, setWorkoutVersion] = useState([]);
- 
+  const [workoutSessions, setWorkoutSessions] = useState([]);
   const [userExercise, setUserExercise] = useState([]);
-
+  const [testing, setTesting] = useState(false);
 
   const context = useContext(AuthContext);
   const navigate = useNavigate();
@@ -20,6 +22,13 @@ const WorkoutPlan = () => {
   console.log(workout)
   useEffect(() => {
     console.log(workoutVersion)},[workoutVersion])
+
+    useEffect(() => {
+      axios
+      .get("/api/workoutSession")
+      .then((res) => setWorkoutSessions(res.data))
+      .catch((e) => console.error(e));
+  }, []);
 
   useEffect(() => {
     axios
@@ -95,6 +104,22 @@ const handleVersionChange = (index) => (e) => {
     window.location.reload()})
       .catch((e) => console.error(e));
   }
+
+  const sessionTester = (id,year,monthIndex,day) => {
+    const newSession = {
+      workoutId: id,
+      name:"TestSession",
+      finishedDate: new Date(year,monthIndex,day+1),
+      completed: false,
+      version:0
+    }
+    axiosInstance
+.post("/api/workoutSession", newSession).then((res) => {console.log(res);
+alert("New workout session created:" +
+ `Date: ${newSession.finishedDate},Workout:${newSession.name},Version:${newSession.version},Completed:${newSession.completed}`)})
+ .catch((err) => console.log(err));
+  }
+
  
 
   return (
@@ -143,11 +168,15 @@ const handleVersionChange = (index) => (e) => {
                         </Link>
                         <Select onChange={handleVersionChange(index)}>
                           <option>Choose a plan</option>
-                          {workout.planVersions.map((x,i) => (
-                            <option key={Math.random()*100} value={Number(i)}>{x.name}</option>
+                          {workout.planVersions.map((x, i) => (
+                            <option key={Math.random() * 100} value={Number(i)}>
+                              {x.name}
+                            </option>
                           ))}
                         </Select>
-                          <Button onClick={createNewVersion(index)}>Create new Version</Button>
+                        <Button onClick={createNewVersion(index)}>
+                          Create new Version
+                        </Button>
                       </div>
                     </div>
                   </div>
@@ -216,6 +245,18 @@ const handleVersionChange = (index) => (e) => {
                     );
                   })}
                 </div>
+                {testing&&
+                  <Button
+                    onClick={() => sessionTester(workout._id, 2024, 1, 1)}
+                  >
+                    Create Session
+                  </Button>
+                }
+                <SessionCalendar
+                  workoutSessions={workoutSessions.filter(
+                    (session) => session.workoutId === workout._id && session
+                  )}
+                />
               </div>
             );
           })}

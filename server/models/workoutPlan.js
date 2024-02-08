@@ -1,6 +1,7 @@
 const mongoose = require("mongoose");
 const exerciseTypes = require("./exerciseTypes");
 
+
 const workoutPlanSchema = new mongoose.Schema(
   {
     userId: {

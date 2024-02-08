@@ -35,6 +35,7 @@ const Editor = () => {
     goal: "",
     restDuration: 0,
     exerciseDuration: 0,
+    visibility: false,
     exercises: [],
   });
   const [exerciseBlock, setExerciseBlock] = useState({
@@ -48,18 +49,20 @@ const Editor = () => {
   useEffect(() => {
     const storedName = localStorage.getItem("workoutPlanName");
     const storedGoal = localStorage.getItem("workoutPlanGoal");
+    const visibility = localStorage.getItem("workoutPlanVisibility");
     const storedRestDuration = localStorage.getItem("workoutPlanRestDuration");
     const storedExerciseDuration = localStorage.getItem("workoutPlanExerciseDuration");
     const storedExercises = localStorage.getItem("workoutPlanExercises");
-    if (storedName || storedGoal || storedRestDuration || storedExerciseDuration || storedExercises) {
+    if (storedName || storedGoal || visibility || storedRestDuration || storedExerciseDuration || storedExercises) {
       const initialExercises = JSON.parse(storedExercises);
       const initialName =JSON.parse(storedName);
-      const initialGoal =JSON.parse(storedGoal);
+      const initialGoal = JSON.parse(storedGoal);
+      const initialVisibility = JSON.parse(visibility);
       const initialRestDuration =JSON.parse(storedRestDuration);
       const initialExerciseDuration =JSON.parse(storedExerciseDuration);
 
       setWorkoutPlan((prev) => ({
-        ...prev,name: initialName, goal: initialGoal, restDuration: initialRestDuration, exerciseDuration: initialExerciseDuration}));
+        ...prev,name: initialName, goal: initialGoal, visibility:initialVisibility, restDuration: initialRestDuration, exerciseDuration: initialExerciseDuration}));
       setBlocks(initialExercises);
       }}, []);
 
@@ -155,7 +158,7 @@ const Editor = () => {
   };
 
   const validatePlan = () => {
-    if (workoutPlan.name === "" || workoutPlan.goal === "" || workoutPlan.exercises.length === 0 || workoutPlan.restDuration <= 0 || workoutPlan.exerciseDuration <= 0) {
+    if (workoutPlan.name === "" || workoutPlan.goal === "" || workoutPlan.visibility === "" || workoutPlan.exercises.length === 0 || workoutPlan.restDuration <= 0 || workoutPlan.exerciseDuration <= 0) {
       return setPlanIsValid(false);
     }
     return setPlanIsValid(true);
@@ -164,6 +167,7 @@ const Editor = () => {
   const saveDraft = () => {
     localStorage.setItem("workoutPlanName", JSON.stringify(workoutPlan.name));
     localStorage.setItem("workoutPlanGoal", JSON.stringify(workoutPlan.goal));
+    localStorage.setItem("workoutPlanVisibility", JSON.stringify(workoutPlan.visibility));
     localStorage.setItem("workoutPlanRestDuration", JSON.stringify(workoutPlan.restDuration));
     localStorage.setItem("workoutPlanExerciseDuration", JSON.stringify(workoutPlan.exerciseDuration));
     localStorage.setItem("workoutPlanExercises", JSON.stringify(workoutPlan.exercises));
@@ -173,10 +177,11 @@ const Editor = () => {
   const clearDraft = () => {
     localStorage.removeItem("workoutPlanName");
     localStorage.removeItem("workoutPlanGoal");
+    localStorage.removeItem("workoutPlanVisibility");
     localStorage.removeItem("workoutPlanRestDuration");
     localStorage.removeItem("workoutPlanExerciseDuration");
     localStorage.removeItem("workoutPlanExercises");
-    setWorkoutPlan((prev) => ({ ...prev, name: "", goal: "", restDuration: 0, exerciseDuration: 0, exercises: [] }));
+    setWorkoutPlan((prev) => ({ ...prev, name: "", goal: "", visibility: false, restDuration: 0, exerciseDuration: 0, exercises: [] }));
     setBlocks([]);
     alert("Draft cleared")
   }
@@ -207,15 +212,41 @@ const Editor = () => {
           <h2 className=" text-gray-500 dark:text-gray-400">Your plan</h2>
           <div className="m-4 ">
             <Label htmlFor="name" value="Plan name" />
-            <TextInput id="name" type="text" onChange={handlePlan} value={workoutPlan.name}/>
+            <TextInput
+              id="name"
+              type="text"
+              onChange={handlePlan}
+              value={workoutPlan.name}
+            />
           </div>
           <div className="m-4 ">
             <Label htmlFor="goal" value="Goal" />
-            <TextInput id="goal" type="text" onChange={handlePlan} value={workoutPlan.goal}/>
+            <TextInput
+              id="goal"
+              type="text"
+              onChange={handlePlan}
+              value={workoutPlan.goal}
+            />
+          </div>
+          <div className="m-4 ">
+            <Label htmlFor="visibility" value="Visibility" />
+            <Select
+              id="visibility"
+              onChange={handlePlan}
+              value={workoutPlan.visibility}
+            >
+              <option value={true}>Public</option>
+              <option value={false}>Private</option>
+            </Select>
           </div>
           <div className="m-4 ">
             <Label htmlFor="restDuration" value="Rest duration" />
-            <TextInput id="restDuration" type="number" onChange={handlePlan} value={workoutPlan.restDuration} />
+            <TextInput
+              id="restDuration"
+              type="number"
+              onChange={handlePlan}
+              value={workoutPlan.restDuration}
+            />
           </div>
           <div className="m-4 ">
             <Label

@@ -186,6 +186,24 @@ const WorkoutPlayer = () => {
 
   const [play] = useSound(countSound);
 
+  useEffect(() => {
+    if(isWorkoutFinished){
+      console.log('workout finished');
+      console.log(isWorkoutFinished);
+      const workoutSession = {
+        finishedDate: new Date(),
+        workoutId: id.id,
+        version: planVersion,
+        completed: currentExerciseIndex >= arrayEx.length,
+        comments: [prompt("Please leave a comment")],
+    };
+  axiosInstance
+.post("/api/workoutSession", workoutSession).then((res) => {console.log(res);
+alert("New workout session created:" +
+ `Date: ${workoutSession.finishedDate},Workout:${workoutData.name},Version:${workoutSession.version},Completed:${workoutSession.completed},Comments:${workoutSession.comments.join(",")}`)})
+ .catch((err) => console.log(err));}
+  }, [isWorkoutFinished]);
+
   return (
     <>
       {!isWorkoutStarted ? (

@@ -6,11 +6,12 @@ import { AuthContext } from "../context/Auth";
 import { Accordion } from "flowbite-react";
 import { Link, useParams, useNavigate } from "react-router-dom";
 import { Select,Button } from "flowbite-react";
+import SessionCalendar from "./SessionCalendar";
 
 const WorkoutPlan = () => {
   const [workout, setWorkout] = useState([]);
   const [workoutVersion, setWorkoutVersion] = useState([]);
- 
+  const [workoutSessions, setWorkoutSessions] = useState([]);
   const [userExercise, setUserExercise] = useState([]);
 
 
@@ -20,6 +21,13 @@ const WorkoutPlan = () => {
   console.log(workout)
   useEffect(() => {
     console.log(workoutVersion)},[workoutVersion])
+
+    useEffect(() => {
+      axios
+      .get("/api/workoutSession")
+      .then((res) => setWorkoutSessions(res.data))
+      .catch((e) => console.error(e));
+  }, []);
 
   useEffect(() => {
     axios
@@ -143,11 +151,15 @@ const handleVersionChange = (index) => (e) => {
                         </Link>
                         <Select onChange={handleVersionChange(index)}>
                           <option>Choose a plan</option>
-                          {workout.planVersions.map((x,i) => (
-                            <option key={Math.random()*100} value={Number(i)}>{x.name}</option>
+                          {workout.planVersions.map((x, i) => (
+                            <option key={Math.random() * 100} value={Number(i)}>
+                              {x.name}
+                            </option>
                           ))}
                         </Select>
-                          <Button onClick={createNewVersion(index)}>Create new Version</Button>
+                        <Button onClick={createNewVersion(index)}>
+                          Create new Version
+                        </Button>
                       </div>
                     </div>
                   </div>
@@ -216,6 +228,7 @@ const handleVersionChange = (index) => (e) => {
                     );
                   })}
                 </div>
+                <SessionCalendar workoutSessions={workoutSessions.filter((session)=>session.workoutId === workout._id&&session)} />
               </div>
             );
           })}

@@ -1,6 +1,8 @@
 const User = require("../models/user");
 const multer = require('multer');
 const path = require('path');
+const axios = require("axios");
+const cloudinary = require("../config/cloudinary");
 
 const createUser = async (req, res) => {
   try {
@@ -41,11 +43,24 @@ const getUserById = async (req, res) => {
 const updateUserById = async (req, res) => {
   const { id } = req.params;
   let updatedUser;
+  let currentUrl;
 
  
   try {
     if(req.file)
     {
+
+      
+
+      axios.get(`http://localhost:8000/api/user/${id}`)
+      .then(res =>  { console.log('****+++++',res.data.profilePic);
+    currentUrl = res.data.profilePic 
+    console.log('currentUrl-----',currentUrl)
+    deletePicture(currentUrl,id,req);
+
+  })
+      .catch(e=>console.error(e)) 
+    
       console.log(req.file.path);
       updatedUser = await User.findOneAndUpdate(
         { _id: id },
@@ -54,8 +69,9 @@ const updateUserById = async (req, res) => {
           new: true,
         }
       ); // { new: true } return the new updated doc in the db
-    }
-    else{
+    
+   
+    }else{
       console.log('no file');
       updatedUser = await User.findOneAndUpdate(
         { _id: id },
@@ -79,6 +95,24 @@ const updateUserById = async (req, res) => {
     res.status(500).json({ message: error.message });
   }
 };
+
+const deletePicture = async(currentUrl,id,req)=>{
+
+  updatedUser = await User.findOneAndUpdate({ _id: id },  {...req.body, profilePic:req.file.path},{
+    new: true,
+  }); // { new: true } return the new updated doc in the db
+
+  
+  if(updatedUser.profilePic.startsWith("https://res.cloudinary.com/")) {
+    const public_id = currentUrl.match(/\.(jpg|jpeg|png|gif)$/)[1]
+    console.log('',public_id);
+    await cloudinary.uploader.destroy(public_id);
+}
+
+
+
+}
+
 
 const deleteUserById = async (req, res) => {
   const { id } = req.params;

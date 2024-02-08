@@ -100,12 +100,12 @@ const handleVersionChange = (index) => (e) => {
   return (
     <div className="w-[100%] bg-white shadow dark:bg-gray-900 py-[100px]">
       <div className="flex flex-wrap justify-between">
-        <div className='w-[100%] lg:w-[49%] "bg-white shadow dark:bg-gray-800 m-[5px]'>
-          <h2 className="text-xl">Your Workout plans</h2>
+        <div className='w-[100%] lg:w-[49%] m-[5px]'>
+          <h2 className="text-xl mb-3  text-gray-500 dark:text-gray-400">Your Workout plans</h2>
           {workout.map((workout,index) => {
             return (
               <div key={workout._id}>
-                <div className="my-[20px] bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
+                <div className="mb-[20px] bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
                   <div className="flex">
                     <div className="w-2/4 bg-white border border-gray-200 rounded-lg dark:bg-gray-800 p-10 dark:border-gray-700 m-[10px]">
                       <img
@@ -115,10 +115,10 @@ const handleVersionChange = (index) => (e) => {
                       />
                     </div>
                     <div className="w-2/4 bg-white border border-gray-200 rounded-lg dark:bg-gray-800 p-10 dark:border-gray-700 m-[10px]">
-                      <p>Workout Name: {workout.name}</p>
-                      <p>Goal: {workout.goal}</p>
-                      <p>Difficulty: {workout.difficulty}</p>
-                      <p>Rating: {workout.rating}</p>
+                      <p className=" text-gray-500 dark:text-gray-400">Workout Name: {workout.name}</p>
+                      <p className=" text-gray-500 dark:text-gray-400">Goal: {workout.goal}</p>
+                      <p className=" text-gray-500 dark:text-gray-400">Difficulty: {workout.difficulty}</p>
+                      <p className=" text-gray-500 dark:text-gray-400">Rating: {workout.rating}</p>
                       <div className="mt-4">
                         <Link
                           to={`/workoutPlayer/${workout._id}/${workoutVersion[index]}`}
@@ -141,7 +141,7 @@ const handleVersionChange = (index) => (e) => {
                         >
                           Delete
                         </Link>
-                        <Select onChange={handleVersionChange(index)}>
+                        <Select className="mb-2" onChange={handleVersionChange(index)}>
                           <option>Choose a plan</option>
                           {workout.planVersions.map((x,i) => (
                             <option key={Math.random()*100} value={Number(i)}>{x.name}</option>
@@ -157,50 +157,50 @@ const handleVersionChange = (index) => (e) => {
                         <Accordion collapseAll className="m-[10px]">
                           <Accordion.Panel className="m-[10px]">
                             <Accordion.Title>
-                              <span className="font-bold">Exercise name:</span>{" "}
+                              <span className="font-bold  text-gray-500 dark:text-gray-400">Exercise name:</span>{" "}
                               {x.exercise.name}
                             </Accordion.Title>
                             <Accordion.Content>
                               <div className="flex">
                                 <div className="w-[60%] bg-white border border-gray-200 rounded-lg dark:bg-gray-800 p-2 dark:border-gray-700 m-[10px]">
                                   <img
-                                    className="rounded-lg object-contain"
+                                    className="rounded-lg object-fill"
                                     src={x.exercise.image}
                                     alt="exercise-image"
                                   />
                                 </div>
                                 <ul className="w-[40%] bg-white border border-gray-200 rounded-lg dark:bg-gray-800 p-3 dark:border-gray-700 m-[10px]">
-                                  <li>
+                                  <li className=" text-gray-500 dark:text-gray-400">
                                     <span className="font-bold">
                                       Equipment:
                                     </span>{" "}
                                     {x.exercise.equipment}
                                   </li>
-                                  <li>
+                                  <li className=" text-gray-500 dark:text-gray-400">
                                     <span className="font-bold">
                                       Difficulty:
                                     </span>{" "}
                                     {x.exercise.difficulty}
                                   </li>
-                                  <li>
+                                  <li className=" text-gray-500 dark:text-gray-400">
                                     <span className="font-bold">
                                       Muscle Group:
                                     </span>{" "}
                                     {x.exercise.muscleGroup}
                                   </li>
-                                  <li>
+                                  <li className=" text-gray-500 dark:text-gray-400">
                                     <span className="font-bold">Rating:</span>{" "}
                                     {x.exercise.rating}
                                   </li>
-                                  <li>
+                                  <li className=" text-gray-500 dark:text-gray-400">
                                     <span className="font-bold">Sets:</span>{" "}
                                     {x.sets}
                                   </li>
-                                  <li>
+                                  <li className=" text-gray-500 dark:text-gray-400">
                                     <span className="font-bold">Duration:</span>{" "}
                                     {x.duration}
                                   </li>
-                                  <li>
+                                  <li className=" text-gray-500 dark:text-gray-400">
                                     <span className="font-bold">Weights:</span>{" "}
                                     {x.weights}
                                   </li>
@@ -221,7 +221,7 @@ const handleVersionChange = (index) => (e) => {
           })}
         </div>
         <div className="w-[100%] lg:w-[49%] m-[5px]">
-          <h2 className="text-xl">Your exercises</h2>
+          <h2 className=" mb-3 text-xl text-gray-500 dark:text-gray-400">Your exercises</h2>
           {userExercise.map((x) => {
             return (
               <div
@@ -231,30 +231,30 @@ const handleVersionChange = (index) => (e) => {
                 <div className="flex">
                   <div className="w-[60%] h-[300px] mr-[10px] bg-white border border-gray-200 p-4 rounded-lg dark:bg-gray-800 dark:border-gray-700">
                     <img
-                      className="w-full h-full rounded-lg object-contain"
+                      className="w-full h-full rounded-lg object-fill"
                       src={x.image}
                       alt="exercise image"
                     />
                   </div>
                   <div className="w-[40%]  bg-white border border-gray-200 p-4 rounded-lg dark:bg-gray-800 dark:border-gray-700">
-                    <p>
-                      <span className="font-bold">Exercises Name: </span>
+                    <p className=" text-gray-500 dark:text-gray-400">
+                      <span className="font-bold  text-gray-500 dark:text-gray-400">Exercises Name: </span>
                       {x.name}
                     </p>
-                    <p>
-                      <span className="font-bold">Equipment: </span>
+                    <p className="text-gray-500 dark:text-gray-400">
+                      <span className="font-bold  text-gray-500 dark:text-gray-400">Equipment: </span>
                       {x.equipment}
                     </p>
-                    <p>
-                      <span className="font-bold">Difficulty: </span>
+                    <p className="text-gray-500 dark:text-gray-400">
+                      <span className="font-bold  text-gray-500 dark:text-gray-400">Difficulty: </span>
                       {x.difficulty}
                     </p>
-                    <p>
-                      <span className="font-bold">Muscle Group: </span>
+                    <p className="text-gray-500 dark:text-gray-400">
+                      <span className="font-bold  text-gray-500 dark:text-gray-400">Muscle Group: </span>
                       {x.muscleGroup}
                     </p>
-                    <p>
-                      <span className="font-bold">Rating: </span>
+                    <p className="text-gray-500 dark:text-gray-400">
+                      <span className="font-bold  text-gray-500 dark:text-gray-400">Rating: </span>
                       {x.rating}
                     </p>
                     <div className="mt-4">
@@ -275,7 +275,7 @@ const handleVersionChange = (index) => (e) => {
                     </div>
                   </div>
                 </div>
-                <p className="mt-[15px]">{x.description}</p>
+                <p className="mt-[15px] text-gray-500 dark:text-gray-400">{x.description}</p>
               </div>
             );
           })}

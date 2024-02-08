@@ -82,7 +82,7 @@ const Exercise = () => {
 
   const SearchSelectEquipment = () => (
     <div className="m-4">
-      <Label htmlFor="searchType" value="Select your search type" />
+      <Label htmlFor="searchType" className=" text-gray-500 sm:mb-0 dark:text-gray-400" value="Select your search type" />
       <Select id="searchType" value={search} onChange={handleSearchEquipment}>
         <option value="">Select your equipment type</option>
         <option value="assisted">Assisted</option>
@@ -120,16 +120,17 @@ const Exercise = () => {
   const SearchResult = () => <h2>{`Search exercises for ${search}`}</h2>;
   return (
     <>
-      <div className="bg-white shadow dark:bg-gray-900 py-[100px]">
-        <div className="flex justify-center">
-          <h1 className="m-10 text-xl font-bold">Search for an exercise</h1>
+      <div className=" text-gray-500 sm:mb-0 dark:text-gray-400 py-[100px]">
+        <div className="flex justify-center flex-wrap">
+          <h1 className="m-10 text-xl font-bold  text-gray-500 sm:mb-0 dark:text-gray-400">Search for an exercise</h1>
         </div>
 
-        <div className="flex justify-evenly m-4">
-          <div className="w-1/4">
+<div className="flex flex-wrap">
+        <div className="flex w-full m-4 flex-wrap justify-between">
+          <div className="w-[100%] lg:w-[39%] m-[5px] p-0 lg:p-5">
             <Tabs aria-label="Default tabs" style="default">
               <Tabs.Item active title="Front view">
-                <div className="grid grid-rows-3 grid-flow-col gap-4">
+                <div className="grid grid-rows-3 grid-flow-col gap-2 md:gap4">
                   <Button
                     onClick={() => handleMuscleButton("pectorals")}
                     disabled={searchType !== "target"}
@@ -223,8 +224,8 @@ const Exercise = () => {
               </Tabs.Item>
             </Tabs>
           </div>
-          <div className="w-1/3">
-            <div className="flex">
+          <div className="w-[100%] lg:w-[59%] m-[5px] mt-[30px] p-5">
+            <div className="flex flex-wrap">
               <div className="m-4">
                 <Label htmlFor="searchType" value="Select your search type" />
                 <Select
@@ -247,12 +248,10 @@ const Exercise = () => {
                   onChange={handleAmount}
                 />
               </div>
-            </div>
-
-            <div className="flex flex-col">
+          
               {searchType === "name" && (
                 <TextInput
-                  className="m-4"
+                  className="m-4  text-gray-500 sm:mb-0 dark:text-gray-400"
                   id="search"
                   type="text"
                   placeholder={`Search by ${searchType}`}
@@ -271,6 +270,7 @@ const Exercise = () => {
               </Button>
             </div>
           </div>
+        </div>
         </div>
         <div>
           {exercises.length > 0 && (

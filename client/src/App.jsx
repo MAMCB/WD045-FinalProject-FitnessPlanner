@@ -20,6 +20,7 @@ import Footer from "./components/Footer";
 function App() {
   return (
     <>
+    <main className="bg-white shadow dark:bg-gray-900">
       <Routes>
         <Route path="/landingPage" element={<LandingPage />} />
         <Route path="login" element={<Login />} />
@@ -41,6 +42,7 @@ function App() {
           <Route path="templateStore" element={<TemplateStore />} />
         </Route>
       </Routes>
+      </main>
       <Footer />
     </>
   );

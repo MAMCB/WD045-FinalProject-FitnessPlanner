@@ -22,8 +22,8 @@ const SessionModal = ({isModalOpen,hideModal,sessions}) => {
         <ul>
           {sessions.map((session) => (
             <li key={session._id} className="m-10">
-              <h3>{session.finishedDate}</h3>
-
+              <h3>{session.finishedDate.substr(11,8)}</h3>
+            <p>Version: {session.version}</p>
               <p>Workout completed: {session.completed.toString()}</p>
               {session.comments.map((comment, index) => (
                 <p key={index}>{comment}</p>

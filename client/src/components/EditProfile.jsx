@@ -12,6 +12,7 @@ const EditProfile = () => {
 
 
   useEffect(() => {
+    console.log('user:',user)
     if(Object.keys(user).length===0) return;
     console.log(user.profilePic);
    // user.profilePic.startsWith("https://res.cloudinary.com/") || user.profilePic.startsWith("https://lh3.googleusercontent.com/")
@@ -21,8 +22,11 @@ const EditProfile = () => {
   },[user]);
 
   useEffect(() => {
-    axios.get(`api/user/${context.user._id}`)
-    .then(res => setUser(res.data))
+    console.log('context:',context.user._id)
+    console.log("getting user")
+    axios.get(`/api/user/${context.user._id}`)
+    .then(res => {setUser(res.data)
+    console.log(res.data)})
     .catch((e) => console.error(e));
   },[]);
 

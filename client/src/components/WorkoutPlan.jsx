@@ -14,7 +14,7 @@ const WorkoutPlan = () => {
   const [workoutVersion, setWorkoutVersion] = useState([]);
   const [workoutSessions, setWorkoutSessions] = useState([]);
   const [userExercise, setUserExercise] = useState([]);
-
+  const [testing, setTesting] = useState(false);
 
   const context = useContext(AuthContext);
   const navigate = useNavigate();
@@ -245,8 +245,18 @@ alert("New workout session created:" +
                     );
                   })}
                 </div>
-                <Button onClick={()=>sessionTester(workout._id,2024,1,1)}>Create Session</Button>
-                <SessionCalendar workoutSessions={workoutSessions.filter((session)=>session.workoutId === workout._id&&session)} />
+                {testing&&
+                  <Button
+                    onClick={() => sessionTester(workout._id, 2024, 1, 1)}
+                  >
+                    Create Session
+                  </Button>
+                }
+                <SessionCalendar
+                  workoutSessions={workoutSessions.filter(
+                    (session) => session.workoutId === workout._id && session
+                  )}
+                />
               </div>
             );
           })}

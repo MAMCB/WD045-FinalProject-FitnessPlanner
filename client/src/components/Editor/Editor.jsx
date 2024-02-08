@@ -229,15 +229,6 @@ const Editor = () => {
             />
           </div>
           <div className="m-4 ">
-            <Label htmlFor="goal" value="Goal" />
-            <TextInput
-              id="goal"
-              type="text"
-              onChange={handlePlan}
-              value={workoutPlan.goal}
-            />
-          </div>
-          <div className="m-4 ">
             <Label htmlFor="visibility" value="Visibility" />
             <Select
               id="visibility"

@@ -13,7 +13,7 @@ import Register from "./components/Register";
 import Profile from "./components/Profile";
 import EditProfile from "./components/EditProfile";
 import LandingPage from "./components/Landing-Page/LandingPage";
-
+import TemplateStore from "./components/TemplateStore";
 import Protected from "./components/ProtectedRoute";
 import Footer from "./components/Footer";
 
@@ -29,7 +29,6 @@ function App() {
           <Route path="exercise" element={<Exercise />} />
           <Route path="exercise/:id" element={<Exercise />} />
           <Route path="editExercise/:id" element={<EditExercise />} />
-
           <Route path="workoutPlan" element={<WorkoutPlan />} />
           <Route path="workoutPlan/:id" element={<EditWorkoutPlan />} />
           <Route path="workoutPlan/public" element={<EditWorkoutPlan />} />
@@ -39,6 +38,7 @@ function App() {
           <Route path="workoutPlayer/:id/:version" element={<WorkoutPlayer />} />
           <Route path="profile" element={<Profile />} />
           <Route path="editProfile/:id" element={<EditProfile />} />
+          <Route path="templateStore" element={<TemplateStore />} />
         </Route>
       </Routes>
       <Footer />

@@ -1,11 +1,14 @@
 import React from 'react'
 import { useState,useEffect } from 'react';
+import SessionModal from './SessionModal';
 
 const SessionCalendar = ({workoutSessions}) => {
     
   const [currentYear, setCurrentYear] = useState(new Date().getFullYear());
   const [currentMonth, setCurrentMonth] = useState(new Date().getMonth());
    const [calendarDays, setCalendarDays] = useState([]);
+   const [isModalOpen, setIsModalOpen] = useState(false);
+   const [sessions, setSessions] = useState([]);
    const daysOfWeek = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
    const monthsNames = [
      "January",
@@ -50,10 +53,12 @@ const SessionCalendar = ({workoutSessions}) => {
 
   function showModal(selectedDate) {
     // Your existing showModal function
+    setIsModalOpen(true);
   }
 
   function hideModal() {
     // Your existing hideModal function
+    setIsModalOpen(false);
   }
 
   function handlePrevMonth() {
@@ -91,6 +96,10 @@ const SessionCalendar = ({workoutSessions}) => {
       day: "numeric",
     };
     const formattedDate = selectedDate.toLocaleDateString(undefined, options);
+     const sessions = workoutSessions.filter(
+                    (session) => session.finishedDate.substr(-29,10) === calculateDate(currentYear,currentMonth,day).toISOString().substr(-29,10)
+                  )
+                  setSessions(sessions)
     showModal(formattedDate);
   }
 
@@ -175,6 +184,7 @@ const SessionCalendar = ({workoutSessions}) => {
           </div>
         </div>
       </div>
+      <SessionModal isModalOpen={isModalOpen} hideModal={hideModal} sessions={sessions}/>
     </div>
   );
 }

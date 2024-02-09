@@ -331,14 +331,7 @@ const Editor = () => {
                   onChange={handleNewExercise}
                 />
               </div>
-              <div className="m-4 ">
-                <Label htmlFor="image" value="Image of the exercise" />
-                <TextInput
-                  id="image"
-                  type="file"
-                  onChange={handleNewExercise}
-                />
-              </div>
+              
               <div className="m-4 ">
                 <Label htmlFor="equipment" value="Equipment required" />
                 <TextInput

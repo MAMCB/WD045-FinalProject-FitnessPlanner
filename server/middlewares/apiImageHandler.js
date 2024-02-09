@@ -8,9 +8,16 @@ const apiImageHandler = async (req, res, next) => {
     {
       return  next();
     }
+    if(!req.body.image.startsWith("https://v2.exercisedb.io/"))
+    {
+      console.log('Not an image from api')
+      return  next();
+    }
   const url = req.body.image;
+  console.log('url:',url)
   const fileName = `${req.body.name}.gif`;
   try {
+    console.log('getting image from api')
     const response = await axios.get(url, { responseType: "arraybuffer" });
     const path = `./public/images/${fileName}`;
     fs.writeFileSync(path, response.data, (err) => {

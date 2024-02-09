@@ -24,4 +24,21 @@ if(!file.originalname.match(/\.(jpg|jpeg|png|gif)$/)){
   }
   const upload = multer({ storage: storage, fileFilter:fileFilter })
 
-  module.exports=upload;
+ const uploadFileIfPresent = (req, res, next) => {
+  console.log(req)
+   // Check if there is a file in the request
+   if (req.file) {
+     // If there is a file, upload it using multer
+     multer({ storage: storage, fileFilter: fileFilter }).single("image")(
+       req,
+       res,
+       next
+     );
+   } else {
+    console.log('No file uploaded through multer')
+     // If there is no file, move to the next middleware
+     next();
+   }
+ };
+
+  module.exports={upload,uploadFileIfPresent};

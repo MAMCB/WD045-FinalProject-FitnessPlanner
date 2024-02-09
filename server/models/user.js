@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
 const bcrypt = require("bcrypt");
-
+const cloudinary = require("../config/cloudinary");
+const fs = require("fs")
 const userSchema = new mongoose.Schema(
   {
     username: {
@@ -60,15 +61,15 @@ userSchema.virtual("confirmPassword")
   .set((value) => (this._confirmPassword = value));
 
   userSchema.pre("validate", function (next) {
+    
     if (this.password !== this.confirmPassword) {
       this.invalidate("confirmPassword", "Passwords must match!!!");
       console.log("Passwords don't match!");
     }
     next();
   });
-
   userSchema.pre("save", async function (next) {
-    console.log("in pre save");
+    if (!this.isModified("password")) return next();
     //hash the password BEFORE it's saved to the db
     //Remember, we know they match from middleware above
     try {
@@ -80,7 +81,45 @@ userSchema.virtual("confirmPassword")
     } catch (error) {
       console.log("IS THERE ANY ERROR", error);
     }
-  });
+
+  })
+
+   userSchema.pre("findOneAndUpdate", async function (next) {
+    console.log("this.getUpdate()", this.getUpdate());
+     if (!this.getUpdate().profilePic) {
+       return next();
+     }
+     if (this.getUpdate().updateProfilePic === "false") {
+       return next();
+     }
+     //get the current image url of the user
+     //check if the image url startsWith("https://res.cloudinary.com/"))
+     //if it does execute this code:   const public_id = user.profilePic.match(//([^/]+).gif$/)[1];
+    // console.log(public_id);
+    // await cloudinary.uploader.destroy(public_id);
+    console.log("trying to update image")
+    console.log("this.profilePic", this.profilePic);
+    console.log("this.getUpdate().profilePic", this.getUpdate().profilePic);
+     try {
+       const options = {
+         public_id: this._id,
+         folder: process.env.CLOUDINARY_USER_FOLDER_NAME,
+       };
+       const imagePath = this.getUpdate().profilePic;
+       const res = await cloudinary.uploader.upload(imagePath, options);
+       console.log("res.secure_url", res.secure_url);
+       this.getUpdate().profilePic = res.secure_url;
+       fs.unlinkSync(imagePath);
+       next();
+     } catch (e) {
+       console.log("error", e.message);
+       if(this.getUpdate().profilePic){
+        const imagePath = this.getUpdate().profilePic;
+       fs.unlinkSync(imagePath);}
+       
+       next(e.message);
+     }
+   });
 
   const User = mongoose.model("User", userSchema);
 

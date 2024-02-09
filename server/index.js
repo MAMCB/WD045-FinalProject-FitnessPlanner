@@ -16,6 +16,7 @@ const workoutSessionRouter = require('./routes/workoutSession');
 const exerciseRouter = require('./routes/exercise');
 const exerciseAPIRouter = require('./routes/exerciseAPI');
 const authRouter = require('./routes/authentication');
+const upload = require('./config/multer');
 
 app.use(cors({origin:process.env.CLIENT_URL, credentials:true}));
 app.use(cookieParser());
@@ -28,6 +29,7 @@ app.use('/api/exercise', exerciseRouter);
 app.use('/exerciseAPI', exerciseAPIRouter);
 app.use('/auth', authRouter); 
 
+
 if (process.env.NODE_ENV === "production") {
   //*Set static folder up in production
   const buildPath = path.join(__dirname, "../client/dist");
@@ -36,6 +38,20 @@ if (process.env.NODE_ENV === "production") {
   app.get("*", (req, res) => res.sendFile(path.join(buildPath, "index.html")));
 }
 
+{/*
+app.use('/uploads', express.static('uploads'));
+app.get('/', (req, res)=>{
+    console.log(__dirname);
+    const filePath = path.join(__dirname,'public', 'index.html')
+    res.sendFile(filePath);
+});
+
+
+app.post("/upload-profile-pic",upload.single("profile_pic"),(req,res)=>{
+    res.send(`<div><img src='/uploads/${req.file.filename}'></div>`)
+})
+
+*/}
 
 
 connectDB().then(() => {

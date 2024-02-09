@@ -1,3 +1,4 @@
+/* eslint-disable no-self-assign */
 import React from "react";
 import {
   Tabs,
@@ -19,6 +20,7 @@ import { v4 as uuidv4 } from "uuid";
 
 
 
+
 const Editor = () => {
   const [exercises, setExercises] = useState([]);
   const [exerciseSearch, setExerciseSearch] = useState("");
@@ -34,15 +36,36 @@ const Editor = () => {
     goal: "",
     restDuration: 0,
     exerciseDuration: 0,
+    visibility: false,
     exercises: [],
   });
   const [exerciseBlock, setExerciseBlock] = useState({
     sets: 1,
     weights: 0,
     duration: 0,
-    
+    id:Math.random()*10
     
   });
+
+  useEffect(() => {
+    const storedName = localStorage.getItem("workoutPlanName");
+    const storedGoal = localStorage.getItem("workoutPlanGoal");
+    const visibility = localStorage.getItem("workoutPlanVisibility");
+    const storedRestDuration = localStorage.getItem("workoutPlanRestDuration");
+    const storedExerciseDuration = localStorage.getItem("workoutPlanExerciseDuration");
+    const storedExercises = localStorage.getItem("workoutPlanExercises");
+    if (storedName || storedGoal || visibility || storedRestDuration || storedExerciseDuration || storedExercises) {
+      const initialExercises = JSON.parse(storedExercises);
+      const initialName =JSON.parse(storedName);
+      const initialGoal = JSON.parse(storedGoal);
+      const initialVisibility = JSON.parse(visibility);
+      const initialRestDuration =JSON.parse(storedRestDuration);
+      const initialExerciseDuration =JSON.parse(storedExerciseDuration);
+
+      setWorkoutPlan((prev) => ({
+        ...prev,name: initialName, goal: initialGoal, visibility:initialVisibility, restDuration: initialRestDuration, exerciseDuration: initialExerciseDuration}));
+      setBlocks(initialExercises);
+      }}, []);
 
   useEffect(() => {
     axiosInstance
@@ -136,19 +159,38 @@ const Editor = () => {
   };
 
   const validatePlan = () => {
-    if (workoutPlan.name === "" || workoutPlan.goal === "" || workoutPlan.exercises.length === 0 || workoutPlan.restDuration <= 0 || workoutPlan.exerciseDuration <= 0) {
+    if (workoutPlan.name === "" || workoutPlan.goal === "" || workoutPlan.visibility === "" || workoutPlan.exercises.length === 0 || workoutPlan.restDuration <= 0 || workoutPlan.exerciseDuration <= 0) {
       return setPlanIsValid(false);
     }
     return setPlanIsValid(true);
   };
 
   const saveDraft = () => {
+    localStorage.setItem("workoutPlanName", JSON.stringify(workoutPlan.name));
+    localStorage.setItem("workoutPlanGoal", JSON.stringify(workoutPlan.goal));
+    localStorage.setItem("workoutPlanVisibility", JSON.stringify(workoutPlan.visibility));
+    localStorage.setItem("workoutPlanRestDuration", JSON.stringify(workoutPlan.restDuration));
+    localStorage.setItem("workoutPlanExerciseDuration", JSON.stringify(workoutPlan.exerciseDuration));
+    localStorage.setItem("workoutPlanExercises", JSON.stringify(workoutPlan.exercises));
+    alert("Draft saved")
   };
+
+  const clearDraft = () => {
+    localStorage.removeItem("workoutPlanName");
+    localStorage.removeItem("workoutPlanGoal");
+    localStorage.removeItem("workoutPlanVisibility");
+    localStorage.removeItem("workoutPlanRestDuration");
+    localStorage.removeItem("workoutPlanExerciseDuration");
+    localStorage.removeItem("workoutPlanExercises");
+    setWorkoutPlan((prev) => ({ ...prev, name: "", goal: "", visibility: false, restDuration: 0, exerciseDuration: 0, exercises: [] }));
+    setBlocks([]);
+    alert("Draft cleared")
+  }
 
  
   return (
     <section className="bg-white shadow dark:bg-gray-900 py-[10px]">
-      <h1 className="m-10  text-xl font-bold">Workout Plan Editor</h1>
+      <h1 className="m-10  text-xl  text-gray-500 dark:text-gray-400">Workout Plan Editor</h1>
       <div className="flex justify-center">
         <Button
           className="m-4"
@@ -161,22 +203,51 @@ const Editor = () => {
         <Button className="m-4" type="button" onClick={saveDraft}>
           Save draft
         </Button>
+        <Button className="m-4" type="button" onClick={clearDraft}>
+          Clear draft
+        </Button>
       </div>
 
-      <div className="flex justify-evenly bg-white shadow dark:bg-gray-900 py-[100px]">
-        <section className="w-1/3 mt-10">
-          <h2>Your plan</h2>
+      <div className="flex flex-wrap px-[20px] justify-between bg-white shadow dark:bg-gray-900 py-[100px]">
+        <section className="w-[100%] lg:pr-[10px] lg:w-[49%] m-[5px]">
+          <h2 className=" text-gray-500 dark:text-gray-400">Your plan</h2>
           <div className="m-4 ">
             <Label htmlFor="name" value="Plan name" />
-            <TextInput id="name" type="text" onChange={handlePlan} />
+            <TextInput
+              id="name"
+              type="text"
+              onChange={handlePlan}
+              value={workoutPlan.name}
+            />
           </div>
           <div className="m-4 ">
             <Label htmlFor="goal" value="Goal" />
-            <TextInput id="goal" type="text" onChange={handlePlan} />
+            <TextInput
+              id="goal"
+              type="text"
+              onChange={handlePlan}
+              value={workoutPlan.goal}
+            />
+          </div>
+          <div className="m-4 ">
+            <Label htmlFor="visibility" value="Visibility" />
+            <Select
+              id="visibility"
+              onChange={handlePlan}
+              value={workoutPlan.visibility}
+            >
+              <option value={true}>Public</option>
+              <option value={false}>Private</option>
+            </Select>
           </div>
           <div className="m-4 ">
             <Label htmlFor="restDuration" value="Rest duration" />
-            <TextInput id="restDuration" type="number" onChange={handlePlan} />
+            <TextInput
+              id="restDuration"
+              type="number"
+              onChange={handlePlan}
+              value={workoutPlan.restDuration}
+            />
           </div>
           <div className="m-4 ">
             <Label
@@ -187,6 +258,7 @@ const Editor = () => {
               id="exerciseDuration"
               type="number"
               onChange={handlePlan}
+              value={workoutPlan.exerciseDuration}
             />
           </div>
 
@@ -203,7 +275,7 @@ const Editor = () => {
               ))}
           </div>
         </section>
-        <section className="w-1/3 mt-10">
+        <section className="w-[100%] lg:pl-[10px] lg:w-[49%] m-[5px]">
           <Tabs aria-label="Default tabs" style="default">
             <Tabs.Item active title="Look for exercises">
               <div className="m-4 ">
@@ -260,14 +332,7 @@ const Editor = () => {
                   onChange={handleNewExercise}
                 />
               </div>
-              <div className="m-4 ">
-                <Label htmlFor="image" value="Image of the exercise" />
-                <TextInput
-                  id="image"
-                  type="file"
-                  onChange={handleNewExercise}
-                />
-              </div>
+              
               <div className="m-4 ">
                 <Label htmlFor="equipment" value="Equipment required" />
                 <TextInput

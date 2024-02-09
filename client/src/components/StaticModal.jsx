@@ -9,7 +9,6 @@ const StaticModal = ({
   setIsModalOp,
   nameBtnOne,
   nameBtnTwo,
-  setisModalOpen,
   isModalOpen,
   setIsWorkoutStarted,
 }) => {
@@ -28,7 +27,7 @@ const StaticModal = ({
       modal_title,
       nameBtnOne,
       nameBtnTwo,
-      setIsWorkoutStarted,
+      setIsWorkoutStarted
     );
   };
 
@@ -36,7 +35,6 @@ const StaticModal = ({
     setIsWorkoutFin(true);
     setIsWorkoutStarted(false);
   };
-
   return (
     <>
       <div
@@ -46,14 +44,14 @@ const StaticModal = ({
         aria-hidden={isModalOpen ? "true" : "false"}
         className={
           isModalOpen
-            ? "overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full "
+            ? "overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full backdrop-blur-md"
             : "hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full"
         }
       >
         <div className="relative p-4 w-full max-w-2xl max-h-full flex justify-center items-center m-auto">
           <div className="relative bg-white rounded-lg shadow dark:bg-gray-700">
             <div className="flex items-center justify-between p-4 md:p-5 border-b rounded-t dark:border-gray-600 g">
-              <h3 className="text-xl font-semibold text-gray-900 dark:text-white">
+              <h3 className="text-xl font-semibold  text-gray-500 dark:text-gray-400">
                 {modal_title}
               </h3>
               <button
@@ -77,7 +75,7 @@ const StaticModal = ({
                     d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"
                   />
                 </svg>
-                <span className="sr-only">Close modal</span>
+                <span className=" text-gray-500 dark:text-gray-400 sr-only">Close modal</span>
               </button>
             </div>
 

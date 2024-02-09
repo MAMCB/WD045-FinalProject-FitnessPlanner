@@ -9,7 +9,6 @@ const StaticModal = ({
   setIsModalOp,
   nameBtnOne,
   nameBtnTwo,
-  setisModalOpen,
   isModalOpen,
   setIsWorkoutStarted,
 }) => {

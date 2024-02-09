@@ -58,6 +58,7 @@ useEffect(() => {
   }
 
   const deleteHandler = (id) =>{
+    if(!confirm("Are you sure you want to delete this workout plan?") ) return;
     axios.delete(`/api/workoutPlan/${id}`)
     .then(res=> navigate(`/workoutPlan`))
     .catch(e=>console.error(e))
@@ -67,6 +68,7 @@ useEffect(() => {
 console.log(workout)
 
 const deleteHandlerExercises = (id) =>{
+  if(!confirm("Are you sure you want to delete this exercise?") ) return;
   axios.delete(`/api/exercise/${id}`)
   .then(res=> navigate(`/workoutPlan`))
   .catch(e=>console.error(e))
@@ -140,10 +142,18 @@ alert("New workout session created:" +
                       />
                     </div>
                     <div className="w-[96%] md:w-2/4 bg-white border border-gray-200 rounded-lg dark:bg-gray-800 p-10 dark:border-gray-700 m-[10px]">
-                      <p className=" text-gray-500 dark:text-gray-400">Workout Name: {workout.name}</p>
-                      <p className=" text-gray-500 dark:text-gray-400">Goal: {workout.goal}</p>
-                      <p className=" text-gray-500 dark:text-gray-400">Difficulty: {workout.difficulty}</p>
-                      <p className=" text-gray-500 dark:text-gray-400">Rating: {workout.rating}</p>
+                      <p className=" text-gray-500 dark:text-gray-400">
+                        Workout Name: {workout.name}
+                      </p>
+                      <p className=" text-gray-500 dark:text-gray-400">
+                        Goal: {workout.goal}
+                      </p>
+                      <p className=" text-gray-500 dark:text-gray-400">
+                        Difficulty: {workout.difficulty}
+                      </p>
+                      <p className=" text-gray-500 dark:text-gray-400">
+                        Rating: {workout.rating}
+                      </p>
                       <div className="mt-4">
                         <Link
                           to={`/workoutPlayer/${workout._id}/${workoutVersion[index]}`}
@@ -162,11 +172,15 @@ alert("New workout session created:" +
                         <Link
                           onClick={() => deleteHandler(`${workout._id}`)}
                           type="button"
-                          className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800"
+                          className="text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-red-600 dark:hover:bg-red-700 focus:outline-none dark:focus:ring-red-800"
                         >
                           Delete
                         </Link>
-                        <Select className="mb-2" onChange={handleVersionChange(index)}>
+                        <Select
+                          className="mb-2"
+                          onChange={handleVersionChange(index)}
+                          value={workoutVersion[index]}
+                        >
                           <option>Choose a plan</option>
                           {workout.planVersions.map((x, i) => (
                             <option key={Math.random() * 100} value={Number(i)}>
@@ -174,7 +188,10 @@ alert("New workout session created:" +
                             </option>
                           ))}
                         </Select>
-                        <Button onClick={createNewVersion(index)}>
+                        <Button
+                          onClick={createNewVersion(index)}
+                          className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800"
+                        >
                           Create new Version
                         </Button>
                       </div>
@@ -186,7 +203,9 @@ alert("New workout session created:" +
                         <Accordion collapseAll className="m-[10px]">
                           <Accordion.Panel className="m-[10px]">
                             <Accordion.Title>
-                              <span className="font-bold  text-gray-500 dark:text-gray-400">Exercise name:</span>{" "}
+                              <span className="font-bold  text-gray-500 dark:text-gray-400">
+                                Exercise name:
+                              </span>{" "}
                               {x.exercise.name}
                             </Accordion.Title>
                             <Accordion.Content>
@@ -245,13 +264,13 @@ alert("New workout session created:" +
                     );
                   })}
                 </div>
-                {testing&&
+                {testing && (
                   <Button
                     onClick={() => sessionTester(workout._id, 2024, 1, 1)}
                   >
                     Create Session
                   </Button>
-                }
+                )}
                 <SessionCalendar
                   workoutSessions={workoutSessions.filter(
                     (session) => session.workoutId === workout._id && session
@@ -279,23 +298,33 @@ alert("New workout session created:" +
                   </div>
                   <div className="w-[96%] md:w-2/4 bg-white border border-gray-200 p-4 rounded-lg dark:bg-gray-800 dark:border-gray-700">
                     <p className=" text-gray-500 dark:text-gray-400">
-                      <span className="font-bold  text-gray-500 dark:text-gray-400">Exercises Name: </span>
+                      <span className="font-bold  text-gray-500 dark:text-gray-400">
+                        Exercises Name:{" "}
+                      </span>
                       {x.name}
                     </p>
                     <p className="text-gray-500 dark:text-gray-400">
-                      <span className="font-bold  text-gray-500 dark:text-gray-400">Equipment: </span>
+                      <span className="font-bold  text-gray-500 dark:text-gray-400">
+                        Equipment:{" "}
+                      </span>
                       {x.equipment}
                     </p>
                     <p className="text-gray-500 dark:text-gray-400">
-                      <span className="font-bold  text-gray-500 dark:text-gray-400">Difficulty: </span>
+                      <span className="font-bold  text-gray-500 dark:text-gray-400">
+                        Difficulty:{" "}
+                      </span>
                       {x.difficulty}
                     </p>
                     <p className="text-gray-500 dark:text-gray-400">
-                      <span className="font-bold  text-gray-500 dark:text-gray-400">Muscle Group: </span>
+                      <span className="font-bold  text-gray-500 dark:text-gray-400">
+                        Muscle Group:{" "}
+                      </span>
                       {x.muscleGroup}
                     </p>
                     <p className="text-gray-500 dark:text-gray-400">
-                      <span className="font-bold  text-gray-500 dark:text-gray-400">Rating: </span>
+                      <span className="font-bold  text-gray-500 dark:text-gray-400">
+                        Rating:{" "}
+                      </span>
                       {x.rating}
                     </p>
                     <div className="mt-4">
@@ -309,14 +338,16 @@ alert("New workout session created:" +
                       <Link
                         onClick={() => deleteHandlerExercises(`${x._id}`)}
                         type="button"
-                        className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800"
+                        className="text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-red-600 dark:hover:bg-red-700 focus:outline-none dark:focus:ring-red-800"
                       >
                         Delete
                       </Link>
                     </div>
                   </div>
                 </div>
-                <p className="mt-[15px] text-gray-500 dark:text-gray-400">{x.description}</p>
+                <p className="mt-[15px] text-gray-500 dark:text-gray-400">
+                  {x.description}
+                </p>
               </div>
             );
           })}

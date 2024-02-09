@@ -124,22 +124,22 @@ alert("New workout session created:" +
 
   return (
     <div className="w-[100%] bg-white shadow dark:bg-gray-900 py-[100px]">
-      <div className="flex flex-wrap justify-between">
+      <div className="flex px-[20px] flex-wrap justify-between">
         <div className='w-[100%] lg:w-[49%] m-[5px]'>
           <h2 className="text-xl mb-3  text-gray-500 dark:text-gray-400">Your Workout plans</h2>
           {workout.map((workout,index) => {
             return (
               <div key={workout._id}>
                 <div className="mb-[20px] bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
-                  <div className="flex">
-                    <div className="w-2/4 bg-white border border-gray-200 rounded-lg dark:bg-gray-800 p-10 dark:border-gray-700 m-[10px]">
+                  <div className="flex flex-col md:flex-row">
+                    <div className="w-[96%] md:w-2/4 bg-white border border-gray-200 rounded-lg dark:bg-gray-800 p-10 dark:border-gray-700 m-[10px]">
                       <img
                         className="rounded-lg object-contain"
                         src={workout.image}
                         alt="workout img"
                       />
                     </div>
-                    <div className="w-2/4 bg-white border border-gray-200 rounded-lg dark:bg-gray-800 p-10 dark:border-gray-700 m-[10px]">
+                    <div className="w-[96%] md:w-2/4 bg-white border border-gray-200 rounded-lg dark:bg-gray-800 p-10 dark:border-gray-700 m-[10px]">
                       <p className=" text-gray-500 dark:text-gray-400">Workout Name: {workout.name}</p>
                       <p className=" text-gray-500 dark:text-gray-400">Goal: {workout.goal}</p>
                       <p className=" text-gray-500 dark:text-gray-400">Difficulty: {workout.difficulty}</p>
@@ -269,15 +269,15 @@ alert("New workout session created:" +
                 key={x._id}
                 className="p-[10px] mb-[15px] bg-white border border-gray-200 rounded-lg dark:bg-gray-800 dark:border-gray-700"
               >
-                <div className="flex">
-                  <div className="w-[60%] h-[300px] mr-[10px] bg-white border border-gray-200 p-4 rounded-lg dark:bg-gray-800 dark:border-gray-700">
+                <div className="flex flex-col md:flex-row">
+                  <div className="w-[96%] md:w-2/4 h-[300px] mr-[10px] bg-white border border-gray-200 p-4 rounded-lg dark:bg-gray-800 dark:border-gray-700">
                     <img
                       className="w-full h-full rounded-lg object-fill"
                       src={x.image}
                       alt="exercise image"
                     />
                   </div>
-                  <div className="w-[40%]  bg-white border border-gray-200 p-4 rounded-lg dark:bg-gray-800 dark:border-gray-700">
+                  <div className="w-[96%] md:w-2/4 bg-white border border-gray-200 p-4 rounded-lg dark:bg-gray-800 dark:border-gray-700">
                     <p className=" text-gray-500 dark:text-gray-400">
                       <span className="font-bold  text-gray-500 dark:text-gray-400">Exercises Name: </span>
                       {x.name}

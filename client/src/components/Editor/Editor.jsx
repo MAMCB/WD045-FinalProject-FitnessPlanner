@@ -207,8 +207,8 @@ const Editor = () => {
         </Button>
       </div>
 
-      <div className="flex flex-wrap justify-between bg-white shadow dark:bg-gray-900 py-[100px]">
-        <section className="w-[100%] lg:w-[49%] m-[5px]">
+      <div className="flex flex-wrap px-[20px] justify-between bg-white shadow dark:bg-gray-900 py-[100px]">
+        <section className="w-[100%] lg:pr-[10px] lg:w-[49%] m-[5px]">
           <h2 className=" text-gray-500 dark:text-gray-400">Your plan</h2>
           <div className="m-4 ">
             <Label htmlFor="name" value="Plan name" />
@@ -274,7 +274,7 @@ const Editor = () => {
               ))}
           </div>
         </section>
-        <section className="w-[100%] lg:w-[49%] m-[5px]">
+        <section className="w-[100%] lg:pl-[10px] lg:w-[49%] m-[5px]">
           <Tabs aria-label="Default tabs" style="default">
             <Tabs.Item active title="Look for exercises">
               <div className="m-4 ">

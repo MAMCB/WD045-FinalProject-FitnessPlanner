@@ -11,6 +11,7 @@ import Editor from "./components/Editor/Editor";
 import Login from "./components/Login";
 import Register from "./components/Register";
 import Profile from "./components/Profile";
+import About from "./components/About";
 import EditProfile from "./components/EditProfile";
 import LandingPage from "./components/Landing-Page/LandingPage";
 import TemplateStore from "./components/TemplateStore";
@@ -25,6 +26,8 @@ function App() {
         <Route path="/landingPage" element={<LandingPage />} />
         <Route path="login" element={<Login />} />
         <Route path="register" element={<Register />} />
+        <Route path="/about" element={<About />} />
+
         <Route path="/" element={<Protected />}>
           <Route path="" element={<Home />} />
           <Route path="exercise" element={<Exercise />} />

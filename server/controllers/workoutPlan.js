@@ -54,13 +54,26 @@ const getWorkoutPlanById = async (req, res) => {
 };
 
 const updateWorkoutPlanById = async (req, res) => {
+  let updatedWorkoutPlan;
+  const workoutPlanId = req.params.id;
   try {
-    const workoutPlanId = req.params.id;
-    const updatedWorkoutPlan = await WorkoutPlan.findByIdAndUpdate(
+    if(req.file)
+    {
+      updatedWorkoutPlan = await WorkoutPlan.findByIdAndUpdate(
+        workoutPlanId,
+        {
+          ...req.body,
+          image: req.file.secure_url,
+        },
+        { new: true }
+      );
+    }
+    else{
+     updatedWorkoutPlan = await WorkoutPlan.findByIdAndUpdate(
       workoutPlanId,
       req.body,
       { new: true }
-    );
+    );}
     if (!updatedWorkoutPlan) {
       res
         .status(404)

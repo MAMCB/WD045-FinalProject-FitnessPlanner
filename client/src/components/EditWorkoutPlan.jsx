@@ -27,16 +27,32 @@ const EditWorkoutPlan = () => {
   }, []);
 
   const handleChange = (e) => {
+     if (e.target.name === "image") {
+      setWorkout((state)=>({ ...state, image: e.target.files[0] }));
+      console.log(e.target.files[0]);
+    }
+    else{
     setWorkout((state) => ({
       ...state,
       [e.target.name]: e.target.value,
-    }));
+    }));}
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    const { name, goal, image, difficulty, restDuration, type, equipment, rating, visibility } = workout;
+    const formData = new FormData();
+    formData.append("name", name);
+    formData.append("goal", goal);
+    formData.append("image", image);
+    formData.append("difficulty", difficulty);
+    formData.append("restDuration", restDuration);
+    formData.append("type", type);
+    formData.append("equipment", equipment);
+    formData.append("rating", rating);
+    formData.append("visibility", visibility);
     axios
-      .put(`/api/workoutPlan/${id}`, workout)
+      .put(`/api/workoutPlan/${id}`, formData)
       .then((res) => navigate(`/workoutPlan`))
       .catch((e) => console.error(e));
   };
@@ -49,7 +65,11 @@ const EditWorkoutPlan = () => {
             Edit workout settings
           </h1>
 
-          <form onSubmit={handleSubmit} className="max-w-sm mx-auto">
+          <form
+            onSubmit={handleSubmit}
+            className="max-w-sm mx-auto"
+            encType="multipart/form-data"
+          >
             <div className="mb-5">
               <label
                 htmlFor="username"
@@ -94,12 +114,8 @@ const EditWorkoutPlan = () => {
                 name="visibility"
                 defaultValue={workout?.visibility}
               >
-                <option value={true}>
-                  Public
-                </option>
-                <option value={false}>
-                  Private
-                </option>
+                <option value={true}>Public</option>
+                <option value={false}>Private</option>
               </Select>
             </div>
             <div className="mb-5">
@@ -110,11 +126,12 @@ const EditWorkoutPlan = () => {
                 Workout image
               </label>
               <input
-                type="text"
+                type="file"
                 id="image"
                 className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                 placeholder="image"
                 required=""
+                accept="image/*"
                 name="image"
                 defaultValue={workout?.image}
                 onChange={handleChange}

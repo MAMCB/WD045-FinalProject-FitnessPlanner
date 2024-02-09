@@ -75,7 +75,7 @@ const TemplateStore = () => {
   return workoutPlans.length === 0 ? (
     <div className="h-screen w-full">Loading...</div>
   ) : (
-    <section className="text-gray-600 body-font">
+    <section className="text-gray-600 body-font px-[40px]">
       <div className="container px-1 py-12 mx-auto ">
         <div className="flex flex-wrap -m-2 gap-4 justify-center justify-items-center ">
           {workoutPlans.map((workout, index) => (

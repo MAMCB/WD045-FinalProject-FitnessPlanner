@@ -250,7 +250,7 @@ alert("New workout session created:" +
           >
             <div className="right_side flex gap-4 flex-col content-center justify-center mb-4  w-full h-full">
               <div className="mb-2 text-xl self-center">
-                <p>
+                <p className=" text-gray-500 dark:text-gray-400">
                   {!isExerciseFinished
                     ? arrayEx[currentExerciseIndex].exercise.name
                     : "Rest time"}
@@ -267,7 +267,7 @@ alert("New workout session created:" +
                   <Lottie options={defaultOptions} />
                 ) : null}
               </div>
-              <div className="flex justify-center">
+              <div className="flex justify-center text-gray-500 dark:text-gray-400">
                 {!isExerciseFinished
                   ? `Weight: ${arrayEx[currentExerciseIndex].weights}`
                   : ""}
@@ -280,7 +280,7 @@ alert("New workout session created:" +
                   data-modal-target="default-modal"
                   data-modal-toggle="pause-modal"
                 >
-                  <FontAwesomeIcon icon={faCirclePause} className="h-10" />
+                  <FontAwesomeIcon icon={faCirclePause} className="h-10 text-gray-500 dark:text-gray-400" />
                 </button>
                 <button
                   onClick={handlePauseButton}
@@ -288,7 +288,7 @@ alert("New workout session created:" +
                   data-modal-toggle="pause-modal"
                   type="button"
                 >
-                  <FontAwesomeIcon icon={faCircleStop} className="h-10" />
+                  <FontAwesomeIcon icon={faCircleStop} className="h-10 text-gray-500 dark:text-gray-400" />
                 </button>
 
                 <StaticModal
@@ -305,6 +305,7 @@ alert("New workout session created:" +
                 />
 
                 <StaticModal
+                  className="text-gray-500 dark:text-gray-400"
                   modal_id="stop-modal"
                   modal_title="Stop workout"
                   modal_description="Your workout is stopped"
@@ -318,12 +319,12 @@ alert("New workout session created:" +
                 />
               </div>
               <div className="flex justify-center">
-                <p>Remaining time</p>
+                <p className="text-gray-500 dark:text-gray-400">Remaining time</p>
               </div>
               <div className="flex flex-col  justify-center self-center">
                 <span className="countdown font-mono text-6xl ">
                   <span
-                    className=" flex justify-center"
+                    className="text-gray-500 dark:text-gray-400 flex justify-center"
                     style={{
                       "--value": !isExerciseFinished
                         ? remainingTime
@@ -333,12 +334,12 @@ alert("New workout session created:" +
                 </span>
               </div>
               <div className="side_panel">
-                <div>
+                <div className="text-gray-500 dark:text-gray-400">
                   {!isExerciseFinished
                     ? `Description : ${arrayEx[currentExerciseIndex].exercise.description}`
                     : ""}
                 </div>
-                <div>
+                <div className="text-gray-500 dark:text-gray-400">
                   {currentExerciseIndex + 1 < arrayEx.length &&
                   !isExerciseFinished
                     ? `Next exercise: ${
@@ -356,7 +357,7 @@ alert("New workout session created:" +
             <div className="flex flex-col items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0">
               <div className="w-full bg-white rounded-lg shadow dark:border md:mt-0 sm:max-w-md xl:p-0 dark:bg-gray-800 dark:border-gray-700">
                 <div className="flex flex-col items-center justify-center p-6 space-y-4 md:space-y-6 sm:p-8">
-                  <h1 className="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-white">
+                  <h1 className="text-xl font-bold leading-tight tracking-tight md:text-2xl text-gray-500 dark:text-gray-400">
                     Workout is finished
                   </h1>
                   <div className="flex items-center p-4 md:p-5 border-t border-gray-200 rounded-b dark:border-gray-600">

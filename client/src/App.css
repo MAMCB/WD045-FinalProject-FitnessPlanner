@@ -35,8 +35,6 @@ img.rounded-full.w-10.h-10{
 }
 
 
-
-
   .border-box-shadow{
     box-shadow: 0px 0px 10px 0px #4FB5A9!important;
   }
@@ -140,4 +138,11 @@ footer {
   color:  #4FB5A9!important;
   font-size: 10px;
  
+}
+
+main {
+  min-height: calc(100vh - 70px);
+}
+footer {
+  height: 50px;
 }

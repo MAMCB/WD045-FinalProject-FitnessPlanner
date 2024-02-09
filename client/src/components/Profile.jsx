@@ -43,14 +43,14 @@ const navigate = useNavigate();
                   src={currentUser.profilePic}
                   alt="Bonnie image"
                 />
-                <h5 className="mb-1 text-xl font-medium text-gray-900 dark:text-white">
+                <h5 className="mb-1 text-xl font-medium text-gray-500 sm:mb-0 dark:text-gray-400">
                   <p>Username: {currentUser.username}</p>
                 </h5>
-                <span className="text-sm text-gray-500 dark:text-gray-400"></span>
+                <span className="text-sm text-gray-500 sm:mb-0 dark:text-gray-400"></span>
                 <div className="flex mt-4 md:mt-6 flex-wrap">
                   <Link
                     to={`/EditProfile/${currentUser._id}`}
-                    className="inline-flex items-center px-4 py-2 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+                    className="inline-flex items-center px-4 py-2 text-sm font-medium text-center  text-white sm:mb-0 dark:text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
                   >
                     Edit Profile
                   </Link>
@@ -63,7 +63,7 @@ const navigate = useNavigate();
         <div className="w-[100%] m-[10px] md:w-[40%]">
           <div className="p-4 bg-white border border-gray-200 rounded-lg shadow sm:p-8 dark:bg-gray-800 dark:border-gray-700">
             <div className="flex items-center justify-between mb-4">
-              <h5 className="text-xl font-bold leading-none text-gray-900 dark:text-white">
+              <h5 className="text-xl font-bold leading-none text-gray-500 sm:mb-0 dark:text-gray-400">
                 User Profile
               </h5>
             </div>
@@ -75,7 +75,7 @@ const navigate = useNavigate();
                 <li className="py-3 sm:py-4">
                   <div className="flex items-center">
                     <div className="flex-1 min-w-0 ms-4">
-                      <p className="text-lg font-medium text-gray-900 truncate dark:text-white">
+                      <p className="text-lg font-medium truncate text-gray-500 sm:mb-0 dark:text-gray-400">
                         Username: {currentUser.username}
                       </p>
                     </div>
@@ -84,7 +84,7 @@ const navigate = useNavigate();
                 <li className="py-3 sm:py-4">
                   <div className="flex items-center ">
                     <div className="flex-1 min-w-0 ms-4">
-                      <p className="text-lg font-medium text-gray-900 truncate dark:text-white">
+                      <p className="text-lg font-medium text-gray-500 sm:mb-0 dark:text-gray-400">
                         Email: {currentUser.email}
                       </p>
                     </div>
@@ -93,7 +93,7 @@ const navigate = useNavigate();
                 <li className="py-3 sm:py-4">
                   <div className="flex items-center">
                     <div className="flex-1 min-w-0 ms-4">
-                      <p className="text-lg font-medium text-gray-900 truncate dark:text-white">
+                      <p className="text-lg font-medium truncate text-gray-500 sm:mb-0 dark:text-gray-400">
                         Age: {currentUser.age}
                       </p>
                     </div>
@@ -102,7 +102,7 @@ const navigate = useNavigate();
                 <li className="py-3 sm:py-4">
                   <div className="flex items-center ">
                     <div className="flex-1 min-w-0 ms-4">
-                      <p className="text-lg font-medium text-gray-900 truncate dark:text-white">
+                      <p className="text-lg font-medium truncate text-gray-500 sm:mb-0 dark:text-gray-400">
                         Height: {currentUser.height} cm
                       </p>
                     </div>
@@ -111,7 +111,7 @@ const navigate = useNavigate();
                 <li className="py-3 sm:py-4">
                   <div className="flex items-center ">
                     <div className="flex-1 min-w-0 ms-4">
-                      <p className="text-lg font-medium text-gray-900 truncate dark:text-white">
+                      <p className="text-lg font-medium truncate text-gray-500 sm:mb-0 dark:text-gray-400">
                         Weight: {currentUser.weight} Kg
                       </p>
                     </div>
@@ -120,7 +120,7 @@ const navigate = useNavigate();
                 <li className="py-3 sm:py-4">
                   <div className="flex items-center ">
                     <div className="flex-1 min-w-0 ms-4">
-                      <p className="text-lg font-medium  text-gray-900 truncate dark:text-white">
+                      <p className="text-lg font-medium truncate text-gray-500 sm:mb-0 dark:text-gray-400">
                         Joined: {currentDate}
                       </p>
                     </div>

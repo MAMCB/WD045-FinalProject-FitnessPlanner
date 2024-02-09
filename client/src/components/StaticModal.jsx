@@ -51,7 +51,7 @@ const StaticModal = ({
         <div className="relative p-4 w-full max-w-2xl max-h-full flex justify-center items-center m-auto">
           <div className="relative bg-white rounded-lg shadow dark:bg-gray-700">
             <div className="flex items-center justify-between p-4 md:p-5 border-b rounded-t dark:border-gray-600 g">
-              <h3 className="text-xl font-semibold text-gray-900 dark:text-white">
+              <h3 className="text-xl font-semibold  text-gray-500 dark:text-gray-400">
                 {modal_title}
               </h3>
               <button
@@ -75,7 +75,7 @@ const StaticModal = ({
                     d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"
                   />
                 </svg>
-                <span className="sr-only">Close modal</span>
+                <span className=" text-gray-500 dark:text-gray-400 sr-only">Close modal</span>
               </button>
             </div>
 

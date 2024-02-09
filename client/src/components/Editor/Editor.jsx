@@ -190,7 +190,7 @@ const Editor = () => {
  
   return (
     <section className="bg-white shadow dark:bg-gray-900 py-[10px]">
-      <h1 className="m-10  text-xl font-bold">Workout Plan Editor</h1>
+      <h1 className="m-10  text-xl  text-gray-500 dark:text-gray-400">Workout Plan Editor</h1>
       <div className="flex justify-center">
         <Button
           className="m-4"
@@ -208,9 +208,9 @@ const Editor = () => {
         </Button>
       </div>
 
-      <div className="flex justify-evenly bg-white shadow dark:bg-gray-900 py-[100px]">
-        <section className="w-1/3 mt-10">
-          <h2>Your plan</h2>
+      <div className="flex flex-wrap px-[20px] justify-between bg-white shadow dark:bg-gray-900 py-[100px]">
+        <section className="w-[100%] lg:pr-[10px] lg:w-[49%] m-[5px]">
+          <h2 className=" text-gray-500 dark:text-gray-400">Your plan</h2>
           <div className="m-4 ">
             <Label htmlFor="name" value="Plan name" />
             <TextInput
@@ -275,7 +275,7 @@ const Editor = () => {
               ))}
           </div>
         </section>
-        <section className="w-1/3 mt-10">
+        <section className="w-[100%] lg:pl-[10px] lg:w-[49%] m-[5px]">
           <Tabs aria-label="Default tabs" style="default">
             <Tabs.Item active title="Look for exercises">
               <div className="m-4 ">
@@ -332,14 +332,7 @@ const Editor = () => {
                   onChange={handleNewExercise}
                 />
               </div>
-              <div className="m-4 ">
-                <Label htmlFor="image" value="Image of the exercise" />
-                <TextInput
-                  id="image"
-                  type="file"
-                  onChange={handleNewExercise}
-                />
-              </div>
+              
               <div className="m-4 ">
                 <Label htmlFor="equipment" value="Equipment required" />
                 <TextInput

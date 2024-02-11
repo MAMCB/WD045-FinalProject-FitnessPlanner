@@ -224,8 +224,8 @@ const Exercise = () => {
               </Tabs.Item>
             </Tabs>
           </div>
-          <div className="w-[100%] lg:w-[59%] m-[5px] mt-[30px] p-5">
-            <div className="flex flex-wrap">
+          <div className="w-[100%] lg:w-[39%] m-[5px] mt-[30px] p-5">
+            <div className="flex flex-col">
               <div className="m-4">
                 <Label htmlFor="searchType" value="Select your search type" />
                 <Select

@@ -8,7 +8,7 @@ import { Link, useParams, useNavigate } from "react-router-dom";
 import { Select, Button } from "flowbite-react";
 import SessionCalendar from "./SessionCalendar";
 import axiosInstance from "../axiosInstance";
-import Loading from "./loading";
+import Loading from "./Loading";
 
 const WorkoutPlan = () => {
   const [workout, setWorkout] = useState([]);
@@ -141,7 +141,7 @@ const WorkoutPlan = () => {
 
   return animationLoading ? (
     <div className="flex items-center h-screen justify-center justify-self-center content-center self-center place-content-center place-items-center place-self-center">
-      <Loading width="250px" />
+      <Loading width="250" />
     </div>
   ) : (
     <div className="w-[100%] bg-white shadow dark:bg-gray-900 py-[100px]">

@@ -6,7 +6,7 @@ import axios from "../axiosInstance";
 import axiosInstance from "../axiosInstance";
 import ExercisesModel from "./ExercisesModel";
 import { useNavigate } from "react-router-dom";
-import Loading from "./loading";
+import Loading from "./Loading";
 import { Button } from "flowbite-react";
 
 const TemplateStore = () => {

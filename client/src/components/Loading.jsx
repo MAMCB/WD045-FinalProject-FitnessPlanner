@@ -30,7 +30,7 @@ function Loading({ width }) {
   return (
     <div className="flex items-center justify-center justify-self-center content-center self-center place-content-center place-items-center place-self-center">
       {animationLoading && (
-        <Lottie options={defaultOptions} width={width} />
+        <Lottie options={defaultOptions} width={250} />
       )}
     </div>
   );

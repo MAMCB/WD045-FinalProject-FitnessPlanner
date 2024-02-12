@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import React from "react";
 import { useState } from "react";
 
@@ -104,9 +105,7 @@ const ExercisesModel = ({ setIsModalOpn, workoutExer }) => {
                           <p className="text-gray-500 dark:text-gray-400">
                             Exercise Sets: {workout.sets}
                           </p>
-                          <p className="text-gray-500 dark:text-gray-400">
-                            Exercise description: {workout.exercise.description}
-                          </p>
+                          
                         </div>
                       </div>
                     </div>

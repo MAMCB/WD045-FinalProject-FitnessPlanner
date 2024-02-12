@@ -176,29 +176,30 @@ const WorkoutPlan = () => {
                         Rating: {workout.rating}
                       </p>
                       <div className="mt-4">
-                        <Link
-                          to={`/workoutPlayer/${workout._id}/${workoutVersion[index]}`}
-                          type="button"
-                          className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800"
-                        >
-                          Play
-                        </Link>
-                        <Link
-                          to={`/workoutPlan/${workout._id}`}
-                          type="button"
-                          className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800"
-                        >
-                          Edit
-                        </Link>
-                        <Link
-                          onClick={() => deleteHandler(`${workout._id}`)}
-                          type="button"
-                          className="text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-red-600 dark:hover:bg-red-700 focus:outline-none dark:focus:ring-red-800"
-                        >
-                          Delete
-                        </Link>
+                        <div className="flex gap-3 mb-4">
+                          <Link
+                            to={`/workoutPlayer/${workout._id}/${workoutVersion[index]}`}
+                            type="button"
+                          >
+                            <Button>Play</Button>
+                          </Link>
+                          <Link
+                            to={`/workoutPlan/${workout._id}`}
+                            type="button"
+                          >
+                            <Button>Edit</Button>
+                          </Link>
+                          <Link
+                            onClick={() => deleteHandler(`${workout._id}`)}
+                            type="button"
+                            className="text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 dark:bg-red-600 dark:hover:bg-red-700 focus:outline-none dark:focus:ring-red-800 h-100"
+                          >
+                            Delete
+                          </Link>
+                        </div>
+
                         <Select
-                          className="mb-2"
+                          className="mb-4"
                           onChange={handleVersionChange(index)}
                           value={workoutVersion[index]}
                         >
@@ -211,7 +212,7 @@ const WorkoutPlan = () => {
                         </Select>
                         <Button
                           onClick={createNewVersion(index)}
-                          className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800"
+                          className="text-white focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2  focus:outline-none "
                         >
                           Create new Version
                         </Button>
@@ -350,18 +351,18 @@ const WorkoutPlan = () => {
                       </span>
                       {x.rating}
                     </p>
-                    <div className="mt-4">
+                    <div className="mt-4 flex gap-3">
                       <Link
                         to={`/editExercise/${x._id}`}
                         type="button"
-                        className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800"
-                      >
-                        Edit
+                       >
+                        <Button>Edit</Button>
+                        
                       </Link>
                       <Link
                         onClick={() => deleteHandlerExercises(`${x._id}`)}
                         type="button"
-                        className="text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-red-600 dark:hover:bg-red-700 focus:outline-none dark:focus:ring-red-800"
+                        className="text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 dark:bg-red-600 dark:hover:bg-red-700 focus:outline-none dark:focus:ring-red-800"
                       >
                         Delete
                       </Link>

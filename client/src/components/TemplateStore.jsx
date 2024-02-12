@@ -7,6 +7,7 @@ import axiosInstance from "../axiosInstance";
 import ExercisesModel from "./ExercisesModel";
 import { useNavigate } from "react-router-dom";
 import Loading from "./loading";
+import { Button } from "flowbite-react";
 
 const TemplateStore = () => {
   const [workoutPlans, setWorkoutPlans] = useState([]);
@@ -116,18 +117,12 @@ const TemplateStore = () => {
                 </p>
               </div>
               <div className="flex flex-row lg:justify-center gap-2 align-middle justify-self-center justify-start md:justify-center lg:">
-                <div
-                  onClick={() => handleViewExercises(workout._id)}
-                  className="cursor-pointer inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
-                >
+                <Button onClick={() => handleViewExercises(workout._id)}>
                   View exercises
-                </div>
-                <div
-                  onClick={() => handleAddWorkout(workout._id)}
-                  className="cursor-pointer inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
-                >
+                </Button>
+                <Button onClick={() => handleAddWorkout(workout._id)}>
                   Add workout
-                </div>
+                </Button>
               </div>
             </div>
           ))}

@@ -1,10 +1,18 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import NavbarForHome from "./NavbarForHome";
 import logo from "../assets/Logo_!.png";
 import gitHub from "../assets/github-mark-white.png";
+import gitHubBlack from "../assets/github-mark.png";
 import gym from "../assets/wp8834037.jpg";
+import { useState } from 'react';
 
 const Contact = () => {
+  const [theme, setTheme] = useState(localStorage.getItem("theme"));
+  
+
+ 
+ 
+
   return (
     <>
       <NavbarForHome />
@@ -27,7 +35,7 @@ const Contact = () => {
             href="https://github.com/MAMCB/WD045-FinalProject-FitnessPlanner"
             target="_blank"
           >
-            <img src={gitHub} className="m-auto mt-4 h-9" alt="Logo" />
+            <img src={theme==="dark"?gitHub:gitHubBlack} className="m-auto mt-4 h-9" alt="Logo" />
           </a>
         </div>
         

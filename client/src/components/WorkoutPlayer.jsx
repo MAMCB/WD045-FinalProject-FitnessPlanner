@@ -10,6 +10,7 @@ import { Link } from "react-router-dom";
 import { useParams } from "react-router-dom";
 import useSound from "use-sound";
 import countSound from "../assets/sounds/finalSound.mp3";
+import { Button } from "flowbite-react";
 
 const WorkoutPlayer = () => {
   const id = useParams();
@@ -26,6 +27,7 @@ const WorkoutPlayer = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [arrayEx, setArrayEx] = useState([]);
   const [planVersion, setPlanVersion] = useState(0);
+  const [radioOpen,setRadioOpen] = useState(false);
   // new code
   useEffect(() => {
     console.log(version.version);
@@ -203,6 +205,10 @@ alert("New workout session created:" +
  .catch((err) => console.log(err));}
   }, [isWorkoutFinished]);
 
+  const handleIFrameVisibility = ()=>{
+    setRadioOpen((prev)=>!prev);
+  }
+
   return (
     <>
       {!isWorkoutStarted ? (
@@ -240,6 +246,22 @@ alert("New workout session created:" +
         isWorkoutStarted &&
         workoutData.planVersions[planVersion] !== undefined ? (
         <section className="p-5 body-font dark:bg-gray-900 w-full">
+          <Button onClick={handleIFrameVisibility}>
+            {radioOpen ? "Close " : "Open "} radio
+          </Button>
+          <div className="iframe-container">
+            <iframe
+              className={`m-auto ${radioOpen ? "block" : "hidden"}`}
+              width="853"
+              height="480"
+              src="https://www.youtube.com/embed/8OVkgBh_3Yc"
+              title="Gym Workout Music 🔥 Best Fitness &amp; Training Workout Music Mix 🔥 New Running Music 2024"
+              frameborder="0"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+              allowfullscreen
+            ></iframe>
+          </div>
+
           <div
             className={
               isExerciseFinished
@@ -279,7 +301,10 @@ alert("New workout session created:" +
                   data-modal-target="default-modal"
                   data-modal-toggle="pause-modal"
                 >
-                  <FontAwesomeIcon icon={faCirclePause} className="h-10 text-gray-500 dark:text-gray-400" />
+                  <FontAwesomeIcon
+                    icon={faCirclePause}
+                    className="h-10 text-gray-500 dark:text-gray-400"
+                  />
                 </button>
                 <button
                   onClick={handlePauseButton}
@@ -287,7 +312,10 @@ alert("New workout session created:" +
                   data-modal-toggle="pause-modal"
                   type="button"
                 >
-                  <FontAwesomeIcon icon={faCircleStop} className="h-10 text-gray-500 dark:text-gray-400" />
+                  <FontAwesomeIcon
+                    icon={faCircleStop}
+                    className="h-10 text-gray-500 dark:text-gray-400"
+                  />
                 </button>
 
                 <StaticModal
@@ -318,7 +346,9 @@ alert("New workout session created:" +
                 />
               </div>
               <div className="flex justify-center">
-                <p className="text-gray-500 dark:text-gray-400">Remaining time</p>
+                <p className="text-gray-500 dark:text-gray-400">
+                  Remaining time
+                </p>
               </div>
               <div className="flex flex-col  justify-center self-center">
                 <span className="countdown font-mono text-6xl ">

@@ -218,7 +218,7 @@ const WorkoutPlan = () => {
                       </div>
                     </div>
                   </div>
-                  {workout.exercises.map((x) => {
+                  {workout.planVersions[workoutVersion[index]].exercises.map((x) => {
                     return (
                       <div key={x.exercise._id}>
                         <Accordion collapseAll className="m-[10px]">

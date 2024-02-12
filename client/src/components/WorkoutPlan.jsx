@@ -5,9 +5,10 @@ import { useState, useEffect, useContext } from "react";
 import { AuthContext } from "../context/Auth";
 import { Accordion } from "flowbite-react";
 import { Link, useParams, useNavigate } from "react-router-dom";
-import { Select,Button } from "flowbite-react";
+import { Select, Button } from "flowbite-react";
 import SessionCalendar from "./SessionCalendar";
 import axiosInstance from "../axiosInstance";
+import Loading from "./loading";
 
 const WorkoutPlan = () => {
   const [workout, setWorkout] = useState([]);
@@ -15,16 +16,24 @@ const WorkoutPlan = () => {
   const [workoutSessions, setWorkoutSessions] = useState([]);
   const [userExercise, setUserExercise] = useState([]);
   const [testing, setTesting] = useState(false);
+  const [animationLoading, setAnimationLoading] = useState(true);
+
+  useEffect(() => {
+    setTimeout(function () {
+      setAnimationLoading(false);
+    }, 2500);
+  }, []);
 
   const context = useContext(AuthContext);
   const navigate = useNavigate();
-  
-  console.log(workout)
-  useEffect(() => {
-    console.log(workoutVersion)},[workoutVersion])
 
-    useEffect(() => {
-      axios
+  console.log(workout);
+  useEffect(() => {
+    console.log(workoutVersion);
+  }, [workoutVersion]);
+
+  useEffect(() => {
+    axios
       .get("/api/workoutSession")
       .then((res) => setWorkoutSessions(res.data))
       .catch((e) => console.error(e));
@@ -34,59 +43,60 @@ const WorkoutPlan = () => {
     axios
       .get("/api/workoutPlan")
       .then((res) => setWorkout(res.data))
-      
+
       .catch((e) => console.error(e));
   }, []);
 
-useEffect(() => {
+  useEffect(() => {
     axios
       .get(`/api/user/${context.user._id}`)
       .then((res) => setUserExercise(res.data?.exercises))
       .catch((e) => console.error(e));
-  }, []); 
+  }, []);
 
   useEffect(() => {
-    setWorkoutVersion([...Array(workout.length).fill(0)])
-  }, [workout])
+    setWorkoutVersion([...Array(workout.length).fill(0)]);
+  }, [workout]);
 
-  const deleteWorkoutTask = (id) =>{
-    setWorkout((state)=>(state.filter(x=> x._id !== id)))
-  }
+  const deleteWorkoutTask = (id) => {
+    setWorkout((state) => state.filter((x) => x._id !== id));
+  };
 
-  const deleteExerciseTask = (id) =>{
-    setUserExercise((state)=>(state.filter(x=>x._id !== id)))
-  }
+  const deleteExerciseTask = (id) => {
+    setUserExercise((state) => state.filter((x) => x._id !== id));
+  };
 
-  const deleteHandler = (id) =>{
-    if(!confirm("Are you sure you want to delete this workout plan?") ) return;
-    axios.delete(`/api/workoutPlan/${id}`)
-    .then(res=> navigate(`/workoutPlan`))
-    .catch(e=>console.error(e))
-    deleteWorkoutTask(id)
-}
+  const deleteHandler = (id) => {
+    if (!confirm("Are you sure you want to delete this workout plan?")) return;
+    axios
+      .delete(`/api/workoutPlan/${id}`)
+      .then((res) => navigate(`/workoutPlan`))
+      .catch((e) => console.error(e));
+    deleteWorkoutTask(id);
+  };
 
-console.log(workout)
+  console.log(workout);
 
-const deleteHandlerExercises = (id) =>{
-  if(!confirm("Are you sure you want to delete this exercise?") ) return;
-  axios.delete(`/api/exercise/${id}`)
-  .then(res=> navigate(`/workoutPlan`))
-  .catch(e=>console.error(e))
-  deleteExerciseTask(id)
- 
-}
+  const deleteHandlerExercises = (id) => {
+    if (!confirm("Are you sure you want to delete this exercise?")) return;
+    axios
+      .delete(`/api/exercise/${id}`)
+      .then((res) => navigate(`/workoutPlan`))
+      .catch((e) => console.error(e));
+    deleteExerciseTask(id);
+  };
 
-const handleVersionChange = (index) => (e) => {
-  console.log(e.target.value)
-  console.log(index)
-  const newVersion = [...workoutVersion]
-  newVersion[index] = Number(e.target.value)
-  setWorkoutVersion(newVersion)
-  ;}
+  const handleVersionChange = (index) => (e) => {
+    console.log(e.target.value);
+    console.log(index);
+    const newVersion = [...workoutVersion];
+    newVersion[index] = Number(e.target.value);
+    setWorkoutVersion(newVersion);
+  };
 
-  const createNewVersion = (index) => ()=>{
-    console.log("creating new version")
-    console.log(workout[index])
+  const createNewVersion = (index) => () => {
+    console.log("creating new version");
+    console.log(workout[index]);
     const newVersion = {
       ...workout[index],
       exercises: workout[index].planVersions[
@@ -97,39 +107,50 @@ const handleVersionChange = (index) => (e) => {
         return { ...x, weights };
       }),
     };
-   
-    console.log(newVersion)
+
+    console.log(newVersion);
     axios
       .put(`/api/workoutPlan/${workout[index]._id}/version`, newVersion)
-      .then((res) => {console.log(res)
-      alert("New version created")
-    window.location.reload()})
+      .then((res) => {
+        console.log(res);
+        alert("New version created");
+        window.location.reload();
+      })
       .catch((e) => console.error(e));
-  }
+  };
 
-  const sessionTester = (id,year,monthIndex,day) => {
+  const sessionTester = (id, year, monthIndex, day) => {
     const newSession = {
       workoutId: id,
-      name:"TestSession",
-      finishedDate: new Date(year,monthIndex,day+1),
+      name: "TestSession",
+      finishedDate: new Date(year, monthIndex, day + 1),
       completed: false,
-      version:0
-    }
+      version: 0,
+    };
     axiosInstance
-.post("/api/workoutSession", newSession).then((res) => {console.log(res);
-alert("New workout session created:" +
- `Date: ${newSession.finishedDate},Workout:${newSession.name},Version:${newSession.version},Completed:${newSession.completed}`)})
- .catch((err) => console.log(err));
-  }
+      .post("/api/workoutSession", newSession)
+      .then((res) => {
+        console.log(res);
+        alert(
+          "New workout session created:" +
+            `Date: ${newSession.finishedDate},Workout:${newSession.name},Version:${newSession.version},Completed:${newSession.completed}`
+        );
+      })
+      .catch((err) => console.log(err));
+  };
 
- 
-
-  return (
+  return animationLoading ? (
+    <div className="flex items-center h-screen justify-center justify-self-center content-center self-center place-content-center place-items-center place-self-center">
+      <Loading width="250px" />
+    </div>
+  ) : (
     <div className="w-[100%] bg-white shadow dark:bg-gray-900 py-[100px]">
       <div className="flex px-[20px] flex-wrap justify-between">
-        <div className='w-[100%] lg:w-[49%] m-[5px]'>
-          <h2 className="text-xl mb-3  text-gray-500 dark:text-gray-400">Your Workout plans</h2>
-          {workout.map((workout,index) => {
+        <div className="w-[100%] lg:w-[49%] m-[5px]">
+          <h2 className="text-xl mb-3  text-gray-500 dark:text-gray-400">
+            Your Workout plans
+          </h2>
+          {workout.map((workout, index) => {
             return (
               <div key={workout._id}>
                 <div className="mb-[20px] bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
@@ -281,7 +302,9 @@ alert("New workout session created:" +
           })}
         </div>
         <div className="w-[100%] lg:w-[49%] m-[5px]">
-          <h2 className=" mb-3 text-xl text-gray-500 dark:text-gray-400">Your exercises</h2>
+          <h2 className=" mb-3 text-xl text-gray-500 dark:text-gray-400">
+            Your exercises
+          </h2>
           {userExercise.map((x) => {
             return (
               <div
@@ -358,4 +381,3 @@ alert("New workout session created:" +
 };
 
 export default WorkoutPlan;
-

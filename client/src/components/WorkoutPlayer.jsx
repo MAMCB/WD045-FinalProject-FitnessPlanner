@@ -1,8 +1,7 @@
 import React from "react";
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect } from "react";
 import axiosInstance from "../axiosInstance";
 import Lottie from "react-lottie";
-import { set } from "react-hook-form";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCirclePause } from "@fortawesome/free-solid-svg-icons";
 import { faCircleStop } from "@fortawesome/free-solid-svg-icons";

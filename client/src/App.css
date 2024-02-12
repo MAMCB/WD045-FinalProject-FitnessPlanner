@@ -159,7 +159,7 @@ footer {
 }
 
 ::-webkit-scrollbar-thumb{
-  background-color: #4FB5A9;
+  background-color: rgb(8 145 178);
   border-radius: 10px;
 }
 

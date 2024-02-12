@@ -116,7 +116,7 @@ const TemplateStore = () => {
                   Was created by : {workoutOwners[index]}
                 </p>
               </div>
-              <div className="flex flex-row lg:justify-center gap-2 align-middle justify-self-center justify-start md:justify-center lg:">
+              <div className="flex flex-row justify-center gap-2 align-middle justify-self-center justify-start md:justify-center">
                 <Button onClick={() => handleViewExercises(workout._id)}>
                   View exercises
                 </Button>

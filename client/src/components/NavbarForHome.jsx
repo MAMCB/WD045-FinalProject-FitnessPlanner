@@ -4,13 +4,14 @@ import { useContext, useState } from "react";
 import { AuthContext } from "../context/Auth";
 import logo from "../assets/Logo_!.png";
 import Profile from "./Profile";
-import { NavLink } from "react-router-dom";
+import { NavLink, useLocation } from "react-router-dom";
 import axios from "../axiosInstance";
 import userAvatar from "../assets/userAvatar.png";
 
 const NavbarForHome = () => {
   const context = useContext(AuthContext);
   const [currentUser, setCurrentUser] = useState({});
+  const location = useLocation();
 
   useEffect(() => {
     if (context.user) {
@@ -37,11 +38,17 @@ const NavbarForHome = () => {
     } else {
       document.documentElement.classList.remove("dark");
     }
+   
   }, [theme]);
 
   const handleToggleTheme = () => {
     const newTheme = theme === "light" ? "dark" : "light";
     setTheme(newTheme);
+    if(location.pathname === "/contact")
+    {
+      window.location.reload();
+    }
+    
   };
 
   //Theme end

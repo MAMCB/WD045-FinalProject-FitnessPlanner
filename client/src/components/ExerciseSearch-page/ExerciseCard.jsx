@@ -81,7 +81,7 @@ const ExerciseCard = ({ exercise, user, addExercise,inPlan,remove,blocks}) => {
           alt={exercise.name}
           className={user ? "w-48 h-48 rounded-xl m-auto" : "rounded-xl"}
         />
-        <div className="ml-5 bg-gray-100 dark:bg-black rounded-xl p-5">
+        <div className="m-5 bg-gray-100 dark:bg-black rounded-xl p-5">
           <h2 className="mt-2 text-xl font-bold">{exercise.name}</h2>
           <h4 className="mt-2">
             {user ? exercise.muscleGroup : exercise.target}

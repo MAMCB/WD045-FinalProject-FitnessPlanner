@@ -152,10 +152,12 @@ const SessionCalendar = ({workoutSessions}) => {
                 onClick={() => handleDayClick(day)}
                 style={
                   workoutSessions.find(
-                    (session) => session.finishedDate.substr(-29,10) === calculateDate(currentYear,currentMonth,day).toISOString().substr(-29,10)
-                  )
-                    && { backgroundColor: "green" }
-                    
+                    (session) =>
+                      session.finishedDate.substr(-29, 10) ===
+                      calculateDate(currentYear, currentMonth, day)
+                        .toISOString()
+                        .substr(-29, 10)
+                  ) && { backgroundColor: "#4BFA6E" }
                 }
               >
                 <h3>{day}</h3>
@@ -184,7 +186,11 @@ const SessionCalendar = ({workoutSessions}) => {
           </div>
         </div>
       </div>
-      <SessionModal isModalOpen={isModalOpen} hideModal={hideModal} sessions={sessions}/>
+      <SessionModal
+        isModalOpen={isModalOpen}
+        hideModal={hideModal}
+        sessions={sessions}
+      />
     </div>
   );
 }

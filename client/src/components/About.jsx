@@ -1,4 +1,5 @@
 import NavbarForHome from "./NavbarForHome"
+import linkedin from "../assets/linkedin.png";
 
 const About = () =>{
    
@@ -9,6 +10,7 @@ const About = () =>{
         image: "https://www.w3schools.com/howto/img_avatar2.png",
         description:
           "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Assumenda, rerum sit. Alias quia quisquam labore beatae, impedit rerum aspernatur placeat! In amet veritatis dignissimos ipsam, laborum eum cumque molestias sit?",
+        contact: "#",
       },
       {
         id: 2,
@@ -16,6 +18,7 @@ const About = () =>{
         image: "https://avatars.githubusercontent.com/u/96302464?v=4",
         description:
           "Borned in Brazil, raised in Portugal and now living in Germany. I came from a background in Tourism where i worked with adventure activities. As such i was always very active and interested in sports. With also a great passion for programming, building this app was a great way to combine both passions. I was responsible mostly for the backend and the database of the app. I also worked on the frontend working on the editor and search exercise functionality. I am very proud of the result and i am looking forward to add new features to it.",
+        contact: "https://www.linkedin.com/in/borges-miguel/",
       },
       {
         id: 3,
@@ -23,6 +26,7 @@ const About = () =>{
         image: "https://www.w3schools.com/howto/img_avatar.png",
         description:
           "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Assumenda, rerum sit. Alias quia quisquam labore beatae, impedit rerum aspernatur placeat! In amet veritatis dignissimos ipsam, laborum eum cumque molestias sit?",
+        contact: "#",
       },
     ];
     
@@ -70,6 +74,15 @@ const About = () =>{
                         {dev.description}
                       </p>
                     </div>
+                    <div className="flex justify-center">
+                      <a href={dev.contact} target="_blank">
+                        <img
+                          src={linkedin}
+                          className="m-auto mt-4 h-9"
+                          alt="Logo"
+                        />
+                      </a>
+                      </div>
                   </div>
                 ))}
               </div>

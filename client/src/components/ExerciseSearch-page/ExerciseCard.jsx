@@ -73,7 +73,7 @@ const ExerciseCard = ({ exercise, user, addExercise,inPlan,remove,blocks}) => {
         className={
           user
             ? "max-w-4xl mt-4 flex-col bg-white rounded-xl"
-            : "max-w-4xl mt-4 flex bg-white rounded-xl"
+            : "max-w-4xl mt-4 flex-col md:flex-row lg:flex bg-white rounded-xl"
         }
       >
         <img

@@ -6,17 +6,23 @@ import axios from "../axiosInstance";
 import axiosInstance from "../axiosInstance";
 import ExercisesModel from "./ExercisesModel";
 import { useNavigate } from "react-router-dom";
+import Loading from "./loading";
 
 const TemplateStore = () => {
   const [workoutPlans, setWorkoutPlans] = useState([]);
   const [workoutOwners, setWorkoutOwners] = useState([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [ExersiseImModal, setExersiseImModal] = useState(null);
+  const [animationLoading, setAnimationLoading] = useState(true);
   const navigate = useNavigate();
 
-
-
   const context = useContext(AuthContext);
+
+    useEffect(() => {
+      setTimeout(function () {
+        setAnimationLoading(false);
+      }, 2500);
+    }, []);
 
   useEffect(() => {
     axios
@@ -47,9 +53,8 @@ const TemplateStore = () => {
 
   const handleViewExercises = (id) => {
     const workout = workoutPlans.find((workout) => workout._id === id);
-    setExersiseImModal(workout)
+    setExersiseImModal(workout);
     setIsModalOpen(true);
-    
   };
 
   const handleAddWorkout = (id) => {
@@ -72,8 +77,10 @@ const TemplateStore = () => {
     console.log("Add workout");
   };
 
-  return workoutPlans.length === 0 ? (
-    <div className="h-screen w-full">Loading...</div>
+  return animationLoading ? (
+    <div className="flex items-center h-screen justify-center justify-self-center content-center self-center place-content-center place-items-center place-self-center">
+      <Loading width="250px" />
+    </div>
   ) : (
     <section className="text-gray-600 body-font px-[40px]">
       <div className="container px-1 py-12 mx-auto ">

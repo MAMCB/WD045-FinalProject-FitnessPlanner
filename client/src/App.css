@@ -159,13 +159,34 @@ footer {
 }
 
 ::-webkit-scrollbar-thumb{
-  background-color: #4FB5A9;
+  background-color: rgb(8 145 178);
   border-radius: 10px;
 }
 
-::-webkit-scrollbar-track{
-  background-color: rgb(31 41 55);
+/* Default background color */
+:root {
+  --scrollbar-track-color: rgb(31, 41, 55); /* Dark mode color */
 }
+
+/* Light mode */
+@media (prefers-color-scheme: light) {
+  :root {
+    --scrollbar-track-color: #ccc; /* Light mode color */
+  }
+}
+
+/* Dark mode */
+@media (prefers-color-scheme: dark) {
+  :root {
+    --scrollbar-track-color: rgb(31, 41, 55); /* Dark mode color */
+  }
+}
+
+/* Scrollbar track styling */
+::-webkit-scrollbar-track {
+  background-color: var(--scrollbar-track-color);
+}
+
 
 ::-webkit-scrollbar-thumb:hover{
   background-color: #4FB5A9;

@@ -176,7 +176,7 @@ const WorkoutPlan = () => {
                         Rating: {workout.rating}
                       </p>
                       <div className="mt-4">
-                        <div className="flex gap-3 mb-4">
+                        <div className="flex flex-wrap gap-3 mb-4">
                           <Link
                             to={`/workoutPlayer/${workout._id}/${workoutVersion[index]}`}
                             type="button"

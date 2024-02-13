@@ -36,7 +36,7 @@ const About = () =>{
       <>
         <NavbarForHome />
         <section className="bg-white shadow dark:bg-gray-900 py-[100px] px-[40px]">
-          <div className="mb-[50px] w-[96%] lg:w-[900px] lg:m-auto">
+          <div className="mb-[50px] w-[96%] lg:w-[1000px] lg:m-auto">
             <h2 className="mb-4 text-center text-4xl font-bold tracking-tight text-gray-500 dark:text-gray-400">
               About Us
             </h2>
@@ -56,7 +56,7 @@ const About = () =>{
                 {developers.map((dev) => (
                   <div
                     key={dev.id}
-                    className=" bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700 lg:w-1/5 md:w-1/3 p-2 w-full flex flex-col justify-between"
+                    className=" bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700 lg:w-1/5 md:w-1/3 p-2 pb-5 w-full flex flex-col"
                   >
                     <div className="w-[100%] h-[300px]">
                     <img
@@ -66,12 +66,12 @@ const About = () =>{
                     />
                     </div>
 
-                    <div className="p-5 pl-0 flex-grow">
+                    <div className="p-5 pl-0">
                       <h5 className="mb-2 text-2xl font-bold tracking-tight text-gray-500 sm:mb-0 dark:text-gray-400">
                         {dev.name}
                       </h5>
                     </div>
-                    <div>
+                    <div className="flex-grow pb-2">
                       <p className="text-gray-500 sm:mb-0 dark:text-gray-400">
                         {dev.description}
                       </p>

@@ -1,9 +1,12 @@
+
+
 import { useContext, useState, useEffect } from "react";
 import { AuthContext } from "../context/Auth";
 import { Link } from "react-router-dom";
 import axios from "../axiosInstance";
 import React from "react";
 import { useNavigate } from "react-router-dom";
+import userAvatar from "../assets/userAvatar.png";
 
 const Profile = () => {
   const context = useContext(AuthContext);
@@ -34,45 +37,23 @@ const navigate = useNavigate();
   return (
     <div className="bg-white shadow dark:bg-gray-900 py-[100px]">
       <div key={currentUser._id} className="flex justify-center w-full">
-        <div className="bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 w-[100%] dark:border-gray-700 m-[10px] md:w-[40%] ">
-          <div className="flex justify-center items-center h-full">
-            <div className="flex align-center px-4 pt-4">
-              <div className="flex flex-col items-center pb-10">
-                <img
-                  className="w-24 h-24 object-cover mb-3 rounded-full shadow-lg"
-                  src={currentUser.profilePic}
-                  alt="Bonnie image"
-                />
-                <h5 className="mb-1 text-xl font-medium text-gray-500 sm:mb-0 dark:text-gray-400">
-                  <p>Username: {currentUser.username}</p>
-                </h5>
-                <span className="text-sm text-gray-500 sm:mb-0 dark:text-gray-400"></span>
-                <div className="flex mt-4 md:mt-6 flex-wrap">
-                  <Link
-                    to={`/EditProfile/${currentUser._id}`}
-                    className="inline-flex items-center px-4 py-2 text-sm font-medium text-center  text-white sm:mb-0 dark:text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
-                  >
-                    Edit Profile
-                  </Link>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-
+        
         <div className="w-[100%] m-[10px] md:w-[40%]">
           <div className="p-4 bg-white border border-gray-200 rounded-lg shadow sm:p-8 dark:bg-gray-800 dark:border-gray-700">
-            <div className="flex items-center justify-between mb-4">
-              <h5 className="text-xl font-bold leading-none text-gray-500 sm:mb-0 dark:text-gray-400">
-                User Profile
-              </h5>
+      
+            <div className="flex items-center justify-center mb-4">
+            <img
+                  className="w-24 h-24 object-cover mb-3 rounded-full shadow-lg"
+                  src={currentUser.profilePic ? currentUser.profilePic : userAvatar}
+                  alt="Bonnie image"
+                />
             </div>
             <div className="flow-root">
               <ul
                 role="list"
                 className="divide-y divide-gray-200 dark:divide-gray-700"
               >
-                <li className="py-3 sm:py-4">
+                <li className="py-3 sm:py-4 text-center">
                   <div className="flex items-center">
                     <div className="flex-1 min-w-0 ms-4">
                       <p className="text-lg font-medium truncate text-gray-500 sm:mb-0 dark:text-gray-400">
@@ -81,7 +62,7 @@ const navigate = useNavigate();
                     </div>
                   </div>
                 </li>
-                <li className="py-3 sm:py-4">
+                <li className="py-3 sm:py-4 text-center">
                   <div className="flex items-center ">
                     <div className="flex-1 min-w-0 ms-4">
                       <p className="text-lg font-medium text-gray-500 sm:mb-0 dark:text-gray-400">
@@ -90,7 +71,7 @@ const navigate = useNavigate();
                     </div>
                   </div>
                 </li>
-                <li className="py-3 sm:py-4">
+                <li className="py-3 sm:py-4 text-center">
                   <div className="flex items-center">
                     <div className="flex-1 min-w-0 ms-4">
                       <p className="text-lg font-medium truncate text-gray-500 sm:mb-0 dark:text-gray-400">
@@ -99,7 +80,7 @@ const navigate = useNavigate();
                     </div>
                   </div>
                 </li>
-                <li className="py-3 sm:py-4">
+                <li className="py-3 sm:py-4 text-center">
                   <div className="flex items-center ">
                     <div className="flex-1 min-w-0 ms-4">
                       <p className="text-lg font-medium truncate text-gray-500 sm:mb-0 dark:text-gray-400">
@@ -108,7 +89,7 @@ const navigate = useNavigate();
                     </div>
                   </div>
                 </li>
-                <li className="py-3 sm:py-4">
+                <li className="py-3 sm:py-4 text-center">
                   <div className="flex items-center ">
                     <div className="flex-1 min-w-0 ms-4">
                       <p className="text-lg font-medium truncate text-gray-500 sm:mb-0 dark:text-gray-400">
@@ -117,7 +98,7 @@ const navigate = useNavigate();
                     </div>
                   </div>
                 </li>
-                <li className="py-3 sm:py-4">
+                <li className="py-3 sm:py-4 text-center">
                   <div className="flex items-center ">
                     <div className="flex-1 min-w-0 ms-4">
                       <p className="text-lg font-medium truncate text-gray-500 sm:mb-0 dark:text-gray-400">
@@ -127,6 +108,16 @@ const navigate = useNavigate();
                   </div>
                 </li>
               </ul>
+              <div className="flex mt-4 md:mt-6 flex-wrap justify-center">
+                <button type="button" className="group mb-5 flex items-center justify-center p-0.5 text-center font-medium relative focus:z-10 focus:outline-none text-white bg-cyan-700 border border-transparent enabled:hover:bg-cyan-800 focus:ring-cyan-300 dark:bg-cyan-600 dark:enabled:hover:bg-cyan-700 dark:focus:ring-cyan-800 rounded-lg focus:ring-2">
+                  <Link
+                    to={`/EditProfile/${currentUser._id}`}
+                    className="flex items-center transition-all duration-200 rounded-md text-sm px-4 py-2"
+                  >
+                    Edit Profile
+                  </Link>
+                  </button>
+                </div>
             </div>
           </div>
         </div>
@@ -136,3 +127,4 @@ const navigate = useNavigate();
 };
 
 export default Profile;
+

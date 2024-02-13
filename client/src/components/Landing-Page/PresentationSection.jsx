@@ -1,14 +1,59 @@
 import bodyBuilding from "../../assets/gym-2.jpeg";
 import timeIcon from "../../assets/time-svgrepo-com.svg";
 import workoutIcon from "../../assets/workout.svg";
+import {motion} from "framer-motion";
+
 
 
 const PresentationSection = () => {
+
+  const fadeInText= {
+    initial:{
+      opacity:0,
+      translateY:-50,
+      translateX:-200,
+    },
+
+    animate:{
+      opacity:1,
+      translateY:-100,
+      translateX:0,
+     delay: 3
+    }
+  }
+
+  const fadeInImage = {
+    initial:{
+      opacity:0,
+     
+    },
+
+    animate:{
+      opacity:1,
+     
+     delay: 3
+    }
+  }
+
+
+
+
+
   return (
-    <section className="relativebg-white shadow dark:bg-gray-900 py-[100px]">
+    <section className="relative bg-white shadow dark:bg-gray-900 py-[100px]">
       <div className="flex container mx-auto">
         <div className="flex flex-col mx-auto md:flex-row">
-        <div className="w-full my-10 pr-[0px] md:w-3/5 lg:pr-[50px] md:pr-[15px]">
+        <motion.div 
+         variants={fadeInText}
+         initial='initial'
+         whileInView='animate'
+         transition={{ duration:.8, delay: .8 }}
+         viewport={{
+           once:true
+         }}
+        
+        
+        className="w-full my-10 pr-[0px] md:w-3/5 lg:pr-[50px] md:pr-[15px]">
           <h2 className="text-gray-500 sm:mb-0 dark:text-gray-400 mb-[50px] uppercase text-xl  font-bold lg:text-6xl">
             Start
             <span className="rounded-xl bottom-[0px] m-2 py-0 px-2 relative border-2   border-box-shadow inline-block sm:text-xl lg:text-2xl lg:m-3 lg:py-1 lg:px-6 lg:bottom-[15px]">
@@ -52,15 +97,25 @@ const PresentationSection = () => {
               </p>
             </div>
           </div>
-        </div>
+        </motion.div>
         <div className="w-full md:w-2/5">
-          <div className="h-[800px] border-2 rounded-lg border-box-shadow">
+          <motion.div
+          variants={fadeInImage}
+          initial='initial'
+          whileInView='animate'
+          transition={{ duration:.8, delay: .9 }}
+          viewport={{
+            once:true
+          }}
+          
+          
+          className="h-[800px] border-2 rounded-lg border-box-shadow  delay-[300ms] duration-[600ms] taos:[transform:translate3d(200px,200px,0)] taos:opacity-0" data-taos-offset="300">
             <img
               className="h-[100%] width-[100%] object-cover rounded-lg"
               src={bodyBuilding}
               alt="Bodybuilding Image"
             />
-          </div>
+          </motion.div>
         </div>
         </div>
       </div>

@@ -2,6 +2,7 @@
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
+import {motion} from "framer-motion";
 
 const TestimonialsSection = () => {
   const settings = {
@@ -30,8 +31,31 @@ const TestimonialsSection = () => {
       },
     ],
   };
+
+  const fadeInASlider = {
+    initial:{
+      opacity:0,
+      translateY:450,
+      translateX:0,
+    },
+    animate:{
+      opacity:1,
+      translateY:0,
+      translateX:0,
+      delay:0.25
+    }
+  }
   return (
-    <section className="relative bg-white shadow dark:bg-gray-900 py-[100px]">
+    <motion.section
+    variants={fadeInASlider}
+    initial='initial'
+    whileInView='animate'
+    transition={{ duration:.8, delay:0.5 }}
+    viewport={{
+      once:true
+    }}
+    
+    className="relative bg-white shadow dark:bg-gray-900 py-[100px]">
       <h2 className="text-2xl lg:text-6xl  text-center text-gray-500 mb-[30px] dark:text-gray-400 sm:mb-[150px] uppercase font-bold">
         Testimonials
       </h2>
@@ -94,11 +118,11 @@ const TestimonialsSection = () => {
             <div className="h-16 w-16 overflow-hidden rounded-full">
               <img
                 className="h-full w-full object-cover"
-                src="https://www.bodybuilding.com/images/2017/march/raise-the-bar-on-triceps-long-head-growth-MUSCLETECH-header-v3-830x467.jpg"
+                src="https://img.freepik.com/free-photo/woman-with-visible-abs-doing-fitness_23-2150228922.jpg"
                 alt=""
               />
             </div>
-            <p className="ml-4">John Doe</p>
+            <p className="ml-4">Rachel Parker</p>
           </div>
         </div>
         <div className="border-box-shadow mb-8  p-8  border-2 text-gray-500 sm:mb-0 dark:text-gray-400 button border-primary-color rounded-lg shadow">
@@ -126,11 +150,11 @@ const TestimonialsSection = () => {
             <div className="h-16 w-16 overflow-hidden rounded-full">
               <img
                 className="h-full w-full object-cover"
-                src="https://www.bodybuilding.com/images/2017/march/raise-the-bar-on-triceps-long-head-growth-MUSCLETECH-header-v3-830x467.jpg"
+                src="https://img.freepik.com/free-photo/fit-blond-woman-with-perfect-smile-stylish-sportswear-looking-camera-holding-bottle-water-white-wall-demonstrate-muscles_273443-4534.jpg?w=996&t=st=1707734313~exp=1707734913~hmac=7ab475bb3205a4bafab4c7d31e742436a6fd985b032fd980a27083adf291fbd6"
                 alt=""
               />
             </div>
-            <p className="ml-4">John Doe</p>
+            <p className="ml-4">Jennifer Smith</p>
           </div>
         </div>
         <div className="border-box-shadow mb-8  p-8  border-2 text-gray-500 sm:mb-0 dark:text-gray-400 button border-primary-color rounded-lg shadow">
@@ -159,11 +183,11 @@ const TestimonialsSection = () => {
             <div className="h-16 w-16 overflow-hidden rounded-full">
               <img
                 className="h-full w-full object-cover"
-                src="https://www.bodybuilding.com/images/2017/march/raise-the-bar-on-triceps-long-head-growth-MUSCLETECH-header-v3-830x467.jpg"
+                src="https://img.freepik.com/free-photo/athletic-shirtless-young-male-fitness-model-holds-dumbbell-with-light-isolated-dark-background_613910-20.jpg?w=360&t=st=1707734420~exp=1707735020~hmac=36c989472beaa06417c4b4baac404668281d0db3c0ffc4180617240553cf86ef"
                 alt=""
               />
             </div>
-            <p className="ml-4">John Doe</p>
+            <p className="ml-4">Ryan Houston</p>
           </div>
         </div>
         <div className="border-box-shadow mb-8  p-8  border-2 text-gray-500 sm:mb-0 dark:text-gray-400 button border-primary-color rounded-lg shadow">
@@ -191,11 +215,11 @@ const TestimonialsSection = () => {
             <div className="h-16 w-16 overflow-hidden rounded-full">
               <img
                 className="h-full w-full object-cover"
-                src="https://www.bodybuilding.com/images/2017/march/raise-the-bar-on-triceps-long-head-growth-MUSCLETECH-header-v3-830x467.jpg"
+                src="https://img.freepik.com/free-photo/sportive-attractive-man-green-training-shirt-is-doing-his-exsercises-gym-with-weights_613910-20768.jpg?w=360&t=st=1707734520~exp=1707735120~hmac=e787bb5432973470713423b3b5c3cfce2656f2cace0ebde182d0fcdec0b5c10a"
                 alt=""
               />
             </div>
-            <p className="ml-4">John Doe</p>
+            <p className="ml-4">James Sunderland</p>
           </div>
         </div>
         <div className="border-box-shadow mb-8  p-8  border-2 text-gray-500 sm:mb-0 dark:text-gray-400 button border-primary-color rounded-lg shadow">
@@ -224,15 +248,15 @@ const TestimonialsSection = () => {
             <div className="h-16 w-16 overflow-hidden rounded-full">
               <img
                 className="h-full w-full object-cover"
-                src="https://www.bodybuilding.com/images/2017/march/raise-the-bar-on-triceps-long-head-growth-MUSCLETECH-header-v3-830x467.jpg"
+                src="https://img.freepik.com/free-photo/athletic-woman-exercising-gym-keep-fit_23-2150989971.jpg?t=st=1707734540~exp=1707738140~hmac=cd3175cadc5d38e073480feafe0ad41017baafad397669292ed9d4ecc8b9cf93&w=740"
                 alt=""
               />
             </div>
-            <p className="ml-4">John Doe</p>
+            <p className="ml-4">Victoria Jones </p>
           </div>
         </div>
       </Slider>
-    </section>
+    </motion.section>
   );
 };
 

@@ -47,7 +47,7 @@ const Exercise = () => {
   }, [search]);
 
   const handleSearchInput = (e) => {
-    setSearch(e.target.value);
+    setSearch(e.target.value.toLowerCase());
   };
 
   const handleMuscleButton = (value) => {
@@ -224,8 +224,8 @@ const Exercise = () => {
               </Tabs.Item>
             </Tabs>
           </div>
-          <div className="w-[100%] lg:w-[59%] m-[5px] mt-[30px] p-5">
-            <div className="flex flex-wrap">
+          <div className="w-[100%] lg:w-[39%] m-[5px] mt-[30px] p-5">
+            <div className="flex flex-col">
               <div className="m-4">
                 <Label htmlFor="searchType" value="Select your search type" />
                 <Select
@@ -262,7 +262,7 @@ const Exercise = () => {
               {searchType === "target" && <SearchResult />}
 
               <Button
-                className="w-1/4 self-center"
+                className="w-1/4 mt-4 self-center"
                 onClick={handleSubmit}
                 disabled={disableSearch}
               >

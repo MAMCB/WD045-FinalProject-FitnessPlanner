@@ -4,13 +4,17 @@ import { useContext, useState } from "react";
 import { AuthContext } from "../context/Auth";
 import logo from "../assets/Logo_!.png";
 import Profile from "./Profile";
-import { NavLink } from "react-router-dom";
+import { NavLink, useLocation } from "react-router-dom";
 import axios from "../axiosInstance";
 import userAvatar from "../assets/userAvatar.png";
+import { useNavigate } from "react-router-dom";
+
 
 const NavbarForHome = () => {
   const context = useContext(AuthContext);
   const [currentUser, setCurrentUser] = useState({});
+  const location = useLocation();
+  const navigate = useNavigate();
 
   useEffect(() => {
     if (context.user) {
@@ -37,11 +41,17 @@ const NavbarForHome = () => {
     } else {
       document.documentElement.classList.remove("dark");
     }
+   
   }, [theme]);
 
   const handleToggleTheme = () => {
     const newTheme = theme === "light" ? "dark" : "light";
     setTheme(newTheme);
+    if(location.pathname === "/contact")
+    {
+      window.location.reload();
+    }
+    
   };
 
   //Theme end
@@ -88,7 +98,13 @@ const NavbarForHome = () => {
           </Dropdown.Item>
           <Dropdown.Item>
             {context.user ? (
-              <NavLink to={"/profile"}>Profile</NavLink>
+              <div
+                onClick={() => navigate("/profile")}
+                style={{ cursor: "pointer" }}
+                className="inline-block w-full text-left dark:text-white"
+              >
+                Profile
+              </div>
             ) : (
               <NavLink to={"/login"}>Sign in</NavLink>
             )}

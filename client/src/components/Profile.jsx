@@ -6,6 +6,7 @@ import { Link } from "react-router-dom";
 import axios from "../axiosInstance";
 import React from "react";
 import { useNavigate } from "react-router-dom";
+import userAvatar from "../assets/userAvatar.png";
 
 const Profile = () => {
   const context = useContext(AuthContext);
@@ -43,7 +44,7 @@ const navigate = useNavigate();
             <div className="flex items-center justify-center mb-4">
             <img
                   className="w-24 h-24 object-cover mb-3 rounded-full shadow-lg"
-                  src={currentUser.profilePic}
+                  src={currentUser.profilePic ? currentUser.profilePic : userAvatar}
                   alt="Bonnie image"
                 />
             </div>

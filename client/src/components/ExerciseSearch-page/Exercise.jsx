@@ -262,7 +262,7 @@ const Exercise = () => {
               {searchType === "target" && <SearchResult />}
 
               <Button
-                className="w-1/4 self-center"
+                className="w-1/4 mt-4 self-center"
                 onClick={handleSubmit}
                 disabled={disableSearch}
               >

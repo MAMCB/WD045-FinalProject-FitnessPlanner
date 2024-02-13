@@ -1,6 +1,7 @@
 /* eslint-disable react/prop-types */
 import React from 'react'
-import { Button } from 'flowbite-react'
+import {Button} from "flowbite-react"
+
 
 const SessionModal = ({isModalOpen,hideModal,sessions}) => {
  

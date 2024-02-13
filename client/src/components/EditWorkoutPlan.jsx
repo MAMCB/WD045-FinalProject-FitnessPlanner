@@ -15,8 +15,8 @@ const EditWorkoutPlan = () => {
     difficulty: "",
     restDuration: 0,
     type: "",
-    equipment: "false",
-    rating: 0,
+    exercises: [],
+    
     visibility: "false",
   });
   const { id } = useParams();
@@ -48,8 +48,7 @@ const EditWorkoutPlan = () => {
     formData.append("difficulty", difficulty);
     formData.append("restDuration", restDuration);
     formData.append("type", type);
-    formData.append("equipment", equipment);
-    formData.append("rating", rating);
+    
     formData.append("visibility", visibility);
     axios
       .put(`/api/workoutPlan/${id}`, formData)
@@ -72,7 +71,7 @@ const EditWorkoutPlan = () => {
           >
             <div className="mb-5">
               <label
-                htmlFor="username"
+                htmlFor="name"
                 className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
               >
                 Workout Name
@@ -90,7 +89,7 @@ const EditWorkoutPlan = () => {
             </div>
             <div className="mb-5">
               <label
-                htmlFor="age"
+                htmlFor="goal"
                 className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
               >
                 Goal
@@ -148,12 +147,28 @@ const EditWorkoutPlan = () => {
                 type="number"
                 id="difficulty"
                 className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                placeholder="weight"
+                placeholder="difficulty"
                 required=""
                 name="difficulty"
                 defaultValue={workout?.difficulty}
                 onChange={handleChange}
               />
+            </div>
+            <div className="mb-5">
+              <Label htmlFor="type" value="type" />
+              <Select
+                id="type"
+                onChange={handleChange}
+                name="type"
+                defaultValue={workout?.type}
+              >
+                <option value={workout?.type}>{workout?.type}</option>
+                <option value={"cardio"}>Cardio</option>
+                <option value={"strength"}>Strength</option>
+                <option value={"flexibility"}>Flexibility</option>
+                <option value={"balance"}>Balance</option>
+                <option value={"other"}>Other</option>
+              </Select>
             </div>
             <div className="mb-5">
               <label
@@ -173,60 +188,7 @@ const EditWorkoutPlan = () => {
                 onChange={handleChange}
               />
             </div>
-            <div className="mb-5">
-              <label
-                htmlFor="equipment"
-                className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-              >
-                Type
-              </label>
-              <input
-                type="text"
-                id="equipment"
-                className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                placeholder="equipment"
-                required=""
-                name="type"
-                defaultValue={workout?.equipment}
-                onChange={handleChange}
-              />
-            </div>
-            <div className="mb-5">
-              <label
-                htmlFor="restDuration"
-                className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-              >
-                Equipment
-              </label>
-              <input
-                type="text"
-                id="restDuration"
-                className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                placeholder="restDuration"
-                required=""
-                name="restDuration"
-                defaultValue={workout?.restDuration}
-                onChange={handleChange}
-              />
-            </div>
-            <div className="mb-5">
-              <label
-                htmlFor="restDuration"
-                className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-              >
-                Rating
-              </label>
-              <input
-                type="number"
-                id="rating"
-                className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                placeholder="rating"
-                required=""
-                name="rating"
-                defaultValue={workout?.rating}
-                onChange={handleChange}
-              />
-            </div>
+
             <button
               type="submit"
               className="group mb-5 flex items-center justify-center p-0.5 text-center font-medium relative focus:z-10 focus:outline-none text-white bg-cyan-700 border border-transparent enabled:hover:bg-cyan-800 focus:ring-cyan-300 dark:bg-cyan-600 dark:enabled:hover:bg-cyan-700 dark:focus:ring-cyan-800 rounded-lg focus:ring-2"

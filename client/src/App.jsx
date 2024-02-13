@@ -18,6 +18,7 @@ import TemplateStore from "./components/TemplateStore";
 import Protected from "./components/ProtectedRoute";
 import Footer from "./components/Footer";
 import Contact from "./components/Contact";
+import Dashboard from "./components/Dashboard";
 
 function App() {
  
@@ -46,6 +47,7 @@ function App() {
           <Route path="profile" element={<Profile />} />
           <Route path="editProfile/:id" element={<EditProfile />} />
           <Route path="templateStore" element={<TemplateStore />} />
+          <Route path="dashboard" element={<Dashboard />} />
         </Route>
       </Routes>
       </main>

@@ -295,7 +295,7 @@ const WorkoutPlan = () => {
                 )}
                 <SessionCalendar
                   workoutSessions={workoutSessions.filter(
-                    (session) => session.workoutId === workout._id && session
+                    (session) => session.workoutId._id === workout._id 
                   )}
                 />
               </div>

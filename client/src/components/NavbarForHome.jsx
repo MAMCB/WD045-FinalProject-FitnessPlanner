@@ -7,11 +7,14 @@ import Profile from "./Profile";
 import { NavLink, useLocation } from "react-router-dom";
 import axios from "../axiosInstance";
 import userAvatar from "../assets/userAvatar.png";
+import { useNavigate } from "react-router-dom";
+
 
 const NavbarForHome = () => {
   const context = useContext(AuthContext);
   const [currentUser, setCurrentUser] = useState({});
   const location = useLocation();
+  const navigate = useNavigate();
 
   useEffect(() => {
     if (context.user) {
@@ -95,7 +98,13 @@ const NavbarForHome = () => {
           </Dropdown.Item>
           <Dropdown.Item>
             {context.user ? (
-              <NavLink to={"/profile"}>Profile</NavLink>
+              <div
+                onClick={() => navigate("/profile")}
+                style={{ cursor: "pointer" }}
+                className="inline-block w-full text-left dark:text-white"
+              >
+                Profile
+              </div>
             ) : (
               <NavLink to={"/login"}>Sign in</NavLink>
             )}

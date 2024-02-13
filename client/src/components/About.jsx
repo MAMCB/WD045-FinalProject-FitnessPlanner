@@ -1,4 +1,4 @@
-import NavbarForHome from "./NavbarForHome"
+import NavbarForHome from "./NavbarForHome";
 import linkedin from "../assets/linkedin.png";
 
 const About = () =>{
@@ -9,8 +9,8 @@ const About = () =>{
         name: "Anna",
         image: "https://www.w3schools.com/howto/img_avatar2.png",
         description:
-          "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Assumenda, rerum sit. Alias quia quisquam labore beatae, impedit rerum aspernatur placeat! In amet veritatis dignissimos ipsam, laborum eum cumque molestias sit?",
-        contact: "#",
+          "I am a passionate full-stack developer with a bachelor’s degree. My journey into programming began during my school days, and I’ve been hooked ever since.My appetite for knowledge drives me to explore cutting-edge technologies, such as cloud computing and web development. In collaboration with my team, I’ve worked  on both the backend and frontend aspects of real-time workout applications. One of my favorite areas of focus is creating an engaging user experience, especially when it comes to the workout player. It’s exhilarating to contribute to projects that empower individuals to build their fitness journey and achieve their goals.",
+        contact: "https://www.linkedin.com/in/anna-hovzan",
       },
       {
         id: 2,
@@ -75,7 +75,7 @@ const About = () =>{
                       </p>
                     </div>
                     <div className="flex justify-center">
-                      <a href={dev.contact} target="_blank">
+                      <a href={dev.contact} rel="noreferrer" target="_blank">
                         <img
                           src={linkedin}
                           className="m-auto mt-4 h-9"
@@ -83,14 +83,12 @@ const About = () =>{
                         />
                       </a>
                       </div>
-                  </div>
-                ))}
-              </div>
+                      </div>
+              ))}
             </div>
           </div>
-        </section>
-      </>
-    );
-}
-
-export default About
+        </div>
+      </section>
+    </>
+  );
+};

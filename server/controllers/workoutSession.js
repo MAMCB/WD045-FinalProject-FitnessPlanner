@@ -16,9 +16,10 @@ const createWorkoutSession = async (req, res) => {
 };
 const getAllWorkoutSessions = async (req, res) => {
     try {
-          const ownerUser = await User.findOne({ _id: req.user._id }).populate(
-            "workoutSessions"
-          );
+          const ownerUser = await User.findOne({ _id: req.user._id }).populate({
+            path: "workoutSessions",
+            populate: { path: "workoutId" }, // Populate the workoutId field
+          });
           if (!ownerUser) {
             return res.status(404).json({ message: "User not found" });
           }

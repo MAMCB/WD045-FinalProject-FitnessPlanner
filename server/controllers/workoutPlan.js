@@ -69,9 +69,14 @@ const updateWorkoutPlanById = async (req, res) => {
       );
     }
     else{
+      
      updatedWorkoutPlan = await WorkoutPlan.findByIdAndUpdate(
       workoutPlanId,
-      req.body,
+      {...req.body,
+      restDuration: Number(req.body.restDuration),
+    exerciseDuration: Number(req.body.exerciseDuration),
+  
+  },
       { new: true }
     );}
     if (!updatedWorkoutPlan) {

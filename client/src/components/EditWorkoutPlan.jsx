@@ -13,7 +13,7 @@ const EditWorkoutPlan = () => {
     goal: "",
     image: "",
     difficulty: "",
-    restDuration: 0,
+    
     type: "",
     exercises: [],
     
@@ -40,16 +40,17 @@ const EditWorkoutPlan = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    const { name, goal, image, difficulty, restDuration, type, equipment, rating, visibility } = workout;
+    const { name, goal, image, difficulty, restDuration, type,  visibility,exerciseDuration } = workout;
     const formData = new FormData();
     formData.append("name", name);
     formData.append("goal", goal);
     formData.append("image", image);
     formData.append("difficulty", difficulty);
-    formData.append("restDuration", restDuration);
+    formData.append("restDuration", Number(restDuration));
     formData.append("type", type);
-    
+    formData.append("exerciseDuration", Number(exerciseDuration));
     formData.append("visibility", visibility);
+    
     axios
       .put(`/api/workoutPlan/${id}`, formData)
       .then((res) => navigate(`/workoutPlan`))
@@ -113,6 +114,9 @@ const EditWorkoutPlan = () => {
                 name="visibility"
                 defaultValue={workout?.visibility}
               >
+                <option value={workout?.visibility}>
+                  {workout?.visibility ? "Public" : "Private"}
+                </option>
                 <option value={true}>Public</option>
                 <option value={false}>Private</option>
               </Select>
@@ -188,12 +192,32 @@ const EditWorkoutPlan = () => {
                 onChange={handleChange}
               />
             </div>
+            <div className="mb-5">
+              <label
+                htmlFor="exerciseDuration"
+                className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+              >
+                Exercise duration
+              </label>
+              <input
+                type="number"
+                id="exerciseDuration"
+                className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                placeholder="exerciseDuration"
+                required=""
+                name="exerciseDuration"
+                defaultValue={workout?.exerciseDuration}
+                onChange={handleChange}
+              />
+            </div>
 
             <button
               type="submit"
               className="group mb-5 flex items-center justify-center p-0.5 text-center font-medium relative focus:z-10 focus:outline-none text-white bg-cyan-700 border border-transparent enabled:hover:bg-cyan-800 focus:ring-cyan-300 dark:bg-cyan-600 dark:enabled:hover:bg-cyan-700 dark:focus:ring-cyan-800 rounded-lg focus:ring-2"
             >
-             <span className="flex items-center transition-all duration-200 rounded-md text-sm px-4 py-2">Edit</span>
+              <span className="flex items-center transition-all duration-200 rounded-md text-sm px-4 py-2">
+                Edit
+              </span>
             </button>
           </form>
         </div>

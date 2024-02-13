@@ -6,7 +6,7 @@ const About = () =>{
     const developers = [
       {
         id: 1,
-        name: "Ana",
+        name: "Anna",
         image: "https://www.w3schools.com/howto/img_avatar2.png",
         description:
           "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Assumenda, rerum sit. Alias quia quisquam labore beatae, impedit rerum aspernatur placeat! In amet veritatis dignissimos ipsam, laborum eum cumque molestias sit?",
@@ -25,8 +25,8 @@ const About = () =>{
         name: "Darko",
         image: "https://www.w3schools.com/howto/img_avatar.png",
         description:
-          "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Assumenda, rerum sit. Alias quia quisquam labore beatae, impedit rerum aspernatur placeat! In amet veritatis dignissimos ipsam, laborum eum cumque molestias sit?",
-        contact: "#",
+          "My name is Darko Hristovski from Macedonia, and my fascination with technology and programming has been a driving force in shaping my path. A fervent enthusiast of all things tech-related, I embarked on a quest to delve into the realm of web development. I thoroughly enjoyed the opportunity to contribute to this final project. It has been a fulfilling experience that I am grateful for",
+        contact: "https://www.linkedin.com/in/darko-hristovski/",
       },
     ];
     
@@ -64,7 +64,7 @@ const About = () =>{
                       alt=""
                     />
 
-                    <div className="p-5 flex-grow">
+                    <div className="p-5 pl-0 flex-grow">
                       <h5 className="mb-2 text-2xl font-bold tracking-tight text-gray-500 sm:mb-0 dark:text-gray-400">
                         {dev.name}
                       </h5>

@@ -9,7 +9,6 @@ const HeroSection = () => {
       opacity:0,
       translateY:-50,
       translateX:-50,
-    
     },
     animate:{
       opacity:1,
@@ -39,7 +38,7 @@ const HeroSection = () => {
   return (
     <section className="border-b-2 border-black bg-[url('/src/assets/bodybilder.jpg')] relative bg-no-repeat bg-left bg-cover h-screen">
       <div className="overlay">
-        <div className="clip-path-triangle z-10 absolute right-0 top-0 bottom-0 left-2/4 bg-white shadow dark:bg-gray-900">
+        <div className="clip-path-triangle hidden md:block z-10 absolute right-0 top-0 bottom-0 left-2/4 bg-white shadow dark:bg-gray-900">
           <div className="flex absolute right-9  bottom-5">
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -97,24 +96,24 @@ const HeroSection = () => {
                once:true
               }}
             
-            className="flex flex-col absolute z-10 left-0 bottom-10 items-baseline justify-end">
-              <p className="text-gray-500  dark:text-gray-400 font-bold mb-5">
+            className="flex flex-col absolute left-[50px] z-10 md:left-[20px] bottom-[-40px] items-baseline justify-end">
+              <p className="text-gray-500  dark:text-gray-400 font-bold mb-3">
                 Start planning your new healthy lifestile!
               </p>
               <button
-                className="text-gray-500  dark:text-gray-400 button border-2 mb-5 px-5 py-2.5  me-2  text-sm font-medium  focus:outline-none bg-white rounded-lg border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700 dark:bg-gray-800 dark: dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700"
+                className="group mb-5 flex items-center justify-center p-0.5 text-center font-medium relative focus:z-10 focus:outline-none text-white bg-cyan-700 border border-transparent enabled:hover:bg-cyan-800 focus:ring-cyan-300 dark:bg-cyan-600 dark:enabled:hover:bg-cyan-700 dark:focus:ring-cyan-800 rounded-lg focus:ring-2"
                 type="button"
               >
-                <Link to={"/register"}>Register</Link>
+                <Link className="flex items-center transition-all duration-200 rounded-md text-sm px-4 py-2" to={"/register"}>Register</Link>
               </button>
               <p className="text-gray-500  dark:text-gray-400 mb-2">
                 Already have an account?
               </p>
               <button
-               className="text-gray-500  dark:text-gray-400 button border-2 mb-5 px-5 py-2.5  me-2  text-sm font-medium  focus:outline-none bg-white rounded-lg border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700 dark:bg-gray-800 dark: dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700"
+               className="group mb-5 flex items-center justify-center p-0.5 text-center font-medium relative focus:z-10 focus:outline-none text-white bg-cyan-700 border border-transparent enabled:hover:bg-cyan-800 focus:ring-cyan-300 dark:bg-cyan-600 dark:enabled:hover:bg-cyan-700 dark:focus:ring-cyan-800 rounded-lg focus:ring-"
                 type="button"
               >
-                <Link to={"/login"}>Login</Link>
+                <Link className="flex items-center transition-all duration-200 rounded-md text-sm px-4 py-2" to={"/login"}>Login</Link>
               </button>
             </motion.div>
           </div>

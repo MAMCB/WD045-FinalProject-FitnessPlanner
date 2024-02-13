@@ -2,6 +2,7 @@
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
+import {motion} from "framer-motion";
 
 const TestimonialsSection = () => {
   const settings = {
@@ -30,8 +31,31 @@ const TestimonialsSection = () => {
       },
     ],
   };
+
+  const fadeInASlider = {
+    initial:{
+      opacity:0,
+      translateY:450,
+      translateX:0,
+    },
+    animate:{
+      opacity:1,
+      translateY:0,
+      translateX:0,
+      delay:0.25
+    }
+  }
   return (
-    <section className="relative bg-white shadow dark:bg-gray-900 py-[100px]">
+    <motion.section
+    variants={fadeInASlider}
+    initial='initial'
+    whileInView='animate'
+    transition={{ duration:.8, delay:0.5 }}
+    viewport={{
+      once:true
+    }}
+    
+    className="relative bg-white shadow dark:bg-gray-900 py-[100px]">
       <h2 className="text-2xl lg:text-6xl  text-center text-gray-500 mb-[30px] dark:text-gray-400 sm:mb-[150px] uppercase font-bold">
         Testimonials
       </h2>
@@ -232,7 +256,7 @@ const TestimonialsSection = () => {
           </div>
         </div>
       </Slider>
-    </section>
+    </motion.section>
   );
 };
 

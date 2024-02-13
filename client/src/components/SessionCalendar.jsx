@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import React from 'react'
 import { useState,useEffect } from 'react';
 import SessionModal from './SessionModal';
@@ -110,81 +111,89 @@ const SessionCalendar = ({workoutSessions}) => {
   }
 
   return (
-    <div className="bg-gray-100 flex items-center justify-center h-1/2">
-      <div className="lg:w-7/12 md:w-9/12 sm:w-10/12 mx-auto p-4">
-        <div className="bg-white shadow-lg rounded-lg overflow-hidden">
-          <div className="flex items-center justify-between px-6 py-3 bg-gray-700">
-            <button
-              id="prevMonth"
-              className="text-white"
-              onClick={handlePrevMonth}
-            >
-              Previous
-            </button>
-            <h2
-              id="currentMonth"
-              className="text-white"
-            >{`${monthsNames[currentMonth]} ${currentYear}`}</h2>
-            <button
-              id="nextMonth"
-              className="text-white"
-              onClick={handleNextMonth}
-            >
-              Next
-            </button>
-          </div>
-          <div
-            className="grid grid-cols-7 gap-2 p-4 dark:text-black"
-            id="calendar"
-          >
-            {daysOfWeek.map((day, index) => (
-              <div
-                key={index}
-                className="text-center py-2 border cursor-pointer"
+    <div className=''>
+      <div className="bg-gray-100 flex items-center justify-center h-1/2">
+        <div className="lg:w-7/12 md:w-9/12 sm:w-10/12 mx-auto p-4">
+          <div className="bg-white shadow-lg rounded-lg overflow-hidden">
+            <div className="flex items-center justify-between px-6 py-3 bg-gray-700">
+              <button
+                id="prevMonth"
+                className="text-white"
+                onClick={handlePrevMonth}
               >
-                <h3>{day}</h3>
-              </div>
-            ))}
-            {calendarDays.map((day, index) => (
-              <div
-                key={index}
-                className="text-center py-2 border cursor-pointer"
-                onClick={() => handleDayClick(day)}
-                style={
-                  workoutSessions.find(
-                    (session) => session.finishedDate.substr(-29,10) === calculateDate(currentYear,currentMonth,day).toISOString().substr(-29,10)
-                  )
-                    && { backgroundColor: "green" }
-                    
-                }
+                Previous
+              </button>
+              <h2
+                id="currentMonth"
+                className="text-white"
+              >{`${monthsNames[currentMonth]} ${currentYear}`}</h2>
+              <button
+                id="nextMonth"
+                className="text-white"
+                onClick={handleNextMonth}
               >
-                <h3>{day}</h3>
-              </div>
-            ))}
-          </div>
-          <div
-            id="myModal"
-            className="modal hidden fixed inset-0 flex items-center justify-center z-50"
-          >
-            <div className="modal-overlay absolute inset-0 bg-black opacity-50"></div>
-            <div className="modal-container bg-white w-11/12 md:max-w-md mx-auto rounded shadow-lg z-50 overflow-y-auto">
-              <div className="modal-content py-4 text-left px-6">
-                <div className="flex justify-between items-center pb-3">
-                  <p className="text-2xl font-bold">Selected Date</p>
-                  <button
-                    id="closeModal"
-                    className="modal-close px-3 py-1 rounded-full bg-gray-200 hover:bg-gray-300 focus:outline-none focus:ring"
-                  >
-                    ✕
-                  </button>
+                Next
+              </button>
+            </div>
+            <div
+              className="grid grid-cols-7 gap-2 p-4 dark:text-black"
+              id="calendar"
+            >
+              {daysOfWeek.map((day, index) => (
+                <div
+                  key={index}
+                  className="text-center py-2 border cursor-pointer"
+                >
+                  <h3>{day}</h3>
                 </div>
-                <div id="modalDate" className="text-xl font-semibold"></div>
+              ))}
+              {calendarDays.map((day, index) => (
+                <div
+                  key={index}
+                  className="text-center py-2 border cursor-pointer"
+                  onClick={() => handleDayClick(day)}
+                  style={
+                    workoutSessions.find(
+                      (session) =>
+                        session.finishedDate.substr(-29, 10) ===
+                        calculateDate(currentYear, currentMonth, day)
+                          .toISOString()
+                          .substr(-29, 10)
+                    ) && { backgroundColor: "#4BFA6E" }
+                  }
+                >
+                  <h3>{day}</h3>
+                </div>
+              ))}
+            </div>
+            <div
+              id="myModal"
+              className="modal hidden fixed inset-0 flex items-center justify-center z-50"
+            >
+              <div className="modal-overlay absolute inset-0 bg-black opacity-50"></div>
+              <div className="modal-container bg-white w-11/12 md:max-w-md mx-auto rounded shadow-lg z-50 overflow-y-auto">
+                <div className="modal-content py-4 text-left px-6">
+                  <div className="flex justify-between items-center pb-3">
+                    <p className="text-2xl font-bold">Selected Date</p>
+                    <button
+                      id="closeModal"
+                      className="modal-close px-3 py-1 rounded-full bg-gray-200 hover:bg-gray-300 focus:outline-none focus:ring"
+                    >
+                      ✕
+                    </button>
+                  </div>
+                  <div id="modalDate" className="text-xl font-semibold"></div>
+                </div>
               </div>
             </div>
           </div>
         </div>
+        <SessionModal
+          isModalOpen={isModalOpen}
+          hideModal={hideModal}
+          sessions={sessions}
+        />
       </div>
-      <SessionModal isModalOpen={isModalOpen} hideModal={hideModal} sessions={sessions}/>
     </div>
   );
 }

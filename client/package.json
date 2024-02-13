@@ -19,7 +19,7 @@
     "axios": "^1.6.5",
     "babel-runtime": "^6.26.0",
     "flowbite-react": "^0.7.2",
-    "framer-motion": "^11.0.2",
+    "framer-motion": "^11.0.3",
     "postcss": "^8.4.33",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
@@ -29,6 +29,7 @@
     "react-slick": "^0.30.1",
     "slick-carousel": "^1.8.1",
     "tailwindcss": "^3.4.1",
+    "taos": "^1.0.5",
     "use-sound": "^4.0.1",
     "uuid": "^9.0.1"
   },

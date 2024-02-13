@@ -1,7 +1,41 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import {motion} from "framer-motion";
 
 const HeroSection = () => {
+
+  const fadeInTitle = {
+    initial:{
+      opacity:0,
+      translateY:-50,
+      translateX:-50,
+    
+    },
+    animate:{
+      opacity:1,
+      translateX:-140,
+      translateY:-100,
+     delay: 1
+    }
+  }
+
+  const fadeInRegister = {
+    initial:{
+      opacity:0,
+      translateY:-50,
+      translateX:-200,
+    },
+
+    animate:{
+      opacity:1,
+      translateY:-100,
+      translateX:0,
+     delay: 3
+    }
+  }
+
+
+
   return (
     <section className="border-b-2 border-black bg-[url('/src/assets/bodybilder.jpg')] relative bg-no-repeat bg-left bg-cover h-screen">
       <div className="overlay">
@@ -38,13 +72,32 @@ const HeroSection = () => {
         </div>
         <div className="max-w-7xl mx-auto h-screen relative">
           <div>
-            <div className="position-text-in-center z-10">
+            <motion.div
+             variants={fadeInTitle}
+             initial='initial'
+             whileInView='animate'
+             transition={{duration:0.5}}
+             viewport={{
+               once:true
+             }}
+            
+            className="position-text-in-center z-10">
               <h1 className="text-gray-500 sm:mb-0 dark:text-gray-400 text-8xl font-bold">FitLife</h1>
               <p className="text-gray-500 sm:mb-0 dark:text-gray-400 text-3xl text-center">
                 Fitness -Planner
               </p>
-            </div>
-            <div className="flex flex-col absolute z-10 left-0 bottom-10 items-baseline justify-end">
+            </motion.div>
+
+            <motion.div 
+             variants={fadeInRegister}
+             initial='initial'
+             whileInView='animate'
+             transition={{duration:0.5, delay:0.8}}
+             viewport={{
+               once:true
+              }}
+            
+            className="flex flex-col absolute z-10 left-0 bottom-10 items-baseline justify-end">
               <p className="text-gray-500  dark:text-gray-400 font-bold mb-5">
                 Start planning your new healthy lifestile!
               </p>
@@ -63,7 +116,7 @@ const HeroSection = () => {
               >
                 <Link to={"/login"}>Login</Link>
               </button>
-            </div>
+            </motion.div>
           </div>
         </div>
       </div>

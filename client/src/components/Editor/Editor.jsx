@@ -262,7 +262,7 @@ const Editor = () => {
             />
           </div>
 
-          <div className="overflow-scroll max-h-screen">
+          <div className="overflow-y-scroll max-h-screen">
             {blocks.length > 0 &&
               blocks.map((block, index) => (
                 <Block
@@ -289,7 +289,7 @@ const Editor = () => {
                   onChange={handleSearch}
                 />
               </div>
-              <div className="overflow-scroll max-h-screen">
+              <div className="overflow-y-scroll max-h-screen">
                 {exercisesToShow.length > 0 &&
                   exercisesToShow.map((exercise) => (
                     <ExerciseCard

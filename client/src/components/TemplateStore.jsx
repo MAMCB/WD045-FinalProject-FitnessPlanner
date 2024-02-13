@@ -6,17 +6,24 @@ import axios from "../axiosInstance";
 import axiosInstance from "../axiosInstance";
 import ExercisesModel from "./ExercisesModel";
 import { useNavigate } from "react-router-dom";
+import Loading from "./Loading";
+import { Button } from "flowbite-react";
 
 const TemplateStore = () => {
   const [workoutPlans, setWorkoutPlans] = useState([]);
   const [workoutOwners, setWorkoutOwners] = useState([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [ExersiseImModal, setExersiseImModal] = useState(null);
+  const [animationLoading, setAnimationLoading] = useState(true);
   const navigate = useNavigate();
 
-
-
   const context = useContext(AuthContext);
+
+    useEffect(() => {
+      setTimeout(function () {
+        setAnimationLoading(false);
+      }, 2500);
+    }, []);
 
   useEffect(() => {
     axios
@@ -47,9 +54,8 @@ const TemplateStore = () => {
 
   const handleViewExercises = (id) => {
     const workout = workoutPlans.find((workout) => workout._id === id);
-    setExersiseImModal(workout)
+    setExersiseImModal(workout);
     setIsModalOpen(true);
-    
   };
 
   const handleAddWorkout = (id) => {
@@ -72,8 +78,10 @@ const TemplateStore = () => {
     console.log("Add workout");
   };
 
-  return workoutPlans.length === 0 ? (
-    <div className="h-screen w-full">Loading...</div>
+  return animationLoading ? (
+    <div className="flex items-center h-screen justify-center justify-self-center content-center self-center place-content-center place-items-center place-self-center">
+      <Loading width="250px" />
+    </div>
   ) : (
     <section className="text-gray-600 body-font px-[40px]">
       <div className="container px-1 py-12 mx-auto ">
@@ -108,19 +116,13 @@ const TemplateStore = () => {
                   Was created by : {workoutOwners[index]}
                 </p>
               </div>
-              <div className="flex flex-row lg:justify-center gap-2 align-middle justify-self-center justify-start md:justify-center lg:">
-                <div
-                  onClick={() => handleViewExercises(workout._id)}
-                  className="cursor-pointer inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
-                >
+              <div className="flex flex-row justify-center gap-2 align-middle justify-self-center justify-start md:justify-center">
+                <Button onClick={() => handleViewExercises(workout._id)}>
                   View exercises
-                </div>
-                <div
-                  onClick={() => handleAddWorkout(workout._id)}
-                  className="cursor-pointer inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
-                >
+                </Button>
+                <Button onClick={() => handleAddWorkout(workout._id)}>
                   Add workout
-                </div>
+                </Button>
               </div>
             </div>
           ))}

@@ -17,8 +17,10 @@ import LandingPage from "./components/Landing-Page/LandingPage";
 import TemplateStore from "./components/TemplateStore";
 import Protected from "./components/ProtectedRoute";
 import Footer from "./components/Footer";
+import Contact from "./components/Contact";
 
 function App() {
+ 
   return (
     <>
     <main className="bg-white shadow dark:bg-gray-900">
@@ -27,6 +29,7 @@ function App() {
         <Route path="login" element={<Login />} />
         <Route path="register" element={<Register />} />
         <Route path="/about" element={<About />} />
+        <Route path="/contact" element={<Contact />} />
 
         <Route path="/" element={<Protected />}>
           <Route path="" element={<Home />} />

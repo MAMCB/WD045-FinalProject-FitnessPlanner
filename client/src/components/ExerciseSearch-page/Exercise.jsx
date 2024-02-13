@@ -47,7 +47,7 @@ const Exercise = () => {
   }, [search]);
 
   const handleSearchInput = (e) => {
-    setSearch(e.target.value);
+    setSearch(e.target.value.toLowerCase());
   };
 
   const handleMuscleButton = (value) => {

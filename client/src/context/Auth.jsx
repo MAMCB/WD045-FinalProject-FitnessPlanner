@@ -51,6 +51,8 @@ function AuthProvider({ children }) {
         navigate("/");
       })
       .catch((err) => {
+        console.log(err.response)
+        alert(err.response.data.message);
         setState(null, false, err.response.data.errors);
       });
   };

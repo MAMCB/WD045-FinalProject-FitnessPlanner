@@ -21,8 +21,6 @@ const userSchema = new mongoose.Schema(
     },
     profilePic: {
       type: String,
-      default:
-        "https://lh6.googleusercontent.com/proxy/i3o6o_HVc0XQaPNEpxAVDJw1QyLH6LRIw_OxAKjhOm5lZQDimRQYyz9_vIGDpMnEliSpI6AKhSbDqvzc4zIDdg3Cx5HAaLvjhE0dfz-Wns9I89ULsgeG8w=s0-d",
     },
     joinedDate: { type: Date, default: Date.now },
     age: { type: Number, default: 0 },

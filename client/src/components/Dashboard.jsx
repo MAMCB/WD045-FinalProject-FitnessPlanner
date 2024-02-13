@@ -10,6 +10,9 @@ const Dashboard = () => {
       axiosInstance.get('/api/workoutSession')
       .then((res) => {
         setWorkoutSessions(res.data);
+        if(res.data.length === 0){
+          alert('No workout sessions yet!')
+        }
       })
       .catch((e) => console.error(e));
     }, []);

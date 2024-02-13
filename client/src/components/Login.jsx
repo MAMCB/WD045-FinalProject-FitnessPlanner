@@ -102,9 +102,9 @@ const Login = () => {
                       </div>
                       <button
                         onClick={handleSubmit}
-                        className="w-full mt-4 mb-4 text-white bg-primaryOne hover:bg-secondary focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800"
+                        className="w-full group mb-5 flex items-center justify-center p-0.5 text-center font-medium relative focus:z-10 focus:outline-none text-white bg-cyan-700 border border-transparent enabled:hover:bg-cyan-800 focus:ring-cyan-300 dark:bg-cyan-600 dark:enabled:hover:bg-cyan-700 dark:focus:ring-cyan-800 rounded-lg focus:ring-2"
                       >
-                        Sign in
+                      <span className="flex items-center transition-all duration-200 rounded-md text-sm px-4 py-2">Sign in</span>
                       </button>
                       <p className="text-sm font-light text-gray-500 dark:text-gray-400">
                         Don’t have an account yet?{" "}

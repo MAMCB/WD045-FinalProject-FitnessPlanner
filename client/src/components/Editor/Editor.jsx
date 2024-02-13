@@ -305,7 +305,7 @@ const Editor = () => {
               </div>
             </Tabs.Item>
             <Tabs.Item title="New exercise">
-              <h2>Create a new exercise</h2>
+              <h2 className="text-gray-500 dark:text-gray-400">Create a new exercise</h2>
               <div className="m-4 ">
                 <Label htmlFor="name" value="Name of the exercise" />
                 <TextInput id="name" type="text" onChange={handleNewExercise} />

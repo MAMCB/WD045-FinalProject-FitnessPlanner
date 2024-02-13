@@ -23,18 +23,20 @@ const SessionModal = ({isModalOpen,hideModal,sessions}) => {
         <div className="bg-gray-400 p-1 mt-9 m-auto text-black w-4/5 md:w-1/2 rounded-lg relative flex items-center justify-center justify-self-center content-center self-center place-content-center place-items-center place-self-center flex-col">
           <div className="flex mt-10 gap-2 ">
             <h1 className="">Workout session</h1>
-            
           </div>
-          <h2 className="mt-5">Data: {sessions[0]?.finishedDate.substr(-29, 10)}</h2>
+          <h2 className="mt-5">
+            Data: {sessions[0]?.finishedDate.substr(-29, 10)}
+          </h2>
           <ul className="text-center">
             {sessions.map((session) => (
-              <>
-              <h2>{session.workoutId.name}</h2>
+              <div key={session._id}>
+                <h2>{session.workoutId.name}</h2>
                 <li
-                  key={session._id}
                   className="m-5 flex items-center justify-center justify-self-center content-center self-center place-content-center place-items-center place-self-center flex-col"
                 >
-                  <h3>Time when finished: {session.finishedDate.substr(11, 8)}</h3>
+                  <h3>
+                    Time when finished: {session.finishedDate.substr(11, 8)}
+                  </h3>
                   <p>Version: {session.version}</p>
                   <p>
                     {session.completed
@@ -46,7 +48,7 @@ const SessionModal = ({isModalOpen,hideModal,sessions}) => {
                   ))}
                 </li>
                 <hr />
-              </>
+              </div>
             ))}
           </ul>
           <Button className="mt-3 mb-3" onClick={handleClose}>

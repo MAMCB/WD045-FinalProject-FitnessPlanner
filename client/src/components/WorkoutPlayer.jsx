@@ -256,9 +256,9 @@ alert("New workout session created:" +
               height="480"
               src="https://www.youtube.com/embed/8OVkgBh_3Yc"
               title="Gym Workout Music 🔥 Best Fitness &amp; Training Workout Music Mix 🔥 New Running Music 2024"
-              frameborder="0"
+             
               allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-              allowfullscreen
+              allowFullScreen
             ></iframe>
           </div>
 

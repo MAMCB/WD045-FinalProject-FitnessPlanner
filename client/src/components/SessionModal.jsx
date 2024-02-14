@@ -31,7 +31,7 @@ const SessionModal = ({isModalOpen,hideModal,sessions}) => {
           <ul className="text-center">
             {sessions.map((session) => (
               <div key={session._id}>
-                <h2>{session.workoutId.name}</h2>
+                <h2>{session.workoutId?.name}</h2>
                 <li
                   className="m-5 flex items-center justify-center justify-self-center content-center self-center place-content-center place-items-center place-self-center flex-col"
                 >

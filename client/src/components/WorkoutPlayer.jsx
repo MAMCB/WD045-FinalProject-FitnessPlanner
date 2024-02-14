@@ -225,7 +225,9 @@ alert("New workout session created:" +
                       to="/"
                       className="group mb-5 flex items-center justify-center p-0.5 text-center font-medium relative focus:z-10 focus:outline-none text-white bg-cyan-700 border border-transparent enabled:hover:bg-cyan-800 focus:ring-cyan-300 dark:bg-cyan-600 dark:enabled:hover:bg-cyan-700 dark:focus:ring-cyan-800 rounded-lg focus:ring-2"
                     >
-                     <span className="flex items-center transition-all duration-200 rounded-md text-sm px-4 py-2">Return to Home Page</span>
+                      <span className="flex items-center transition-all duration-200 rounded-md text-sm px-4 py-2">
+                        Return to Home Page
+                      </span>
                     </Link>
                     <button
                       onClick={() => {
@@ -234,7 +236,9 @@ alert("New workout session created:" +
                       type="button"
                       className="group mb-5 flex items-center justify-center p-0.5 text-center font-medium relative focus:z-10 focus:outline-none text-white bg-cyan-700 border border-transparent enabled:hover:bg-cyan-800 focus:ring-cyan-300 dark:bg-cyan-600 dark:enabled:hover:bg-cyan-700 dark:focus:ring-cyan-800 rounded-lg focus:ring-2"
                     >
-                     <span className="flex items-center transition-all duration-200 rounded-md text-sm px-4 py-2">Start the Workout</span>
+                      <span className="flex items-center transition-all duration-200 rounded-md text-sm px-4 py-2">
+                        Start the Workout
+                      </span>
                     </button>
                   </div>
                 </div>
@@ -250,15 +254,16 @@ alert("New workout session created:" +
             {radioOpen ? "Close " : "Open "} radio
           </Button>
           <div className="iframe-container">
+            
             <iframe
               className={`m-auto ${radioOpen ? "block" : "hidden"}`}
               width="853"
               height="480"
-              src="https://www.youtube.com/embed/8OVkgBh_3Yc"
-              title="Gym Workout Music 🔥 Best Fitness &amp; Training Workout Music Mix 🔥 New Running Music 2024"
-             
+              src="https://www.youtube.com/embed/jwvd0sHj0w4"
+              title="WORKOUT MUSIC 2023 🔥 POWERFUL HIPHOP TRAP &amp; BASS 🔥 GYM MOTIVATION MUSIC 2023 #44"
+              frameborder="0"
               allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-              allowFullScreen
+              allowfullscreen
             ></iframe>
           </div>
 

@@ -85,7 +85,7 @@ const PresentationSection = () => {
             <img className="h-full w-full" src={workoutIcon} alt="" />
             </div>
               <p className="font-normal text-gray-500 sm:mb-0 dark:text-gray-400 text-center">
-                Track Your Achievement.
+                Improve your body.
               </p>
             </div>
             <div className="flex mb-2 min-w-full flex-wrap flex-col justify-center content-center max-w-sm min-h-72 p-6 m-0.5  bg-pale-sky border border-gray-200 rounded-lg shadow hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700 md:w-[49%] md:min-w-0 lg:w-1/3">
@@ -93,7 +93,7 @@ const PresentationSection = () => {
             <img className="h-full w-full" src={timeIcon} alt="" />
             </div>
               <p className="font-normal text-gray-500 sm:mb-0 dark:text-gray-400 text-center">
-                Track Your Achievement.
+                Schedule your workouts.
               </p>
             </div>
           </div>

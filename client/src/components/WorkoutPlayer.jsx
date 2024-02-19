@@ -261,9 +261,9 @@ alert("New workout session created:" +
               height="480"
               src="https://www.youtube.com/embed/jwvd0sHj0w4"
               title="WORKOUT MUSIC 2023 🔥 POWERFUL HIPHOP TRAP &amp; BASS 🔥 GYM MOTIVATION MUSIC 2023 #44"
-              frameborder="0"
+              frameBorder="0"
               allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-              allowfullscreen
+              allowFullScreen
             ></iframe>
           </div>
 
